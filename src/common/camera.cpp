@@ -1,7 +1,7 @@
 #include <glm/glm.hpp>
 
 #include "camera.h"
-#include "scene.h"
+#include "day_scene.h"
 
 using namespace std;
 using namespace glm;
@@ -42,31 +42,29 @@ void Camera::updateWithDirection (vec3 position, short direction) {
 vec3 Camera::getDirectionMatrix (short direction) {
     switch (direction) {
         case 0: {
-            return vec3{0, -3, 6};
-        }
-        case 1: {
-            return vec3{-6, -3, 0};
-        }
-        case 2: {
-            return vec3{0, -3, -6};
+            return vec3{0, -15, 6};
         }
         case 3: {
-            return vec3{6, -3, 0};
+            return vec3{0, -15, -6};
+        }
+        case 1: {
+            return vec3{6, -15, 0};
+        }
+        case 2: {
+            return vec3{-6, -15, 0};
         }
     }
 }
 
-void Camera::switchView (Scene *scene) {
+void Camera::switchView (DayScene *scene) {
     view++;
     if (view == views.size()) {
         view = 0;
     };
     if (view == 1) {
-        
-//        views[view].position =
-//            scene->player->position - this->getDirectionMatrix(scene->player->direction);
-        
-//        views[view].center = scene->player->position;
+        views[view].position = scene->player->position - this->getDirectionMatrix(scene->player->direction);
+
+        views[view].center = scene->player->position;
     }
     this->update(views[view]);
 }

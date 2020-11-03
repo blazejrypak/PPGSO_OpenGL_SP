@@ -9,7 +9,7 @@
 using namespace glm;
 using namespace std;
 
-class Scene;
+class DayScene;
 
 typedef struct {
     vec3 up;
@@ -94,12 +94,12 @@ public:
     void update (vec3 eye, vec3 center);
     
     void updateWithDirection (vec3 position, short direction);
-    
+
     vec3 getDirectionMatrix (short direction);
     
     vec3 cast (double u, double v);
     
-    void switchView (Scene *scene);
+    void switchView (DayScene *scene);
     
     void handleKey (int key);
     

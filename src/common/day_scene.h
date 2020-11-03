@@ -1,11 +1,11 @@
 #pragma once
 
 #include "scene.h"
+#include "../objects/player.h"
 
 #ifndef FINALFINAL_DAY_SCENE_H
 #define FINALFINAL_DAY_SCENE_H
 
-class Player;
 
 class DayScene final : public Scene {
 

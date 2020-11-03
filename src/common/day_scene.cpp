@@ -2,7 +2,6 @@
 #include <chrono>
 #include "day_scene.h"
 #include "main_window.h"
-#include "../objects/world.h"
 #include "../objects/wall.h"
 #include "../objects/shape.h"
 
@@ -26,10 +25,6 @@ void DayScene::init() {
     axis_z->color = {0, 0, 1};
     axis_z->scale = {y, z, x};
     this->objects.push_back(move(axis_z));
-
-//    auto base = std::make_unique<Shape>("wall", "cube");
-//    base->scale = {50.f, 0.1f, 50.f};
-//    this->objects.push_back(move(base));
 
     auto sofa = std::make_unique<Shape>("blacc", "sofa/sofa");
     sofa->position = {5.f, -5.f, 0.f};
@@ -61,9 +56,11 @@ void DayScene::init() {
     policka_real->scale = {5.f, 5.f, 5.f};
     this->objects.push_back(move(policka_real));
 
-//    auto world = std::make_unique<World>();
-//    world->scale = {10.f, 10.f, 10.f};
-//    this->objects.push_back(move(world));
+    auto player_ = std::make_unique<Player>();
+    player_->position = {2.f,2.f,2.f };
+    player_->scale = {2.f, 2.f, 2.f};
+    this->player = player_.get();
+    this->objects.push_back(move(player_));
 
 }
 
@@ -87,7 +84,7 @@ void DayScene::handleKey (int key, int action) {
                 break;
             }
                 // Pause
-            case (GLFW_KEY_P): {
+            case (GLFW_KEY_L): {
                 this->animate = !this->animate;
                 break;
             }
@@ -114,5 +111,11 @@ void DayScene::handleKey (int key, int action) {
     if (std::find(std::begin(this->camera->controls), std::end(this->camera->controls), key)
         != std::end(this->camera->controls)) {
         this->camera->handleKey(key);
+    }
+
+    // Handle player
+    if (std::find(std::begin(this->player->controls), std::end(this->player->controls), key)
+        != std::end(this->player->controls)) {
+        this->player->handleKey(*this, key);
     }
 }
