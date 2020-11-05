@@ -1,12 +1,12 @@
 #include "wall.h"
 #include "../common/scene.h"
 
-#include <shaders/diffuse_vert_glsl.h>
-#include <shaders/diffuse_frag_glsl.h>
+#include <shaders/color_vert_glsl.h>
+#include <shaders/color_frag_glsl.h>
 
 Wall::Wall () {
     // Initialize static resources if needed
-    if (!shader) shader = make_unique<Shader>(diffuse_vert_glsl, diffuse_frag_glsl);
+    if (!shader) shader = make_unique<Shader>(color_vert_glsl, color_frag_glsl);
     if (!texture)
         texture = make_unique<Texture>(image::loadBMP("textures/red.bmp"));
     if (!mesh) mesh = make_unique<Mesh>("objects/cube.obj");
@@ -15,7 +15,7 @@ Wall::Wall () {
 
 Wall::Wall (const std::string& textureName, const std::string& objectName) {
     // Initialize static resources if needed
-    if (!shader) shader = make_unique<Shader>(diffuse_vert_glsl, diffuse_frag_glsl);
+    if (!shader) shader = make_unique<Shader>(color_vert_glsl, color_frag_glsl);
     if (!texture)
         texture = make_unique<Texture>(image::loadBMP("textures/" + textureName + ".bmp"));
     if (!mesh) mesh = make_unique<Mesh>("objects/" + objectName + ".obj");

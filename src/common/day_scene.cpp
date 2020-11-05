@@ -26,9 +26,9 @@ void DayScene::init() {
     axis_z->scale = {y, z, x};
     this->objects.push_back(move(axis_z));
 
-    auto basement = std::make_unique<Shape>("grass", "wall");
-    basement->position = {5.f, -7.f, 0.f};
-    basement->scale = {50.f, 5.f, 50.f};
+    auto basement = std::make_unique<Shape>("grass", "cube");
+    basement->position = {5.f, 0.f, 0.f};
+    basement->scale = {50.f, 0.1f, 50.f};
     this->objects.push_back(move(basement));
 
     auto road = std::make_unique<Shape>("road", "road/road");
@@ -51,42 +51,50 @@ void DayScene::init() {
         this->objects.push_back(move(box));
     }
 
-    auto sofa = std::make_unique<Shape>("blacc", "sofa/sofa");
-    sofa->position = {5.f, -5.f, 0.f};
-    sofa->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(sofa));
-
-    auto table_circle = std::make_unique<Shape>("blacc", "table_circle/table");
-    table_circle->position = {5.f, -5.f, 0.f};
-    table_circle->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(table_circle));
-
-    auto wall = std::make_unique<Shape>("white", "wall");
-    wall->position = {5.f, -5.f, 0.f};
-    wall->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(wall));
-
-    auto left_wall = std::make_unique<Shape>("white", "left_wall");
-    left_wall->position = {5.f, -5.f, 0.f};
-    left_wall->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(left_wall));
-
-    auto small_table = std::make_unique<Shape>("red", "small_table");
-    small_table->position = {5.f, -5.f, 0.f};
-    small_table->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(small_table));
-
-    auto policka_real = std::make_unique<Shape>("block", "policka_real");
-    policka_real->position = {5.f, -5.f, 0.f};
-    policka_real->scale = {5.f, 5.f, 5.f};
-    this->objects.push_back(move(policka_real));
-
     auto player_ = std::make_unique<Player>();
-    player_->position = {2.f,2.f,2.f };
-    player_->scale = {2.f, 2.f, 2.f};
+    player_->position = {2.f,0.5f,2.f };
+    player_->scale = {1.f, 1.f, 1.f};
     this->player = player_.get();
     this->objects.push_back(move(player_));
 
+    struct house_obj {
+        std::string texturePath;
+        std::string objPath;
+        std::string type;
+    };
+
+    std::vector<house_obj> house_objects = {
+            {"house/BanheiraTexture", "house/Bathtub", "base"},
+            {"house/TetoTexture", "house/Bed", "base"},
+            {"house/CasaTexture", "house/Casa", "base"},
+            {"house/ChaoTexture", "house/Chao", "base"},
+            {"house/PortaTexture", "house/Porta", "base"},
+            {"house/PortaTexture", "house/Porta1", "base"},
+            {"house/PortaTexture", "house/Porta2", "base"},
+            {"house/TetoTexture", "house/Sink", "base"},
+            {"house/TetoTexture", "house/Table", "base"},
+            {"house/TetoTexture", "house/Teto", "base"},
+            {"house/TetoTexture", "house/Window", "base"},
+            {"house/TetoTexture", "house/Window1", "base"},
+            {"house/TetoTexture", "house/Window2", "base"},
+            {"house/TetoTexture", "house/Window3", "base"},
+            {"house/VentiladorTexture", "house/Ventilator", "base"},
+            {"house/LuminariaTexture", "house/Luminaria", "base"},
+            {"house/LuminariaTexture", "house/Luminaria1", "base"},
+            {"house/LuminariaTexture", "house/Luminaria2", "base"},
+    };
+
+    glm::vec3 house_base_position_objects = glm::vec3{5.f, 8.f, 0.f};
+    glm::vec3 house_base_scale_objects = glm::vec3{5.f, 5.f, 5.f};
+    glm::vec3 house_base_rotation_objects = glm::vec3{0.f, 0.f, glm::radians(180.f)};
+
+    for (auto & house_object : house_objects) {
+        auto obj = std::make_unique<Shape>(house_object.texturePath, house_object.objPath);
+        obj->position = house_base_position_objects;
+        obj->scale = house_base_scale_objects;
+        obj->rotation = house_base_rotation_objects;
+        this->objects.push_back(move(obj));
+    }
 }
 
 void DayScene::update(float time) {
