@@ -23,13 +23,10 @@ using namespace ppgso;
 class SceneWindow : public Window {
 
 private:
-    Game *game;
     Menu *menu;
     Scene *scene;
 
     DayScene *dayScene;
-
-    static float time;
 
     template<typename T>
     void initScene (T *currentScene);

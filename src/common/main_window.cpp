@@ -44,10 +44,10 @@ void SceneWindow::onIdle () {
     float dt = 0;
 
 // Compute time delta
-//    if (dynamic_cast<Game *>(this->scene)) {
-//        dt = dynamic_cast<Game *>(this->scene)->animate ? (float) glfwGetTime() - time : 0;
-//        dynamic_cast<Game *>(this->scene)->weather->update();
-//    }
+    if (dynamic_cast<DayScene *>(this->scene)) {
+        dt = (float) glfwGetTime() - time_;
+        dynamic_cast<DayScene *>(this->scene)->_weather->update();
+    }
 
 
     glClearColor(.7f, .93f, .96f, 0);

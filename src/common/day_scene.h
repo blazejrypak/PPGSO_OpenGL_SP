@@ -2,6 +2,7 @@
 
 #include "scene.h"
 #include "../objects/player.h"
+#include "../objects/weather.h"
 
 #ifndef FINALFINAL_DAY_SCENE_H
 #define FINALFINAL_DAY_SCENE_H
@@ -16,6 +17,7 @@ public:
     bool animate = true;
 
     Player *player;
+    unique_ptr<Weather> _weather;
 
     void init();
 

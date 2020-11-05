@@ -4,6 +4,7 @@
 #include "main_window.h"
 #include "../objects/wall.h"
 #include "../objects/shape.h"
+#include "../objects/weather.h"
 
 
 void DayScene::init() {
@@ -95,6 +96,22 @@ void DayScene::init() {
         obj->rotation = house_base_rotation_objects;
         this->objects.push_back(move(obj));
     }
+
+    // WEATHER
+    auto weather = std::make_unique<Weather>(this);
+    this->_weather = move(weather);
+
+    auto pool = std::make_unique<Shape>("house/BanheiraTexture", "pool/pool1");
+    pool->position = {15.f, 1.f, -18.f};
+    pool->scale = {5.f, 5.f, 5.f};
+    this->_weather->_pool = pool.get();
+    this->objects.push_back(move(pool));
+
+    auto pool_volume = std::make_unique<Shape>("blau", "pool/pool_volume");
+    pool_volume->position = {15.f, 1.f, -18.f};
+    pool_volume->scale = {5.f, 0.1f, 5.f};
+    this->_weather->_pool_volume = pool_volume.get();
+    this->objects.push_back(move(pool_volume));
 }
 
 void DayScene::update(float time) {
@@ -124,6 +141,16 @@ void DayScene::handleKey (int key, int action) {
                 // Switch camera view
             case (GLFW_KEY_C): {
                 this->camera->switchView(this);
+                break;
+            }
+                // Start raining
+            case (GLFW_KEY_G): {
+                this->_weather->toggleRain();
+                break;
+            }
+                // Pause raining
+            case (GLFW_KEY_H): {
+                this->_weather->pauseRain();
                 break;
             }
 

@@ -87,6 +87,7 @@ add_executable(FinalFinal
         src/objects/wall.cpp
         src/objects/shape.cpp
         src/objects/player.cpp
+        src/objects/weather.cpp
         )
 
 target_link_libraries(FinalFinal ppgso shaders)
