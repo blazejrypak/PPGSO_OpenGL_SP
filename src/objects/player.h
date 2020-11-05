@@ -33,7 +33,6 @@ public:
     };
 
     short direction = 0;
-    short lastDirection = 0;
 
     Player ();
 

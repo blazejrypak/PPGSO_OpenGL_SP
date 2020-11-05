@@ -53,7 +53,7 @@ void DayScene::init() {
     }
 
     auto player_ = std::make_unique<Player>();
-    player_->position = {2.f,0.5f,2.f };
+    player_->position = {2.f,0.5f,-20.f };
     player_->scale = {1.f, 1.f, 1.f};
     this->player = player_.get();
     this->objects.push_back(move(player_));

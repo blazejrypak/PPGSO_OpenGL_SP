@@ -56,32 +56,37 @@ void Player::render (Scene &scene) {
 
 void Player::handleKey (Scene &scene, int key){
     float speed = 0.5f;
-    if (key == GLFW_KEY_W) {
-        position.z += speed;
-        rotation.z = glm::radians(0.f);
-        shadow->rotation.z = glm::radians(90.f);
-        direction = 0;
+//    W -> 0
+//    D -> 1
+//    S -> 2
+//    A -> 3
+    if (key == GLFW_KEY_W){
+        if (direction == 0 || abs(direction) == 2){
+            if (direction == 0){
+                position.z += speed;
+            } else {
+                position.z -= speed;
+            }
+        } else {
+            if (direction == 1 || direction == -3) {
+                position.x -= speed;
+            } else {
+                position.x += speed;
+            }
+        }
+    } else if (key == GLFW_KEY_D && scene.keyboard[key] == GLFW_PRESS){
+        direction += 1;
+    } else if (key == GLFW_KEY_A && scene.keyboard[key] == GLFW_PRESS){
+        direction -= 1;
+    } else if (key == GLFW_KEY_S && scene.keyboard[key] == GLFW_PRESS) {
+        direction += 2;
     }
-    if (key == GLFW_KEY_S) {
-        position.z -= speed;
-        rotation.z = glm::radians(-180.f);
-        shadow->rotation.z = glm::radians(-90.f);
-        direction = 2;
-    }
-    if (key == GLFW_KEY_D) {
-        position.x -= speed;
-        rotation.z = glm::radians(-90.f);
-        shadow->rotation.z = glm::radians(0.f);
-        direction = 3;
-    }
-    if (key == GLFW_KEY_A) {
-        position.x += speed;
-        rotation.z = glm::radians(90.f);
-        shadow->rotation.z = glm::radians(0.f);
-        direction = 1;
-    }
+    direction %= 4;
+    rotation.z = glm::radians(static_cast<float>(direction) * -90.0f);
     if (scene.camera->isFirstPersonMode()){
-        scene.camera->updateWithDirection(position, direction);
+        int d = (direction+2)%4;
+        d = d == -1 ? 3 : d;
+        scene.camera->updateWithDirection(position, abs(static_cast<short>(d)));
     }
 }
 

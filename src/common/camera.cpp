@@ -34,24 +34,32 @@ void Camera::update (vec3 center) {
 }
 
 void Camera::updateWithDirection (vec3 position, short direction) {
-    current.position = position - this->getDirectionMatrix(direction);
-    current.center = position;
+    firstPersonViewCenter = position;
+    current.position = position + this->getDirectionMatrix(direction);
+    current.center = firstPersonViewCenter;
     this->update();
 }
 
 vec3 Camera::getDirectionMatrix (short direction) {
+    int y = 5;
+    int x = 6;
+    int z = 10;
     switch (direction) {
         case 0: {
-            return vec3{0, -15, 6};
+            firstPersonViewCenter.z -= z;
+            return vec3{0, y, x};
         }
         case 3: {
-            return vec3{0, -15, -6};
+            firstPersonViewCenter.x -= z;
+            return vec3{x, y, 0};
         }
         case 1: {
-            return vec3{6, -15, 0};
+            firstPersonViewCenter.x += z;
+            return vec3{-x, y, 0};
         }
         case 2: {
-            return vec3{-6, -15, 0};
+            firstPersonViewCenter.z += z;
+            return vec3{0, y, -x};
         }
     }
 }
@@ -62,7 +70,7 @@ void Camera::switchView (DayScene *scene) {
         view = 0;
     };
     if (view == 1) {
-        views[view].position = scene->player->position - this->getDirectionMatrix(scene->player->direction);
+        views[view].position = scene->player->position + this->getDirectionMatrix(scene->player->direction);
 
         views[view].center = scene->player->position;
     }
