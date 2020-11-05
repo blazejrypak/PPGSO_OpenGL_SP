@@ -18,6 +18,8 @@ unique_ptr<Texture> Player::texture;
 unique_ptr<Shader> Player::shader;
 
 Player::Player () {
+    this->shadow = new Shadow(this->position+glm::vec3{0.f, 10.f, 0.f}, {this->scale.x*5, 0.1, this->scale.z*5});
+    this->shadow->rotation.z = glm::radians(90.f);
     if (!shader) shader = make_unique<Shader>(diffuse_vert_glsl, diffuse_frag_glsl);
     if (!texture)
         texture = make_unique<Texture>(image::loadBMP("textures/cyborg.bmp"));
@@ -25,17 +27,9 @@ Player::Player () {
 }
 
 bool Player::update (Scene &scene, float dt) {
-
-//    // Keyframes and linear interpolation when moving
-//    if (hasMoved) {
-//        position = lerp(position, nextKeyPos, dt * 6);
-//        if (scene.camera->isFirstPersonMode())
-//            scene.camera->updateWithDirection(position, direction);
-//        if (abs(nextKeyPos.z - position.z) < 0.1f && abs(nextKeyPos.x - position.x) < 0.1f) {
-//            position = nextKeyPos;
-//            hasMoved = false;
-//        }
-//    }
+    shadow->update(this->position, scene);
+    shadow->update(scene, dt);
+    shadow->render(scene);
 
     generateModelMatrix();
     return true;
@@ -65,21 +59,25 @@ void Player::handleKey (Scene &scene, int key){
     if (key == GLFW_KEY_W) {
         position.z += speed;
         rotation.z = glm::radians(0.f);
+        shadow->rotation.z = glm::radians(90.f);
         direction = 0;
     }
     if (key == GLFW_KEY_S) {
         position.z -= speed;
         rotation.z = glm::radians(-180.f);
+        shadow->rotation.z = glm::radians(-90.f);
         direction = 2;
     }
     if (key == GLFW_KEY_D) {
         position.x -= speed;
         rotation.z = glm::radians(-90.f);
+        shadow->rotation.z = glm::radians(0.f);
         direction = 3;
     }
     if (key == GLFW_KEY_A) {
         position.x += speed;
         rotation.z = glm::radians(90.f);
+        shadow->rotation.z = glm::radians(0.f);
         direction = 1;
     }
     if (scene.camera->isFirstPersonMode()){

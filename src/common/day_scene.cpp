@@ -26,6 +26,31 @@ void DayScene::init() {
     axis_z->scale = {y, z, x};
     this->objects.push_back(move(axis_z));
 
+    auto basement = std::make_unique<Shape>("grass", "wall");
+    basement->position = {5.f, -7.f, 0.f};
+    basement->scale = {50.f, 5.f, 50.f};
+    this->objects.push_back(move(basement));
+
+    auto road = std::make_unique<Shape>("road", "road/road");
+    road->position = {15.f, 0.f, -35.f};
+    road->scale = {3.f, 3.f, 30.f};
+    road->rotation = {0.f, 0.f, glm::radians(90.f)};
+    this->objects.push_back(move(road));
+
+    for (int i = -5; i < 5; ++i) {
+        auto lamp_post = std::make_unique<Shape>("white", "lamp_post/lamp_post");
+        lamp_post->position = {15.f*i, 0.f, -40.f};
+        lamp_post->scale = {0.3f, 0.3f, 0.3f};
+        lamp_post->rotation = {0.f, 0.f, glm::radians(-90.f)};
+        this->objects.push_back(move(lamp_post));
+
+        auto box = std::make_unique<Wall>("red", "sphere");
+        box->position = {15.f*i, 3.f, -35.f};
+        box->color = {0, 0, 1};
+        box->scale = {3.f, 3.f, 3.f};
+        this->objects.push_back(move(box));
+    }
+
     auto sofa = std::make_unique<Shape>("blacc", "sofa/sofa");
     sofa->position = {5.f, -5.f, 0.f};
     sofa->scale = {5.f, 5.f, 5.f};

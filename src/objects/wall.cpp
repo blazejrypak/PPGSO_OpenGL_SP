@@ -33,6 +33,7 @@ void Wall::render (Scene &scene) {
     // Set up light
     shader->setUniform("LightDirection", scene.lightDirection);
     shader->setUniform("LightColor", scene.lightColor);
+    shader->setUniform("viewPos", scene.camera->getView().position);
 
     // use camera
     shader->setUniform("ProjectionMatrix", scene.camera->projectionMatrix);

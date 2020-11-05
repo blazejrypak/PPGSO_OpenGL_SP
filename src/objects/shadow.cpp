@@ -39,7 +39,7 @@ void Shadow::update (vec3 position, vec3 scale, Scene &scene) {
 void Shadow::render (Scene &scene) {
     shader->use();
     
-    shader->setUniform("Transparency", .5f);
+    shader->setUniform("Transparency", .9f);
     
     // use camera
     shader->setUniform("ProjectionMatrix", scene.camera->projectionMatrix);

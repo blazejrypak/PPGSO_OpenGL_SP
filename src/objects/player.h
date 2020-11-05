@@ -8,10 +8,7 @@
 
 #include "object.h"
 #include "block.h"
-
-class Bomb;
-
-class PowerUp;
+#include "shadow.h"
 
 class Player final : public Object {
 private:
@@ -24,8 +21,10 @@ private:
     static std::unique_ptr<ppgso::Shader> shader;
     static std::unique_ptr<ppgso::Texture> texture;
 
-public:
 
+    Shadow *shadow;
+
+public:
     vector<int> controls = {
             GLFW_KEY_W,
             GLFW_KEY_S,
