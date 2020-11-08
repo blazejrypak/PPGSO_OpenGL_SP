@@ -9,6 +9,7 @@
 #include "object.h"
 #include "block.h"
 #include "shadow.h"
+#include "shape.h"
 
 class Player final : public Object {
 private:
@@ -30,9 +31,13 @@ public:
             GLFW_KEY_S,
             GLFW_KEY_D,
             GLFW_KEY_A,
+            GLFW_KEY_E,
     };
 
     short direction = 0;
+
+    bool updated = false;
+    bool canMove = false;
 
     Player ();
 
@@ -41,6 +46,8 @@ public:
     void render (Scene &scene) override;
 
     void handleKey (Scene &scene, int key);
+
+    Shape *checkMove(Scene &scene);
 };
 
 #endif //FINALFINAL_PLAYER_H

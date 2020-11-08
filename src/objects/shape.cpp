@@ -20,7 +20,6 @@ bool Shape::update (Scene &scene, float dt) {
         shadow->update(scene, dt);
         shadow->render(scene);
     }
-
     generateModelMatrix();
     return true;
 }
@@ -43,3 +42,5 @@ void Shape::render (Scene &scene) {
 
     mesh->render();
 }
+
+

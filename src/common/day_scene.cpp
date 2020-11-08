@@ -69,12 +69,12 @@ void DayScene::init() {
             {"house/TetoTexture", "house/Bed", "base"},
             {"house/CasaTexture", "house/Casa", "base"},
             {"house/ChaoTexture", "house/Chao", "base"},
-            {"house/PortaTexture", "house/Porta", "base"},
-            {"house/PortaTexture", "house/Porta1", "base"},
-            {"house/PortaTexture", "house/Porta2", "base"},
+            {"house/PortaTexture", "house/Porta", "door"},
+            {"house/PortaTexture", "house/Porta1", "door"},
+            {"house/PortaTexture", "house/Porta2", "door"},
             {"house/TetoTexture", "house/Sink", "base"},
             {"house/TetoTexture", "house/Table", "base"},
-            {"house/TetoTexture", "house/Teto", "base"},
+//            {"house/TetoTexture", "house/Teto", "base"},
             {"house/TetoTexture", "house/Window", "base"},
             {"house/TetoTexture", "house/Window1", "base"},
             {"house/TetoTexture", "house/Window2", "base"},
@@ -94,6 +94,7 @@ void DayScene::init() {
         obj->position = house_base_position_objects;
         obj->scale = house_base_scale_objects;
         obj->rotation = house_base_rotation_objects;
+        obj->_type = house_object.type;
         this->objects.push_back(move(obj));
     }
 

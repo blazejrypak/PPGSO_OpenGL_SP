@@ -3,6 +3,7 @@
 #include "scene.h"
 #include "../objects/player.h"
 #include "../objects/weather.h"
+#include "../objects/shape.h"
 
 #ifndef FINALFINAL_DAY_SCENE_H
 #define FINALFINAL_DAY_SCENE_H
@@ -11,7 +12,6 @@
 class DayScene final : public Scene {
 
 private:
-    float _time = 0;
 
 public:
     bool animate = true;

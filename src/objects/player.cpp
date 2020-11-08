@@ -1,11 +1,8 @@
-//
-// Created by František Gič on 30/11/2019.
-//
-
 #include <thread>
 #include <chrono>
 #include "../common/scene.h"
 #include "../common/main_window.h"
+#include "../objects/shape.h"
 #include "player.h"
 
 using namespace std;
@@ -27,11 +24,26 @@ Player::Player () {
 }
 
 bool Player::update (Scene &scene, float dt) {
+    shadow->render(scene);
     shadow->update(this->position, scene);
     shadow->update(scene, dt);
-    shadow->render(scene);
-
     generateModelMatrix();
+//    Shape *obj = checkMove(scene);
+//    if (!updated){
+//        updated = true;
+//        return true;
+//    }
+//    if (!obj){
+//        shadow->update(this->position, scene);
+//        shadow->update(scene, dt);
+//        generateModelMatrix();
+//    } else {
+//        if (obj->state){
+//            shadow->update(this->position, scene);
+//            shadow->update(scene, dt);
+////            generateModelMatrix();
+//        }
+//    }
     return true;
 }
 
@@ -53,8 +65,46 @@ void Player::render (Scene &scene) {
     mesh->render();
 }
 
+Shape *Player::checkMove(Scene &scene) {
+    auto i = std::begin(scene.objects);
+
+    while (i != std::end(scene.objects)) {
+        // Update and remove from list if needed
+        auto obj = i->get();
+        float radius = 0.01f;
+        if (obj->_type == "door"){
+            if (
+                    this->position.x + radius > obj->position.x || this->position.x - radius < obj->position.x ||
+                    this->position.y + radius > obj->position.y || this->position.y - radius < obj->position.y ||
+                    this->position.z + radius > obj->position.z || this->position.z - radius < obj->position.z
+                    ){
+                return dynamic_cast<Shape *>(obj);
+            }
+        }
+        i++;
+    }
+    return nullptr;
+}
+
 
 void Player::handleKey (Scene &scene, int key){
+//    if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS){
+//        Shape *obj = checkMove(scene);
+//        std::cout << position.z << " " << obj->position.z << std::endl;
+//        if(obj){
+//            if (!obj->state){
+//                obj->rotation.y = glm::radians(-90.0f);
+//                obj->position.z = -15;
+//                obj->position.x = 2.5f;
+//            } else {
+//                obj->rotation.z = glm::radians(180.0f);
+//                obj->position.z = 0;
+//                obj->position.x = 5.f;
+//            }
+//            obj->state = !obj->state;
+//        }
+//        return;
+//    }
     float speed = 0.5f;
 //    W -> 0
 //    D -> 1

@@ -23,7 +23,6 @@ using namespace ppgso;
 class SceneWindow : public Window {
 
 private:
-    Menu *menu;
     Scene *scene;
 
     DayScene *dayScene;

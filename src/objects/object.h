@@ -3,6 +3,7 @@
 #include <memory>
 #include <list>
 #include <map>
+#include <string>
 #include <glm/glm.hpp>
 
 using namespace std;
@@ -55,6 +56,9 @@ public:
     vec3 rotation{0, 0, 0};
     vec3 scale{1, 1, 1};
     mat4 modelMatrix{1};
+
+    std::string _type;
+    bool state{false};
 
 protected:
     /*!
