@@ -13,15 +13,27 @@ Camera::Camera (float fow, float ratio, float near, float far) {
     projectionMatrix = perspective(fowInRad, ratio, near, far);
     worldUp = this->views[this->view].up;
     this->update(this->views[this->view]);
+    this->resetAnimation();
 }
 
 
 void Camera::update () {
-    this->update(current.position, current.center);
+        this->update(current.position, current.center);
 }
 
 void Camera::update (vec3 eye, vec3 center) {
-    viewMatrix = lookAt(eye, center + front, globalUp);
+    if (animationRunning){
+        if (currentAnimationFrameIndex == animationFrames.size()){
+            resetAnimation();
+            viewMatrix = lookAt(views[0].position, views[0].center + front, globalUp);
+        } else {
+            std::cout << animationFrames[currentAnimationFrameIndex].position.x << " " << animationFrames[currentAnimationFrameIndex].position.y << " " << animationFrames[currentAnimationFrameIndex].position.z << std::endl;
+            viewMatrix = lookAt(animationFrames[currentAnimationFrameIndex].position, animationFrames[currentAnimationFrameIndex].center + front, animationFrames[currentAnimationFrameIndex].up);
+            currentAnimationFrameIndex += 1;
+        }
+    } else {
+        viewMatrix = lookAt(eye, center + front, globalUp);
+    }
 }
 
 void Camera::update (View view) {
@@ -77,12 +89,17 @@ void Camera::switchView (DayScene *scene) {
     this->update(views[view]);
 }
 
-void Camera::handleKey (int key) {
+void Camera::handleKey (Scene &scene, int key) {
     
     // Rotating camera shouldn't be enabled in third person mode
     if (view != 1) {
         float speed = 0.2f;
         float speedRotation = 2.5f;
+
+        if (key == GLFW_KEY_X && scene.keyboard[key] == GLFW_PRESS) {
+            this->generateAnimationShape();
+            animationRunning = true;
+        }
 
         if (key == GLFW_KEY_O) {
             current.position -= (current.center - current.position) * (speed / 2);
@@ -195,4 +212,12 @@ void Camera::updateCameraVectors()
     right = glm::normalize(glm::cross(front, current.up));
     // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     current.up    = glm::normalize(glm::cross(right, front));
+}
+
+void Camera::resetAnimation() {
+    animationFrames.clear();
+    animationRunning = false;
+    animationDeltaTime = 0.0f;
+    animationFramesPerSecond = 0.5f;
+    currentAnimationFrameIndex = 0;
 }
