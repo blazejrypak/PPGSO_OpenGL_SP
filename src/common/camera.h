@@ -10,6 +10,7 @@ using namespace glm;
 using namespace std;
 
 class DayScene;
+class Scene;
 
 typedef struct {
     vec3 up;
@@ -62,7 +63,83 @@ private:
     float mouseSensitivity;
     float zoom;
 
+    std::vector<View> animationKeyFrames = {
+            {
+                globalUp,
+                    {15.0f, 30.0f, -60.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {30.0f, 20.0f, -40.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {60.0f, 15.0f, -20.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {60.0f, 15.0f, 0.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {60.0f, 20.0f, 20.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {40.0f, 30.0f, 40.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            },
+            {
+                    globalUp,
+                    {30.0f, 30.0f, 40.0f},
+                    {15.0f, 2.0f, 15.0f},
+
+            }
+    };
+    std::vector<View> animationFrames;
+    int animationPathSteps = 10;
+
+    static glm::vec3 lerp3(const glm::vec3 &p1, const glm::vec3 &p2, const float t) {
+        return p1 * (1.f - t) + p2 * t;
+    }
+
+    glm::vec3 getAnimationPoint(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const float t){
+        vec3 a = lerp3(p0, p1, t);
+        vec3 b = lerp3(p1, p2, t);
+
+        return lerp3(a, b, t);
+    }
+
+    void generateAnimationShape(){
+        for (unsigned int i = 1; i < animationKeyFrames.size(); i+=2) {
+            for (int j = 0; j <= animationPathSteps; ++j) {
+                View frame;
+                frame.position = getAnimationPoint(animationKeyFrames[i-1].position, animationKeyFrames[i].position, animationKeyFrames[i+1].position, static_cast<float>(j)/static_cast<float>(animationPathSteps));
+                frame.center = getAnimationPoint(animationKeyFrames[i-1].center, animationKeyFrames[i].center, animationKeyFrames[i+1].center, static_cast<float>(j)/static_cast<float>(animationPathSteps));
+                frame.up = getAnimationPoint(animationKeyFrames[i-1].up, animationKeyFrames[i].up, animationKeyFrames[i+1].up, static_cast<float>(j)/static_cast<float>(animationPathSteps));
+                animationFrames.emplace_back(frame);
+            }
+        }
+    }
+
+    void resetAnimation();
+
 public:
+    bool animationRunning;
+    float animationDeltaTime;
+    float animationFramesPerSecond;
+    unsigned int currentAnimationFrameIndex;
     
     View current = {
         globalUp,
@@ -81,10 +158,10 @@ public:
         GLFW_KEY_RIGHT,
         GLFW_KEY_LEFT,
         GLFW_KEY_O,
-        GLFW_KEY_P
+        GLFW_KEY_P,
+        GLFW_KEY_X
     };
-    
-    
+
     Camera (float fow = 45.0f, float ratio = 1.0f, float near = 0.1f, float far = 10.0f);
     
     void update ();
@@ -103,7 +180,7 @@ public:
     
     void switchView (DayScene *scene);
     
-    void handleKey (int key);
+    void handleKey (Scene &scene, int key);
     
     bool isFirstPersonMode ();
     

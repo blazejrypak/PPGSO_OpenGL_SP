@@ -116,6 +116,13 @@ void DayScene::init() {
 }
 
 void DayScene::update(float time) {
+    if (this->camera->animationRunning && this->camera->currentAnimationFrameIndex == 0){
+        this->camera->animationDeltaTime = time + this->camera->animationFramesPerSecond;
+        this->camera->update();
+    } else if (this->camera->animationRunning && time > this->camera->animationDeltaTime){
+        this->camera->animationDeltaTime += this->camera->animationFramesPerSecond;
+        this->camera->update();
+    }
     Scene::update(time);
 }
 
@@ -171,7 +178,7 @@ void DayScene::handleKey (int key, int action) {
     // Handle camera
     if (std::find(std::begin(this->camera->controls), std::end(this->camera->controls), key)
         != std::end(this->camera->controls)) {
-        this->camera->handleKey(key);
+        this->camera->handleKey(*this, key);
     }
 
     // Handle player
