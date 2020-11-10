@@ -161,13 +161,21 @@ void DayScene::handleKey (int key, int action) {
                 this->_weather->pauseRain();
                 break;
             }
-
+                // Change scene light color
+            case (GLFW_KEY_I): {
+                float r = glm::linearRand(0.0f, 1.0f);
+                float g = glm::linearRand(0.0f, 1.0f);
+                float b = glm::linearRand(0.0f, 1.0f);
+                this->lightColor.x = r;
+                this->lightColor.y = g;
+                this->lightColor.z = b;
+                break;
+            }
             default:
                 break;
         }
     }
 
-        // Move the sun ( "Give me an axis and I will move the sun" ~ArchimedesFero )
     else if (key == GLFW_KEY_B) {
         this->lightDirection.x -= 0.4f;
     }

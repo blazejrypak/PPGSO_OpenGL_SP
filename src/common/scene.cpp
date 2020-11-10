@@ -64,6 +64,5 @@ void Scene::lightReset () {
     this->lightColor = vec3{1.0f, 1.0f, 1.0f};
 }
 
-void Scene::handleKey (int key, int action) {};
-
+void Scene::handleKey (int key, int action) {}
 

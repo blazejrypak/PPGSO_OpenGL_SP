@@ -38,8 +38,8 @@ public:
     std::map<int, int> keyboard;
     
     // Lights, in this case using only simple directional diffuse lighting
-//    glm::vec3 lightDirection{1.0f};
     glm::vec3 lightDirection{0.f, 1.f, 1.f};
+
     glm::vec3 lightColor{1.0f};
     
     
