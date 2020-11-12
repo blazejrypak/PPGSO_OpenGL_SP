@@ -17,7 +17,7 @@ unique_ptr<Shader> Player::shader;
 Player::Player () {
     this->shadow = new Shadow(this->position+glm::vec3{0.f, 10.f, 0.f}, {this->scale.x*5, 0.1, this->scale.z*5});
     this->shadow->rotation.z = glm::radians(90.f);
-    if (!shader) shader = make_unique<Shader>(diffuse_vert_glsl, diffuse_frag_glsl);
+    if (!shader) shader = make_unique<Shader>(phong_vert_glsl, phong_frag_glsl);
     if (!texture)
         texture = make_unique<Texture>(image::loadBMP("textures/cyborg.bmp"));
     if (!mesh) mesh = make_unique<Mesh>("objects/cyborg.obj");
@@ -50,9 +50,23 @@ bool Player::update (Scene &scene, float dt) {
 void Player::render (Scene &scene) {
     shader->use();
 
+    for (unsigned int i = 0; i < scene.lights.size(); ++i) {
+        shader->setUniform("pointLights[" + to_string(i) + "].position", scene.lights[i]->position);
+        shader->setUniform("pointLights[" + to_string(i) + "].ambient", scene.lights[i]->pointLight.ambient);
+        shader->setUniform("pointLights[" + to_string(i) + "].diffuse", scene.lights[i]->pointLight.diffuse);
+        shader->setUniform("pointLights[" + to_string(i) + "].specular", scene.lights[i]->pointLight.specular);
+        shader->setUniform("pointLights[" + to_string(i) + "].constant", scene.lights[i]->pointLight.constant);
+        shader->setUniform("pointLights[" + to_string(i) + "].linear", scene.lights[i]->pointLight.linear);
+        shader->setUniform("pointLights[" + to_string(i) + "].quadratic", scene.lights[i]->pointLight.quadratic);
+    }
+
+    shader->setUniform("viewPos", scene.camera->getView().position);
+    shader->setUniform("material.ambient", material.ambient);
+    shader->setUniform("material.diffuse", material.diffuse);
+    shader->setUniform("material.specular", material.specular);
+    shader->setUniform("material.shininess", material.shininess);
+
     // Set up light
-    shader->setUniform("LightDirection", scene.lightDirection);
-    shader->setUniform("LightColor", scene.lightColor);
 
     // use camera
     shader->setUniform("ProjectionMatrix", scene.camera->projectionMatrix);

@@ -10,7 +10,7 @@ using namespace ppgso;
 
 Camera::Camera (float fow, float ratio, float near, float far) {
     float fowInRad = (PI / 180.0f) * fow;
-    projectionMatrix = perspective(fowInRad, ratio, near, far);
+    projectionMatrix = perspective(fowInRad, ratio, near, far + 1000.f);
     worldUp = this->views[this->view].up;
     this->update(this->views[this->view]);
     this->resetAnimation();

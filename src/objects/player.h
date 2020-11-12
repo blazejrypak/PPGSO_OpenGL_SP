@@ -5,11 +5,14 @@
 
 #include <shaders/diffuse_vert_glsl.h>
 #include <shaders/diffuse_frag_glsl.h>
+#include <shaders/phong_vert_glsl.h>
+#include <shaders/phong_frag_glsl.h>
 
 #include "object.h"
 #include "block.h"
 #include "shadow.h"
 #include "shape.h"
+#include "light.h"
 
 class Player final : public Object {
 private:
@@ -24,6 +27,7 @@ private:
 
 
     Shadow *shadow;
+    Light *light;
 
 public:
     vector<int> controls = {

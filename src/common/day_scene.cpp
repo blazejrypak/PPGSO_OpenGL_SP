@@ -5,6 +5,8 @@
 #include "../objects/wall.h"
 #include "../objects/shape.h"
 #include "../objects/weather.h"
+#include "../objects/common.h"
+#include "../objects/light.h"
 
 
 void DayScene::init() {
@@ -12,6 +14,34 @@ void DayScene::init() {
     float x = 100.f;
     float y = 0.1f;
     float z = 0.1f;
+    auto light_1 = std::make_unique<Light>();
+    light_1->position = {23.5f, 8.f, 0.75f};
+    light_1->color = {0.5, 0.f, 0.f};
+    light_1->scale = {0.25f, 0.25f, 0.25f};
+    light_1->pointLight.position = light_1->position;
+    light_1->pointLight.constant = 1.0f;
+    light_1->pointLight.linear = 0.09f;
+    light_1->pointLight.quadratic = 0.032f;
+    light_1->pointLight.ambient = {.5f, 0.5f, 0.5f};
+    light_1->pointLight.diffuse = {.5f, .5f, .5f};
+    light_1->pointLight.specular = {1.0f, 1.0f,1.0f};
+    this->lights.push_back(light_1.get());
+    this->objects.push_back(move(light_1));
+
+    auto light_2 = std::make_unique<Light>();
+    light_2->position = {19.5f, 8.f, 0.75f};
+    light_2->color = {0.5, 0.0, 0.0};
+    light_2->scale = {0.25f, 0.25f, 0.25f};
+    light_2->pointLight.position = light_2->position;
+    light_2->pointLight.constant = 1.0f;
+    light_2->pointLight.linear = 0.09f;
+    light_2->pointLight.quadratic = 0.032f;
+    light_2->pointLight.ambient = {.7f, 0.7f, 0.7f};
+    light_2->pointLight.diffuse = {.5f, .5f, .5f};
+    light_2->pointLight.specular = {1.0f, 1.0f,1.0f};
+    this->lights.push_back(light_2.get());
+    this->objects.push_back(move(light_2));
+
     auto axis_x = std::make_unique<Wall>();
     axis_x->color = {1, 0, 0};
     axis_x->scale = {x, y, z};
@@ -66,15 +96,15 @@ void DayScene::init() {
 
     std::vector<house_obj> house_objects = {
             {"house/BanheiraTexture", "house/Bathtub", "base"},
-            {"house/TetoTexture", "house/Bed", "base"},
-            {"house/CasaTexture", "house/Casa", "base"},
-            {"house/ChaoTexture", "house/Chao", "base"},
+            {"house/TetoTexture", "house/Bed", "wall"},
+            {"house/CasaTexture", "house/Casa", "wall"},
+            {"house/ChaoTexture", "house/Chao", "wall"},
             {"house/PortaTexture", "house/Porta", "door"},
             {"house/PortaTexture", "house/Porta1", "door"},
             {"house/PortaTexture", "house/Porta2", "door"},
             {"house/TetoTexture", "house/Sink", "base"},
             {"house/TetoTexture", "house/Table", "base"},
-//            {"house/TetoTexture", "house/Teto", "base"},
+            {"house/TetoTexture", "house/Teto", "base"},
             {"house/TetoTexture", "house/Window", "base"},
             {"house/TetoTexture", "house/Window1", "base"},
             {"house/TetoTexture", "house/Window2", "base"},

@@ -12,6 +12,7 @@
 #include <list>
 
 #include "../objects/object.h"
+#include "../objects/light.h"
 #include "../common/camera.h"
 
 class SceneWindow;
@@ -41,8 +42,13 @@ public:
     glm::vec3 lightDirection{0.f, 1.f, 1.f};
 
     glm::vec3 lightColor{1.0f};
-    
-    
+
+    Light *light;
+
+    std::vector<Light *> lights;
+
+
+
     // Store cursor state
     struct {
         double x, y;

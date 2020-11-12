@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/transform.hpp>
+#include <bin/ppgso/lib/ppgso.h>
 
 #include "object.h"
 
@@ -16,3 +17,4 @@ void Object::generateModelMatrix () {
     modelMatrix *= glm::orientate4(rotation);
     modelMatrix *= glm::scale(mat4(1.0f), scale);
 }
+

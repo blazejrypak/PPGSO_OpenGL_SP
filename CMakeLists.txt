@@ -48,6 +48,7 @@ set(PPGSO_SHADER_SRC
         bin/ppgso/shader/convolution_vert.glsl bin/ppgso/shader/convolution_frag.glsl
         bin/ppgso/shader/diffuse_vert.glsl bin/ppgso/shader/diffuse_frag.glsl
         bin/ppgso/shader/texture_vert.glsl bin/ppgso/shader/texture_frag.glsl
+        bin/ppgso/shader/phong_vert.glsl bin/ppgso/shader/phong_frag.glsl
         )
 add_resources(shaders ${PPGSO_SHADER_SRC})
 
@@ -88,7 +89,8 @@ add_executable(FinalFinal
         src/objects/shape.cpp
         src/objects/player.cpp
         src/objects/weather.cpp
-        )
+        src/objects/light.cpp
+        src/objects/common.h)
 
 target_link_libraries(FinalFinal ppgso shaders)
 install(TARGETS FinalFinal DESTINATION .)

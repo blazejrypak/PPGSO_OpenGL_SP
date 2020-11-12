@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <glm/glm.hpp>
+#include "common.h"
 
 using namespace std;
 using namespace glm;
@@ -49,13 +50,21 @@ public:
      * @param scene
      */
     virtual void onClick (Scene &scene) {};
-    
+
+    struct {
+        vec3 ambient{1.f, 1.f, 1.f};
+        vec3 diffuse{.5f, .5f, .5f};
+        vec3 specular{.5f, .5f, .5f};
+        float shininess = 32.0f;
+    } material;
+
     // Object properties
     vec3 position{0, 0, 0};
     vec3 nextKeyPos{1};
     vec3 rotation{0, 0, 0};
     vec3 scale{1, 1, 1};
     mat4 modelMatrix{1};
+    glm::vec3 lightColor{1.0f};
 
     std::string _type;
     bool state{false};
