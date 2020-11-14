@@ -43,7 +43,11 @@ public:
 
     glm::vec3 lightColor{1.0f};
 
+    // flashlight
     Light *light;
+    Light *sun;
+
+    bool flash_light_on = false;
 
     std::vector<Light *> lights;
 

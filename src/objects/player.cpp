@@ -50,6 +50,11 @@ bool Player::update (Scene &scene, float dt) {
 void Player::render (Scene &scene) {
     shader->use();
 
+    shader->setUniform("dirLight.direction", scene.sun->dirLight.direction);
+    shader->setUniform("dirLight.ambient", scene.sun->dirLight.ambient);
+    shader->setUniform("dirLight.diffuse", scene.sun->dirLight.diffuse);
+    shader->setUniform("dirLight.specular", scene.sun->dirLight.specular);
+
     for (unsigned int i = 0; i < scene.lights.size(); ++i) {
         shader->setUniform("pointLights[" + to_string(i) + "].position", scene.lights[i]->position);
         shader->setUniform("pointLights[" + to_string(i) + "].ambient", scene.lights[i]->pointLight.ambient);
@@ -58,6 +63,20 @@ void Player::render (Scene &scene) {
         shader->setUniform("pointLights[" + to_string(i) + "].constant", scene.lights[i]->pointLight.constant);
         shader->setUniform("pointLights[" + to_string(i) + "].linear", scene.lights[i]->pointLight.linear);
         shader->setUniform("pointLights[" + to_string(i) + "].quadratic", scene.lights[i]->pointLight.quadratic);
+    }
+
+    shader->setUniform( "spotLightOn", scene.flash_light_on);
+    if (scene.flash_light_on){
+        shader->setUniform( "spotLight.position", scene.light->spotLight.position);
+        shader->setUniform( "spotLight.direction", scene.light->spotLight.direction);
+        shader->setUniform( "spotLight.ambient", scene.light->spotLight.ambient);
+        shader->setUniform( "spotLight.diffuse", scene.light->spotLight.diffuse);
+        shader->setUniform( "spotLight.specular", scene.light->spotLight.specular);
+        shader->setUniform( "spotLight.constant", scene.light->spotLight.constant);
+        shader->setUniform( "spotLight.linear", scene.light->spotLight.linear);
+        shader->setUniform( "spotLight.quadratic", scene.light->spotLight.quadratic);
+        shader->setUniform( "spotLight.cutOff", scene.light->spotLight.cutOff);
+        shader->setUniform( "spotLight.outerCutOff", scene.light->spotLight.outerCutOff);
     }
 
     shader->setUniform("viewPos", scene.camera->getView().position);
@@ -119,6 +138,10 @@ void Player::handleKey (Scene &scene, int key){
 //        }
 //        return;
 //    }
+
+    if (key == GLFW_KEY_Q && scene.keyboard[key] == GLFW_PRESS && scene.camera->isFirstPersonMode()){
+        scene.flash_light_on = !scene.flash_light_on;
+    }
     float speed = 0.5f;
 //    W -> 0
 //    D -> 1

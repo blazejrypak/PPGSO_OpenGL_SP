@@ -65,6 +65,7 @@ struct Material {
 uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLight;
+uniform bool spotLightOn;
 uniform Material material;
 
 uniform vec3 viewPos;
@@ -82,13 +83,15 @@ void main() {
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 result;
     // phase 1: directional lighting
-//    vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point lights
-    result = CalcPointLight(pointLights[0], norm, FragPos, viewDir);
+    result += CalcPointLight(pointLights[0], norm, FragPos, viewDir);
     for(int i = 1; i < NR_POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     // phase 3: spot light
-//    result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    if(spotLightOn){
+        result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
+    }
 
     FragmentColor = texture(Texture, vec2(texCoord.x, 1.0 - texCoord.y) + TextureOffset) * vec4(result, 1.0);
 }

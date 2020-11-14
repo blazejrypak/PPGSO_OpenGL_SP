@@ -69,6 +69,9 @@ public:
     std::string _type;
     bool state{false};
 
+    vec3 minXYZ;
+    vec3 maxXYZ;
+
 protected:
     /*!
      * Generate modelMatrix from position, rotation and scale

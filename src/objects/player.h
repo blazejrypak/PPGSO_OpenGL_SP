@@ -27,7 +27,6 @@ private:
 
 
     Shadow *shadow;
-    Light *light;
 
 public:
     vector<int> controls = {
@@ -36,6 +35,7 @@ public:
             GLFW_KEY_D,
             GLFW_KEY_A,
             GLFW_KEY_E,
+            GLFW_KEY_Q,
     };
 
     short direction = 0;

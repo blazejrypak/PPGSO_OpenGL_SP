@@ -28,8 +28,6 @@ private:
         LEFT,
         RIGHT
     };
-
-    vec3 firstPersonViewCenter{0, 0, 0};
     
     vec3 globalUp = vec3{0, 1, 0};
 
@@ -140,6 +138,7 @@ public:
     float animationDeltaTime;
     float animationFramesPerSecond;
     unsigned int currentAnimationFrameIndex;
+    vec3 firstPersonViewCenter{0, 0, 0};
     
     View current = {
         globalUp,

@@ -31,56 +31,13 @@ bool Shape::update (Scene &scene, float dt) {
 void Shape::render (Scene &scene) {
     shader->use();
 
-//    if (dirLight){
-//        shader->setUniform("dirLight.direction", dir_light->direction);
-//        shader->setUniform("dirLight.ambient", dir_light->ambient);
-//        shader->setUniform("dirLight.diffuse", dir_light->diffuse);
-//        shader->setUniform("dirLight.specular", dir_light->specular);
-//        shader->setUniform("dirLight.specular", dir_light->specular);
-//
-//        shader->setUniform("viewPos", scene.camera->getView().position);
-//        shader->setUniform("material.ambient", material.ambient);
-//        shader->setUniform("material.diffuse", material.diffuse);
-//        shader->setUniform("material.specular", material.specular);
-//        shader->setUniform("material.shininess", material.shininess);
-//    }
-//    if (pointLight){
-//        shader->setUniform("pointLights[0].position", light.position);
-//        shader->setUniform("pointLights[0].ambient", light.ambient);
-//        shader->setUniform("pointLights[0].diffuse", light.diffuse);
-//        shader->setUniform("pointLights[0].specular", light.specular);
-//        shader->setUniform("pointLights[0].constant", light.constant);
-//        shader->setUniform("pointLights[0].linear", light.linear);
-//        shader->setUniform("pointLights[0].quadratic", light.quadratic);
-//
-//        shader->setUniform("viewPos", scene.camera->getView().position);
-//        shader->setUniform("material.ambient", material.ambient);
-//        shader->setUniform("material.diffuse", material.diffuse);
-//        shader->setUniform("material.specular", material.specular);
-//        shader->setUniform("material.shininess", material.shininess);
-//
-//    }
-//    if (spotLight){
-//        shader->setUniform("spotLight.position", scene.camera->getView().position);
-//        shader->setUniform("spotLight.direction", spot_light->direction);
-//        shader->setUniform("spotLight.ambient", spot_light->ambient);
-//        shader->setUniform("spotLight.diffuse", spot_light->diffuse);
-//        shader->setUniform("spotLight.specular", spot_light->specular);
-//        shader->setUniform("spotLight.constant", spot_light->constant);
-//        shader->setUniform("spotLight.linear", spot_light->linear);
-//        shader->setUniform("spotLight.quadratic", spot_light->quadratic);
-//        shader->setUniform("spotLight.cutOff", spot_light->cutOff);
-//        shader->setUniform("spotLight.outerCutOff", spot_light->outerCutOff);
-//
-//        shader->setUniform("viewPos", scene.camera->getView().position);
-//        shader->setUniform("material.ambient", material.ambient);
-//        shader->setUniform("material.diffuse", material.diffuse);
-//        shader->setUniform("material.specular", material.specular);
-//        shader->setUniform("material.shininess", material.shininess);
-//
-//    }
+    if (this->_type == "out"){
+    shader->setUniform("dirLight.direction", scene.sun->dirLight.direction);
+    shader->setUniform("dirLight.ambient", scene.sun->dirLight.ambient);
+    shader->setUniform("dirLight.diffuse", scene.sun->dirLight.diffuse);
+    shader->setUniform("dirLight.specular", scene.sun->dirLight.specular);
+    }
 
-//    if (this->_type == "wall"){
     // Set up light
     for (unsigned int i = 0; i < scene.lights.size(); ++i) {
         shader->setUniform("pointLights[" + to_string(i) + "].position", scene.lights[i]->position);
@@ -91,7 +48,21 @@ void Shape::render (Scene &scene) {
         shader->setUniform("pointLights[" + to_string(i) + "].linear", scene.lights[i]->pointLight.linear);
         shader->setUniform("pointLights[" + to_string(i) + "].quadratic", scene.lights[i]->pointLight.quadratic);
     }
-//    }
+
+    shader->setUniform( "spotLightOn", scene.flash_light_on);
+    if (scene.flash_light_on){
+        shader->setUniform( "spotLight.position", scene.light->spotLight.position);
+        shader->setUniform( "spotLight.direction", scene.light->spotLight.direction);
+        shader->setUniform( "spotLight.ambient", scene.light->spotLight.ambient);
+        shader->setUniform( "spotLight.diffuse", scene.light->spotLight.diffuse);
+        shader->setUniform( "spotLight.specular", scene.light->spotLight.specular);
+        shader->setUniform( "spotLight.constant", scene.light->spotLight.constant);
+        shader->setUniform( "spotLight.linear", scene.light->spotLight.linear);
+        shader->setUniform( "spotLight.quadratic", scene.light->spotLight.quadratic);
+        shader->setUniform( "spotLight.cutOff", scene.light->spotLight.cutOff);
+        shader->setUniform( "spotLight.outerCutOff", scene.light->spotLight.outerCutOff);
+    }
+
 
     shader->setUniform("viewPos", scene.camera->getView().position);
     shader->setUniform("material.ambient", material.ambient);

@@ -12,28 +12,6 @@ using namespace glm;
 class Light : public Object {
 
 private:
-    struct DirLight {
-        vec3 direction;
-
-        vec3 ambient;
-        vec3 diffuse;
-        vec3 specular;
-    };
-
-    struct SpotLight {
-        vec3 position;
-        vec3 direction;
-        float cutOff;
-        float outerCutOff;
-
-        float constant;
-        float linear;
-        float quadratic;
-
-        vec3 ambient;
-        vec3 diffuse;
-        vec3 specular;
-    };
 
     std::unique_ptr<ppgso::Mesh> mesh;
     std::unique_ptr<ppgso::Shader> shader;
@@ -50,6 +28,30 @@ public:
         vec3 diffuse;
         vec3 specular;
     } pointLight;
+
+    struct {
+        vec3 position;
+        vec3 direction;
+        float cutOff;
+        float outerCutOff;
+
+        float constant;
+        float linear;
+        float quadratic;
+
+        vec3 ambient;
+        vec3 diffuse;
+        vec3 specular;
+    } spotLight;
+
+
+    struct {
+        vec3 direction;
+
+        vec3 ambient;
+        vec3 diffuse;
+        vec3 specular;
+    } dirLight;
 
     glm::vec3 color = {1.0, 1.0, 1.0};
 
