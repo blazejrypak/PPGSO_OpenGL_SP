@@ -67,6 +67,7 @@ public:
     glm::vec3 lightColor{1.0f};
 
     std::string _type;
+    std::string ID;
     bool state{false};
 
     vec3 minXYZ;

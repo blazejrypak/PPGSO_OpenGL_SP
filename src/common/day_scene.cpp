@@ -128,27 +128,29 @@ void DayScene::init() {
         std::string texturePath;
         std::string objPath;
         std::string type;
+        std::string ID;
     };
 
     std::vector<house_obj> house_objects = {
-            {"house/BanheiraTexture", "house/Bathtub", "base"},
-            {"house/TetoTexture", "house/Bed", "out"},
-            {"house/CasaTexture", "house/Casa", "out"},
-            {"house/ChaoTexture", "house/Chao", "out"},
-            {"house/PortaTexture", "house/Porta", "door"},
-            {"house/PortaTexture", "house/Porta1", "door"},
-            {"house/PortaTexture", "house/Porta2", "door"},
-            {"house/TetoTexture", "house/Sink", "base"},
-            {"house/TetoTexture", "house/Table", "base"},
-            {"house/TetoTexture", "house/Teto", "base"},
-            {"house/TetoTexture", "house/Window", "base"},
-            {"house/TetoTexture", "house/Window1", "base"},
-            {"house/TetoTexture", "house/Window2", "base"},
-            {"house/TetoTexture", "house/Window3", "base"},
-            {"house/VentiladorTexture", "house/Ventilator", "base"},
-            {"house/LuminariaTexture", "house/Luminaria", "base"},
-            {"house/LuminariaTexture", "house/Luminaria1", "base"},
-            {"house/LuminariaTexture", "house/Luminaria2", "base"},
+            {"house/BanheiraTexture", "house/Bathtub", "base", ""},
+            {"house/TetoTexture", "house/Bed", "out", ""},
+            {"house/CasaTexture", "house/Casa", "out", ""},
+            {"house/ChaoTexture", "house/Chao", "out", ""},
+            {"house/PortaTexture", "house/door1", "out", "door"},
+//            {"house/PortaTexture", "house/Porta1", "door", ""},
+//            {"house/PortaTexture", "house/Porta2", "door", ""},
+            {"house/TetoTexture", "house/Sink", "base", ""},
+            {"house/TetoTexture", "house/Table", "base", ""},
+            {"house/TetoTexture", "house/Teto", "base", ""},
+            {"house/TetoTexture", "house/Window", "base", ""},
+            {"house/TetoTexture", "house/Window1", "base", ""},
+            {"house/TetoTexture", "house/Window2", "base", ""},
+            {"house/TetoTexture", "house/Window3", "base", ""},
+            {"house/VentiladorTexture", "house/Ventilator", "base", ""},
+            {"house/LuminariaTexture", "house/Luminaria", "base", ""},
+            {"house/LuminariaTexture", "house/Luminaria1", "base", ""},
+            {"house/LuminariaTexture", "house/Luminaria2", "base", ""},
+            {"house/BanheiraTexture", "home/roof", "out", "roof"},
     };
 
     glm::vec3 house_base_position_objects = glm::vec3{5.f, 8.f, 0.f};
@@ -157,10 +159,23 @@ void DayScene::init() {
 
     for (auto & house_object : house_objects) {
         auto obj = std::make_unique<Shape>(house_object.texturePath, house_object.objPath);
+        if (house_object.ID == "door"){
+            obj->position = { -2.f,  6.f, -8.f};
+            obj->scale = house_base_scale_objects;
+            obj->_type = house_object.type;
+            obj->ID = house_object.ID;
+        } else if(house_object.ID == "roof"){
+            obj->ID = house_object.ID;
+            obj->position = {5.f, 0.f, 0.f};
+            obj->scale = {8.0f, 5.0f, 5.f};
+        }
+        else {
+            obj->ID = house_object.ID;
         obj->position = house_base_position_objects;
         obj->scale = house_base_scale_objects;
         obj->rotation = house_base_rotation_objects;
         obj->_type = house_object.type;
+        }
         this->objects.push_back(move(obj));
     }
 

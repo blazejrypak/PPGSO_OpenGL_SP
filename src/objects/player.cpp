@@ -28,22 +28,22 @@ bool Player::update (Scene &scene, float dt) {
     shadow->update(this->position, scene);
     shadow->update(scene, dt);
     generateModelMatrix();
-//    Shape *obj = checkMove(scene);
-//    if (!updated){
-//        updated = true;
-//        return true;
-//    }
-//    if (!obj){
-//        shadow->update(this->position, scene);
-//        shadow->update(scene, dt);
-//        generateModelMatrix();
-//    } else {
-//        if (obj->state){
-//            shadow->update(this->position, scene);
-//            shadow->update(scene, dt);
-////            generateModelMatrix();
-//        }
-//    }
+    Shape *obj = checkMove(scene);
+    if (!updated){
+        updated = true;
+        return true;
+    }
+    if (!obj){
+        shadow->update(this->position, scene);
+        shadow->update(scene, dt);
+        generateModelMatrix();
+    } else {
+        if (obj->state){
+            shadow->update(this->position, scene);
+            shadow->update(scene, dt);
+            generateModelMatrix();
+        }
+    }
     return true;
 }
 
@@ -104,8 +104,8 @@ Shape *Player::checkMove(Scene &scene) {
     while (i != std::end(scene.objects)) {
         // Update and remove from list if needed
         auto obj = i->get();
-        float radius = 0.01f;
-        if (obj->_type == "door"){
+        float radius = 1.0f;
+        if (obj->ID == "door"){
             if (
                     this->position.x + radius > obj->position.x || this->position.x - radius < obj->position.x ||
                     this->position.y + radius > obj->position.y || this->position.y - radius < obj->position.y ||
@@ -113,6 +113,7 @@ Shape *Player::checkMove(Scene &scene) {
                     ){
                 return dynamic_cast<Shape *>(obj);
             }
+            return nullptr;
         }
         i++;
     }
@@ -121,23 +122,20 @@ Shape *Player::checkMove(Scene &scene) {
 
 
 void Player::handleKey (Scene &scene, int key){
-//    if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS){
-//        Shape *obj = checkMove(scene);
-//        std::cout << position.z << " " << obj->position.z << std::endl;
-//        if(obj){
-//            if (!obj->state){
-//                obj->rotation.y = glm::radians(-90.0f);
-//                obj->position.z = -15;
-//                obj->position.x = 2.5f;
-//            } else {
-//                obj->rotation.z = glm::radians(180.0f);
-//                obj->position.z = 0;
-//                obj->position.x = 5.f;
-//            }
-//            obj->state = !obj->state;
-//        }
-//        return;
-//    }
+    if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS){
+        Shape *obj = checkMove(scene);
+        if(obj){
+            if (!obj->state){
+                obj->position = { 0.f,  6.f, -10.f};
+                obj->rotation = {0.0f, 0.0f, glm::radians(-90.f)};
+            } else {
+                obj->position = { -2.f,  6.f, -8.f};
+                obj->rotation = {0.0f, 0.0f, 0.0f};
+            }
+            obj->state = !obj->state;
+        }
+        return;
+    }
 
     if (key == GLFW_KEY_Q && scene.keyboard[key] == GLFW_PRESS && scene.camera->isFirstPersonMode()){
         scene.flash_light_on = !scene.flash_light_on;
