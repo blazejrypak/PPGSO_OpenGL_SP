@@ -26,7 +26,7 @@ out vec4 FragmentColor;
 
 void main()
 {
-    vec4 ambient = vec4(0.1 * LightColor, 1.0);
+    vec4 ambient = vec4(0.1 * LightColor, 1.0) * Transparency;
     vec4 diffuse = vec4(max(dot(normal, vec4(normalize(LightDirection), 1.0f)), 0.0) * LightColor, 1.0);
     FragmentColor = texture(Texture, vec2(texCoord.x, 1.0 - texCoord.y) + TextureOffset) * (ambient + diffuse);// +specular
     FragmentColor.a = Transparency;

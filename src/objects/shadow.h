@@ -25,8 +25,6 @@ public:
     
     void update (vec3 position, Scene &scene);
     
-    void update (vec3 position, vec3 scale, Scene &scene);
-    
     bool update (Scene &scene, float dt) override;
     
     void render (Scene &scene) override;

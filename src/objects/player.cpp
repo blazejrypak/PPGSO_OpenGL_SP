@@ -15,7 +15,7 @@ unique_ptr<Texture> Player::texture;
 unique_ptr<Shader> Player::shader;
 
 Player::Player () {
-    this->shadow = new Shadow(this->position+glm::vec3{0.f, 10.f, 0.f}, {this->scale.x*5, 0.1, this->scale.z*5});
+    this->shadow = new Shadow(this->position+glm::vec3{0.f, 10.f, 0.f}, {this->scale.x*2, 0.1, this->scale.z*2});
     this->shadow->rotation.z = glm::radians(90.f);
     if (!shader) shader = make_unique<Shader>(phong_vert_glsl, phong_frag_glsl);
     if (!texture)
@@ -24,9 +24,9 @@ Player::Player () {
 }
 
 bool Player::update (Scene &scene, float dt) {
-    shadow->render(scene);
     shadow->update(this->position, scene);
     shadow->update(scene, dt);
+    shadow->render(scene);
     generateModelMatrix();
     Shape *obj = checkMove(scene);
     if (!updated){

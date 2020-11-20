@@ -26,20 +26,14 @@ bool Shadow::update (Scene &scene, float dt) {
 }
 
 void Shadow::update (vec3 position, Scene &scene) {
-    this->position = vec3{position.x - (scene.lightDirection.x / 1.5), 1.0f, position.z};
-    this->scale.x = abs(scene.lightDirection.x) + scale.x / 4;
+    this->position = vec3{position.x - (scene.sun->dirLight.direction.x / 1.5), 0.5f, position.z};
+    this->scale.x = abs(scene.sun->dirLight.direction.x)  + scale.x / 2;
 }
-
-void Shadow::update (vec3 position, vec3 scale, Scene &scene) {
-    this->position = vec3{position.x - (scene.lightDirection.x / 1.5), 1.0f, position.z};
-    this->scale = vec3{abs(scene.lightDirection.x) + scale.x / 4, this->scale.y, scale.z};
-}
-
 
 void Shadow::render (Scene &scene) {
     shader->use();
     
-    shader->setUniform("Transparency", .9f);
+    shader->setUniform("Transparency", .4f);
     
     // use camera
     shader->setUniform("ProjectionMatrix", scene.camera->projectionMatrix);
