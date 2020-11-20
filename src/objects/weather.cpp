@@ -20,6 +20,40 @@ Weather::RainParticle::RainParticle(vec3 position, Weather *parent) {
     if (!mesh) mesh = make_unique<Mesh>("objects/sphere.obj");
 }
 
+bool checkRoofCollision(Scene &scene, vec3 particlePos) {
+    auto i = std::begin(scene.objects);
+
+    while (i != std::end(scene.objects)) {
+        // Update and remove from list if needed
+        auto obj = i->get();
+        float radius = 1.0f;
+        if (obj->ID == "roof"){
+//            std::cout << particlePos.x << " " << particlePos.y << " " << particlePos.z << std::endl;
+//            std::cout << obj->position.x << " " << obj->position.y << " " << obj->position.z << std::endl;
+            if (particlePos.x < obj->position.x + 40 && particlePos.x > obj->position.x - 40){
+                if (particlePos.z > 0){
+                    if (particlePos.y < obj->position.y + 30 && particlePos.z < obj->position.z + 20){
+                        if ( particlePos.y < 16 + (20 - glm::abs(particlePos.z))){
+//                            std::cout << "bitch" << std::endl;
+                            return true;
+                        }
+                    }
+                } else {
+                    if (particlePos.y < obj->position.y + 30 && particlePos.z > obj->position.z - 20){
+                        if ( particlePos.y < 16 + (20 - glm::abs(particlePos.z))){
+//                            std::cout << "bitch" << std::endl;
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        i++;
+    }
+    return false;
+}
+
 bool Weather::RainParticle::update(Scene &scene1, float dt) {
     if (this->parent->pause) {
         return true;
@@ -27,12 +61,32 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
     if (this->age >= this->maxAge) {
         return false;
     }
+    if (this->position.y <= 0){
+        return false;
+    }
     if (this->position.y > 1) {
-        position += vec3{(speed.x * dt) + this->parent->windSpeed.x, speed.y * dt, speed.z * dt};
-        speed += speed * dt;
+        vector<Object *> collisions = scene1.intersect(this->position, this->speed);
+        for (auto & collision : collisions) {
+            if (collision->_type == "out"){
+                return false;
+            }
+        }
+//        bool collision = checkRoofCollision(scene1, this->position);
+//        if (collision){
+//            this->speed = {0.0f, -1.0f, -1.0f};
+//                this->position += vec3{speed.x * dt, speed.y * dt, speed.z * dt};
+//                this->speed += this->speed * dt;
+//            return false;
+//        } else {
+//            this->speed = {0.0f, -1.0f, 0.0f};
+//        }
+        this->speed += this->parent->windSpeed;
+        this->position += vec3{(speed.x * dt), speed.y * dt, speed.z * dt};
+        this->speed += this->speed * dt;
         generateModelMatrix();
         return true;
     }
+    // POOL
     if (position.y <= 1) {
         if (position.x > this->parent->_pool_volume->position.x - 5 ||
             position.x < this->parent->_pool_volume->position.x + 5 ||
@@ -45,7 +99,6 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
         } else {
             scale -= vec3{0.1, 0.2, 0.1};
             this->age += 0.5f;
-//            return false;
         }
     }
     generateModelMatrix();
@@ -84,10 +137,21 @@ void Weather::pauseRain() {
 
 void Weather::update() {
     if (this->raining && !this->pause) {
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 50; ++i) {
             vec3 pos = vec3{(rand() % 100)-50, (rand() % 100) + 20, (rand() % 100)-50};
             auto rainParticle = std::make_unique<Weather::RainParticle>(pos, this);
             scene->objects.push_back(move(rainParticle));
         }
     }
+}
+
+void Weather::downWindSpeed() {
+    this->windSpeed.x -= 0.2f;
+    this->windSpeed.y += 0.2f;
+}
+
+void Weather::upWindSpeed() {
+    this->windSpeed.x += 0.2f;
+    this->windSpeed.y -= 0.2f;
+
 }

@@ -133,7 +133,7 @@ void DayScene::init() {
 
     std::vector<house_obj> house_objects = {
             {"house/BanheiraTexture", "house/Bathtub", "base", ""},
-            {"house/TetoTexture", "house/Bed", "out", ""},
+            {"house/TetoTexture", "house/Bed", "base", ""},
             {"house/CasaTexture", "house/Casa", "out", ""},
             {"house/ChaoTexture", "house/Chao", "out", ""},
             {"house/PortaTexture", "house/door1", "out", "door"},
@@ -262,6 +262,16 @@ void DayScene::handleKey (int key, int action) {
                 // Pause raining
             case (GLFW_KEY_H): {
                 this->_weather->pauseRain();
+                break;
+            }
+                // Pause raining
+            case (GLFW_KEY_J): {
+                this->_weather->upWindSpeed();
+                break;
+            }
+                // Pause raining
+            case (GLFW_KEY_K): {
+                this->_weather->downWindSpeed();
                 break;
             }
                 // Change scene light color
