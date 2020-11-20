@@ -21,6 +21,10 @@ void Camera::update () {
         this->update(current.position, current.center);
 }
 
+void Camera::updatePosition (vec3 position) {
+        this->update(position, current.center);
+}
+
 void Camera::update (vec3 eye, vec3 center) {
     if (animationRunning){
         if (currentAnimationFrameIndex == animationFrames.size()){
