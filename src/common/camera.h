@@ -33,11 +33,6 @@ private:
 
     uint view = 0;
     vector<View> views = {
-//        {
-//            globalUp,
-//            {0.f, 5.f, -30.f},
-//            {.0f, 0.f, .0f},
-//        },
         {
             globalUp,
             {14.0f, 30, -60},
@@ -47,7 +42,12 @@ private:
             globalUp,
             {2,     4,  0},
             {0,     0, -1},
-        }
+        },
+            {
+                globalUp,
+                        {0.0f, 0, 10},
+                        {0.0f, 0, 0.0f},
+            },
     };
 
     glm::vec3 front;
@@ -189,7 +189,9 @@ public:
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
     void ProcessMouseScroll(float yoffset);
 
+    void updatePosition(vec3 position);
 private:
     void updateCameraVectors();
+
 };
 

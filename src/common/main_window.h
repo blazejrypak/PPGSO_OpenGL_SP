@@ -16,6 +16,8 @@ class Game;
 
 class DayScene;
 
+class MenuScene;
+
 using namespace std;
 using namespace glm;
 using namespace ppgso;
@@ -26,6 +28,7 @@ private:
     Scene *scene;
 
     DayScene *dayScene;
+    MenuScene *menuScene;
 
     template<typename T>
     void initScene (T *currentScene);
@@ -39,7 +42,7 @@ public:
     
     void openDayScene ();
     
-    void startGame ();
+    void openMenu ();
     
 };
 

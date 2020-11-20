@@ -1,6 +1,7 @@
 #include "main_window.h"
 #include "scene.h"
 #include "day_scene.h"
+#include "menu_scene.h"
 
 const unsigned int SIZE = 1024;
 
@@ -10,6 +11,12 @@ void SceneWindow::initScene (T *currentScene) {
     
     /* Handling Camera */
     auto camera = make_unique<Camera>(60.0f, 1.0f, 0.1f, 100.0f);
+    View menuView = {
+            {0, 1, 0},
+            {0, 0, -10},
+            {0, 0, 0}pp
+    };
+    camera->update(menuView);
     currentScene->camera = move(camera);
     
     this->scene = currentScene;
@@ -18,6 +25,7 @@ void SceneWindow::initScene (T *currentScene) {
 
 SceneWindow::SceneWindow () : Window{"Apartment", SIZE, SIZE} {
     this->dayScene = new DayScene();
+    this->menuScene = new MenuScene();
 
     hideCursor();
     glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
@@ -29,7 +37,7 @@ SceneWindow::SceneWindow () : Window{"Apartment", SIZE, SIZE} {
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
     
-    this->openDayScene();
+    this->openMenu();
 }
 
 void SceneWindow::onKey (int key, int scanCode, int action, int mods) {
@@ -50,7 +58,7 @@ void SceneWindow::onIdle () {
     }
 
 
-    glClearColor(.7f, .93f, .96f, 0);
+    glClearColor(.7f, .5f, .96f, 0);
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
@@ -62,6 +70,6 @@ void SceneWindow::openDayScene () {
     initScene(this->dayScene);
 }
 
-void SceneWindow::startGame () {
-//    initScene(game);
+void SceneWindow::openMenu () {
+    initScene(this->menuScene);
 }

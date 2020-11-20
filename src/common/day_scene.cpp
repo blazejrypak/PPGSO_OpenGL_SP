@@ -241,7 +241,7 @@ void DayScene::handleKey (int key, int action) {
 
                 // Restart
             case (GLFW_KEY_R): {
-                this->windowRef->startGame();
+                this->windowRef->openMenu();
                 break;
             }
                 // Pause
