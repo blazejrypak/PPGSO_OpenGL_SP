@@ -234,13 +234,7 @@ void DayScene::handleKey (int key, int action) {
         switch (key) {
 
             //Exit to the menu
-            case (GLFW_KEY_ESCAPE): {
-                this->windowRef->openDayScene();
-                break;
-            }
-
-                // Restart
-            case (GLFW_KEY_R): {
+            case (GLFW_KEY_Q): {
                 this->windowRef->openMenu();
                 break;
             }

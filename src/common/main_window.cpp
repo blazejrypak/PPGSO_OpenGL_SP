@@ -11,12 +11,6 @@ void SceneWindow::initScene (T *currentScene) {
     
     /* Handling Camera */
     auto camera = make_unique<Camera>(60.0f, 1.0f, 0.1f, 100.0f);
-    View menuView = {
-            {0, 1, 0},
-            {0, 0, -10},
-            {0, 0, 0}pp
-    };
-    camera->update(menuView);
     currentScene->camera = move(camera);
     
     this->scene = currentScene;
@@ -71,5 +65,13 @@ void SceneWindow::openDayScene () {
 }
 
 void SceneWindow::openMenu () {
+    View menuView = {
+            {0, 1, 0},
+            {0, 0, -30},
+            {0, 0, 0}
+    };
+    if (this->scene){
+        this->scene->camera->update(menuView);
+    }
     initScene(this->menuScene);
 }

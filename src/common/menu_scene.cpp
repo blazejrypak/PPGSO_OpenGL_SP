@@ -15,10 +15,6 @@
 
 
 void MenuScene::init() {
-    Scene::init();
-    float x = 100.f;
-    float y = 0.1f;
-    float z = 0.1f;
     auto sun = std::make_unique<Light>();
     sun->position = {0.f, 70.f, 0.f};
     sun->color = {1.f, 1.f, 1.f};
@@ -30,41 +26,46 @@ void MenuScene::init() {
     this->sun = sun.get();
     this->objects.push_back(move(sun));
 
-    auto axis_x = std::make_unique<Wall>();
-    axis_x->color = {1, 0, 0};
-    axis_x->scale = {x, y, z};
-    this->objects.push_back(move(axis_x));
+    auto cone = std::make_unique<Shape>("grass", "menu/cone");
+    cone->position = {0, 0, 0};
+    cone->scale = {50.f, 50.f, 50.f};
+    cone->_type = "out";
+    this->objects.push_back(move(cone));
 
-    auto axis_y = std::make_unique<Wall>();
-    axis_y->color = {0, 1, 0};
-    axis_y->scale = {y, x, z};
-    this->objects.push_back(move(axis_y));
+    auto desk = std::make_unique<Shape>("grass", "menu/desk");
+    desk->position = {0, 7, 0};
+    desk->scale = {5.f, 5.f, 5.f};
+    desk->_type = "out";
+    this->objects.push_back(move(desk));
 
-    auto axis_z = std::make_unique<Wall>();
-    axis_z->color = {0, 0, 1};
-    axis_z->scale = {y, z, x};
-    this->objects.push_back(move(axis_z));
+    auto run_demo_scene = std::make_unique<Shape>("grass", "menu/run_demo_scene");
+    run_demo_scene->position = {0, 5, 0};
+    run_demo_scene->scale = {5.f, 5.f, 5.f};
+    run_demo_scene->rotation = {0, 0, glm::radians(180.f)};
+    run_demo_scene->_type = "out";
+    this->objects.push_back(move(run_demo_scene));
+
+    auto exit = std::make_unique<Shape>("grass", "menu/exit");
+    exit->scale = {5.f, 5.f, 5.f};
+    exit->rotation = {0, 0, glm::radians(180.f)};
+    exit->_type = "out";
+    this->objects.push_back(move(exit));
 }
 
 void MenuScene::update(float time) {
-    if (this->camera->animationRunning && this->camera->currentAnimationFrameIndex == 0){
-        this->camera->animationDeltaTime = time + this->camera->animationFramesPerSecond;
-        this->camera->update();
-    } else if (this->camera->animationRunning && time > this->camera->animationDeltaTime){
-        this->camera->animationDeltaTime += this->camera->animationFramesPerSecond;
-        this->camera->update();
-    }
     Scene::update(time);
 }
 
 void MenuScene::handleKey (int key, int action) {
     if (action == GLFW_PRESS) {
         switch (key) {
-
-            //Exit to the menu
-            case (GLFW_KEY_ESCAPE): {
+            case (GLFW_KEY_ENTER): {
                 this->windowRef->openDayScene();
                 break;
+            }
+                //Exit to the menu
+            case (GLFW_KEY_Q): {
+                exit(0);
             }
             default:
                 break;
@@ -72,8 +73,8 @@ void MenuScene::handleKey (int key, int action) {
     }
 
     // Handle camera
-    if (std::find(std::begin(this->camera->controls), std::end(this->camera->controls), key)
-        != std::end(this->camera->controls)) {
-        this->camera->handleKey(*this, key);
-    }
+//    if (std::find(std::begin(this->camera->controls), std::end(this->camera->controls), key)
+//        != std::end(this->camera->controls)) {
+//        this->camera->handleKey(*this, key);
+//    }
 }
