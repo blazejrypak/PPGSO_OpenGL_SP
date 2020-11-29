@@ -107,12 +107,6 @@ void DayScene::init() {
         lamp_post->_type = "out";
         lamp_post->rotation = {0.f, 0.f, glm::radians(-90.f)};
         this->objects.push_back(move(lamp_post));
-
-        auto box = std::make_unique<Wall>("red", "sphere");
-        box->position = {15.f*i, 3.f, -35.f};
-        box->color = {0, 0, 1};
-        box->scale = {3.f, 3.f, 3.f};
-        this->objects.push_back(move(box));
     }
 
     auto player_ = std::make_unique<Player>();
@@ -224,7 +218,7 @@ void DayScene::update(float time) {
     } else {
         interpolation = (day_length - sunShinness)*(2*0.8f/day_length);
     }
-    this->sun->dirLight.ambient = {interpolation, interpolation, interpolation};
+    this->sun->dirLight.ambient = vec3(interpolation, interpolation, interpolation) * this->sun->color;
     this->sun->dirLight.direction = {interpolation, interpolation, interpolation};
     Scene::update(time);
 }
@@ -273,9 +267,7 @@ void DayScene::handleKey (int key, int action) {
                 float r = glm::linearRand(0.0f, 1.0f);
                 float g = glm::linearRand(0.0f, 1.0f);
                 float b = glm::linearRand(0.0f, 1.0f);
-                this->lights[0]->spotLight.ambient.x = r;
-                this->lights[0]->spotLight.ambient.y = g;
-                this->lights[0]->spotLight.ambient.z = b;
+                this->sun->color = {r, g, b};
                 break;
             }
             default:
