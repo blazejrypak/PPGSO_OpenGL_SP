@@ -137,6 +137,7 @@ public:
     bool animationRunning;
     float animationDeltaTime;
     float animationFramesPerSecond;
+    float animationDelay = 10.0f;
     unsigned int currentAnimationFrameIndex;
     vec3 firstPersonViewCenter{0, 0, 0};
     

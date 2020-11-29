@@ -31,7 +31,7 @@ void Camera::update (vec3 eye, vec3 center) {
             resetAnimation();
             viewMatrix = lookAt(views[0].position, views[0].center + front, globalUp);
         } else {
-            std::cout << animationFrames[currentAnimationFrameIndex].position.x << " " << animationFrames[currentAnimationFrameIndex].position.y << " " << animationFrames[currentAnimationFrameIndex].position.z << std::endl;
+//            std::cout << animationFrames[currentAnimationFrameIndex].position.x << " " << animationFrames[currentAnimationFrameIndex].position.y << " " << animationFrames[currentAnimationFrameIndex].position.z << std::endl;
             viewMatrix = lookAt(animationFrames[currentAnimationFrameIndex].position, animationFrames[currentAnimationFrameIndex].center + front, animationFrames[currentAnimationFrameIndex].up);
             currentAnimationFrameIndex += 1;
         }
@@ -101,7 +101,9 @@ void Camera::handleKey (Scene &scene, int key) {
         float speedRotation = 2.5f;
 
         if (key == GLFW_KEY_X && scene.keyboard[key] == GLFW_PRESS) {
+            this->resetAnimation();
             this->generateAnimationShape();
+            this->animationFramesPerSecond = (animationDelay / this->animationFrames.size())*10;
             animationRunning = true;
         }
 
@@ -223,5 +225,6 @@ void Camera::resetAnimation() {
     animationRunning = false;
     animationDeltaTime = 0.0f;
     animationFramesPerSecond = 0.5f;
+    animationDelay = 2.f;
     currentAnimationFrameIndex = 0;
 }
