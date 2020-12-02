@@ -40,6 +40,7 @@ void Shape::render (Scene &scene) {
 
     // Set up light
     for (unsigned int i = 0; i < scene.lights.size(); ++i) {
+        shader->setUniform( "pointLightsOn", true);
         shader->setUniform("pointLights[" + to_string(i) + "].position", scene.lights[i]->position);
         shader->setUniform("pointLights[" + to_string(i) + "].ambient", scene.lights[i]->pointLight.ambient);
         shader->setUniform("pointLights[" + to_string(i) + "].diffuse", scene.lights[i]->pointLight.diffuse);

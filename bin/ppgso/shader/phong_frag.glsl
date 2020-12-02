@@ -65,6 +65,7 @@ struct Material {
 uniform DirLight dirLight;
 uniform PointLight pointLights[NR_POINT_LIGHTS];
 uniform SpotLight spotLight;
+uniform bool pointLightsOn;
 uniform bool spotLightOn;
 uniform Material material;
 
@@ -85,9 +86,11 @@ void main() {
     // phase 1: directional lighting
     result = CalcDirLight(dirLight, norm, viewDir);
     // phase 2: point lights
-    result += CalcPointLight(pointLights[0], norm, FragPos, viewDir);
-    for(int i = 1; i < NR_POINT_LIGHTS; i++)
+    if(pointLightsOn){
+        result += CalcPointLight(pointLights[0], norm, FragPos, viewDir);
+        for (int i = 1; i < NR_POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
+    }
     // phase 3: spot light
     if(spotLightOn){
         result += CalcSpotLight(spotLight, norm, FragPos, viewDir);

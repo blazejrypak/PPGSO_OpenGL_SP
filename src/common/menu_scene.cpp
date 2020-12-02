@@ -15,8 +15,9 @@
 
 
 void MenuScene::init() {
+    Scene::init();
     auto sun = std::make_unique<Light>();
-    sun->position = {0.f, 70.f, 0.f};
+    sun->position = {0.f, 100.f, 0.f};
     sun->color = {1.f, 1.f, 1.f};
     sun->scale = {1.f, 1.f, 1.f};
     sun->dirLight.direction = {0.f, -1.f, 0.f};
@@ -27,8 +28,8 @@ void MenuScene::init() {
     this->objects.push_back(move(sun));
 
     auto cone = std::make_unique<Shape>("grass", "menu/cone");
-    cone->position = {0, 0, 0};
-    cone->scale = {50.f, 50.f, 50.f};
+    cone->position = {0, 15, 0};
+    cone->scale = {5.f, 5.f, 5.f};
     cone->_type = "out";
     this->objects.push_back(move(cone));
 

@@ -90,7 +90,10 @@ add_executable(FinalFinal
         src/objects/player.cpp
         src/objects/weather.cpp
         src/objects/light.cpp
-        src/objects/common.h src/common/menu_scene.cpp src/common/menu_scene.h)
+        src/objects/common.h
+        src/common/menu_scene.cpp
+        src/common/menu_scene.h
+        )
 
 target_link_libraries(FinalFinal ppgso shaders)
 install(TARGETS FinalFinal DESTINATION .)
