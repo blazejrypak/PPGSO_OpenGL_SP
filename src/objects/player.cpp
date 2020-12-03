@@ -34,6 +34,8 @@ bool Player::update (Scene &scene, float dt) {
         return true;
     }
     if (!obj){
+        Shape *door = dynamic_cast<Shape *>(scene.getObject("door"));
+        door->state = false;
         shadow->update(this->position, scene);
         shadow->update(scene, dt);
         generateModelMatrix();
@@ -42,6 +44,8 @@ bool Player::update (Scene &scene, float dt) {
             shadow->update(this->position, scene);
             shadow->update(scene, dt);
             generateModelMatrix();
+        } else { // kolizia so zatvorenymi dverami
+            obj->state = true;
         }
     }
     return true;
@@ -108,9 +112,8 @@ Shape *Player::checkMove(Scene &scene) {
         float radius = 1.0f;
         if (obj->ID == "door"){
             if (
-                    this->position.x + radius > obj->position.x || this->position.x - radius < obj->position.x ||
-                    this->position.y + radius > obj->position.y || this->position.y - radius < obj->position.y ||
-                    this->position.z + radius > obj->position.z || this->position.z - radius < obj->position.z
+                    (this->position.x <= obj->position.x + radius && this->position.x >= obj->position.x - radius) &&
+                            (this->position.z <= obj->position.z + radius && this->position.z >= obj->position.z - radius)
                     ){
                 return dynamic_cast<Shape *>(obj);
             }
@@ -126,13 +129,6 @@ void Player::handleKey (Scene &scene, int key){
     if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS){
         Shape *obj = checkMove(scene);
         if(obj){
-            if (!obj->state){
-                obj->position = { 0.f,  6.f, -10.f};
-                obj->rotation = {0.0f, 0.0f, glm::radians(-90.f)};
-            } else {
-                obj->position = { -2.f,  6.f, -8.f};
-                obj->rotation = {0.0f, 0.0f, 0.0f};
-            }
             obj->state = !obj->state;
         }
         return;

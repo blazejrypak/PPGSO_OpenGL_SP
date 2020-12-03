@@ -24,6 +24,13 @@ bool Shape::update (Scene &scene, float dt) {
         shadow->update(scene, dt);
         shadow->render(scene);
     }
+    if (this->ID == "door" && !this->state){ // otvorene dvere
+        this->position = { -2.f,  6.f, -8.f};
+        this->rotation = {0.0f, 0.0f, 0.0f};
+    } else if (this->ID == "door" && this->state){ // zatvorene dvere
+        this->position = { 0.f,  6.f, -10.f};
+        this->rotation = {0.0f, 0.0f, glm::radians(-90.f)};
+    }
     generateModelMatrix();
     return true;
 }

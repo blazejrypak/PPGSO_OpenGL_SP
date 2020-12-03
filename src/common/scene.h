@@ -28,7 +28,8 @@ public:
     void init ();
     
     std::vector<Object *> intersect (const glm::vec3 &position, const glm::vec3 &direction);
-    
+    Object* getObject (std::string ID);
+
     // Camera object
     std::unique_ptr<Camera> camera;
     
