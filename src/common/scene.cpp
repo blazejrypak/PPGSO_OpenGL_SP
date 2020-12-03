@@ -66,3 +66,12 @@ void Scene::lightReset () {
 
 void Scene::handleKey (int key, int action) {}
 
+Object* Scene::getObject(std::string _ID) {
+    for (auto &object : objects) {
+        if (object->ID == _ID){
+            return object.get();
+        }
+    }
+    return nullptr;
+}
+
