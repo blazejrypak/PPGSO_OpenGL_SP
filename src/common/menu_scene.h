@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <src/objects/shape.h>
 #include "scene.h"
 #ifndef FINALFINAL_MENU_SCENE_H
 #define FINALFINAL_MENU_SCENE_H
@@ -14,6 +15,10 @@ private:
 
 public:
     bool animate = false;
+
+    Shape *cone_1 = nullptr;
+    Shape *cone_2 = nullptr;
+    Shape *cone_3 = nullptr;
 
     void init();
 

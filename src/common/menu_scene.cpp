@@ -31,7 +31,24 @@ void MenuScene::init() {
     cone->position = {0, 15, 0};
     cone->scale = {5.f, 5.f, 5.f};
     cone->_type = "out";
+    cone_1 = cone.get();
     this->objects.push_back(move(cone));
+
+    auto cone2 = std::make_unique<Shape>("blau", "menu/cone");
+    cone2->position = {0, 25, 0};
+    cone2->scale = {7.f, 7.f, 7.f};
+    cone2->_type = "out";
+    cone_2 = cone2.get();
+    cone_2->parentModelMatrix = &cone_1->modelMatrix;
+    this->objects.push_back(move(cone2));
+
+    auto cone3 = std::make_unique<Shape>("blau", "menu/cone");
+    cone3->position = {0, 25, 0};
+    cone3->scale = {7.f, 7.f, 7.f};
+    cone3->_type = "out";
+    cone_3 = cone3.get();
+    cone_3->parentModelMatrix = &cone_2->modelMatrix;
+    this->objects.push_back(move(cone3));
 
     auto desk = std::make_unique<Shape>("grass", "menu/desk");
     desk->position = {0, 7, 0};
@@ -54,6 +71,16 @@ void MenuScene::init() {
 }
 
 void MenuScene::update(float time) {
+    cone_1->position = {20, 25, 0};
+    cone_1->rotation.y += glm::radians(5.f);
+    cone_1->update(*this, time);
+    cone_2->position = {0, 2, 0};
+    cone_2->rotation.y += glm::radians(10.f);
+    cone_2->scale = {1.f, 1.f, 1.f};
+    cone_2->update(*this, time);
+    cone_3->position = {0, 1, 1};
+    cone_3->rotation.y += glm::radians(30.f);
+    cone_3->scale = {0.5f, 0.5f, 0.5f};
     Scene::update(time);
 }
 
