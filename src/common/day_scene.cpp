@@ -146,8 +146,8 @@ void DayScene::init() {
             obj->ID = house_object.ID;
         } else if(house_object.ID == "roof"){
             obj->ID = house_object.ID;
-            obj->position = {5.f, 0.f, 0.f};
-            obj->scale = {8.0f, 5.0f, 5.f};
+            obj->position = {5.f, 0.f, 5.f};
+            obj->scale = {9.0f, 4.0f, 5.f};
         }
         else {
             obj->ID = house_object.ID;
