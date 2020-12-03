@@ -91,6 +91,7 @@ add_executable(FinalFinal
         src/objects/weather.cpp
         src/objects/light.cpp
         src/objects/common.h
+        src/objects/background.cpp
         src/common/menu_scene.cpp
         src/common/menu_scene.h
         )

@@ -1,5 +1,6 @@
 #include <thread>
 #include <chrono>
+#include <src/objects/background.h>
 #include "day_scene.h"
 #include "main_window.h"
 #include "../objects/wall.h"
@@ -11,9 +12,9 @@
 
 void DayScene::init() {
     Scene::init();
-    float x = 100.f;
-    float y = 0.1f;
-    float z = 0.1f;
+    // Add background
+    this->objects.push_back(std::make_unique<Background>());
+
     auto sun = std::make_unique<Light>();
     sun->position = {0.f, 70.f, 0.f};
     sun->color = {1.f, 1.f, 1.f};
@@ -66,21 +67,6 @@ void DayScene::init() {
     flash_light->spotLight.outerCutOff = glm::cos(glm::radians(7.5f));
     this->light = flash_light.get();
 
-    auto axis_x = std::make_unique<Wall>();
-    axis_x->color = {1, 0, 0};
-    axis_x->scale = {x, y, z};
-    this->objects.push_back(move(axis_x));
-
-    auto axis_y = std::make_unique<Wall>();
-    axis_y->color = {0, 1, 0};
-    axis_y->scale = {y, x, z};
-    this->objects.push_back(move(axis_y));
-
-    auto axis_z = std::make_unique<Wall>();
-    axis_z->color = {0, 0, 1};
-    axis_z->scale = {y, z, x};
-    this->objects.push_back(move(axis_z));
-
     auto basement = std::make_unique<Shape>("grass", "cube");
     basement->position = {5.f, 0.f, 0.f};
     basement->scale = {50.f, 0.1f, 50.f};
@@ -89,7 +75,7 @@ void DayScene::init() {
 
     auto road = std::make_unique<Shape>("road", "road/road");
     road->position = {15.f, 0.f, -35.f};
-    road->scale = {3.f, 3.f, 30.f};
+    road->scale = {3.f, 3.f, 15.f};
     road->_type = "out";
     road->rotation = {0.f, 0.f, glm::radians(90.f)};
     this->objects.push_back(move(road));
@@ -100,7 +86,7 @@ void DayScene::init() {
     this->car_ = car.get();
     this->objects.push_back(move(car));
 
-    for (int i = -5; i < 5; ++i) {
+    for (int i = -3; i < 3; ++i) {
         auto lamp_post = std::make_unique<Shape>("white", "lamp_post/lamp_post");
         lamp_post->position = {15.f*i, 0.f, -40.f};
         lamp_post->scale = {0.3f, 0.3f, 0.3f};
@@ -189,8 +175,8 @@ void DayScene::init() {
     pool_volume->scale = {5.f, 0.1f, 5.f};
     pool_volume->_type = "out";
     this->_weather->_pool_volume = pool_volume.get();
-    pool_volume->minXYZ = {15.f+7.5f, 1.f, -18.f-5.f};
-    pool_volume->maxXYZ = {15.f-7.5f, 1.f, -18.f+5.f};
+    pool_volume->minXYZ = {pool_volume->position.x+7.5f, 1.f, pool_volume->position.z-5.f};
+    pool_volume->maxXYZ = {pool_volume->position.x-7.5f, 1.f, pool_volume->position.z+5.f};
     this->objects.push_back(move(pool_volume));
 }
 
@@ -204,8 +190,8 @@ void DayScene::update(float time) {
     }
     float day_length = 30.f;
 
-    if (this->car_->position.x < -100.f){
-        this->car_->position.x = 100.f;
+    if (this->car_->position.x < -50.f){
+        this->car_->position.x = 50.f;
     }
     this->car_->position.x -= day_length/60.f;
 

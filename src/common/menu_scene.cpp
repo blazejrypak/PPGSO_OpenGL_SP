@@ -6,6 +6,7 @@
 
 #include <thread>
 #include <chrono>
+#include <src/objects/background.h>
 #include "main_window.h"
 #include "../objects/wall.h"
 #include "../objects/shape.h"
@@ -16,6 +17,10 @@
 
 void MenuScene::init() {
     Scene::init();
+
+    // Add background
+    this->objects.push_back(std::make_unique<Background>());
+
     auto sun = std::make_unique<Light>();
     sun->position = {0.f, 100.f, 0.f};
     sun->color = {1.f, 1.f, 1.f};
