@@ -135,17 +135,27 @@ void DayScene::init() {
             obj->scale = house_base_scale_objects;
             obj->_type = house_object.type;
             obj->ID = house_object.ID;
+            // material silver
+            obj->material.ambient = {0.19225f, 0.19225f, 0.19225f};
+            obj->material.diffuse = {0.50754f, 0.50754f, 0.50754f};
+            obj->material.specular = {0.508273f, 0.508273f, 0.508273f};
+            obj->material.shininess = 0.4f * 128;
         } else if(house_object.ID == "roof"){
             obj->ID = house_object.ID;
             obj->position = {5.f, 0.f, 5.f};
             obj->scale = {9.0f, 4.0f, 5.f};
+            // material brass
+            obj->material.ambient = {0.329412f, 0.223529f, 0.027451f};
+            obj->material.diffuse = {0.780392f, 0.568627f, 0.113725f};
+            obj->material.specular = {0.992157f, 0.941176f, 0.807843f};
+            obj->material.shininess = 0.21794872f * 128;
         }
         else {
             obj->ID = house_object.ID;
-        obj->position = house_base_position_objects;
-        obj->scale = house_base_scale_objects;
-        obj->rotation = house_base_rotation_objects;
-        obj->_type = house_object.type;
+            obj->position = house_base_position_objects;
+            obj->scale = house_base_scale_objects;
+            obj->rotation = house_base_rotation_objects;
+            obj->_type = house_object.type;
         }
         this->objects.push_back(move(obj));
     }
@@ -177,6 +187,11 @@ void DayScene::init() {
     player_->minXYZ = {2.f+1.5f,0.5f,-20.f - 0.5f};
     player_->maxXYZ = {2.f-1.5f,0.5f,-20.f + 0.5f};
     player_->_type = "out";
+    // material emerald
+    player_->material.ambient = {0.215f, 0.1745f, 0.215f};
+    player_->material.diffuse = {0.07568f, 0.61424f, 0.07568f};
+    player_->material.specular = {0.633f, 0.727811f, 0.633f};
+    player_->material.shininess = 0.6f * 128;
     player_->_pool = this->_weather->_pool;
     this->player = player_.get();
     this->objects.push_back(move(player_));

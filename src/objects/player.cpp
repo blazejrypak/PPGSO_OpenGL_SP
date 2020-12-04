@@ -179,7 +179,6 @@ void Player::handleKey (Scene &scene, int key){
 }
 
 bool Player::checkPlayerMove(vec3 &nextPosition) {
-        std::cout << nextPosition.x << " " << nextPosition.z << std::endl;
         if ((nextPosition.x >= _pool->position.x - 2*_pool->scale.x && position.x <= _pool->position.x + 2*_pool->scale.x) &&
                 (_pool->position.z - _pool->scale.z <= nextPosition.z && nextPosition.z <= _pool->position.z + _pool->scale.z)
                 ){
