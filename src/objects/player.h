@@ -29,6 +29,7 @@ private:
     Shadow *shadow;
 
 public:
+    Shape *_pool;
     vector<int> controls = {
             GLFW_KEY_W,
             GLFW_KEY_S,
@@ -52,6 +53,8 @@ public:
     void handleKey (Scene &scene, int key);
 
     Shape *checkMove(Scene &scene);
+
+    bool checkPlayerMove(vec3 &nextPosition);
 };
 
 #endif //FINALFINAL_PLAYER_H

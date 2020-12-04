@@ -95,15 +95,6 @@ void DayScene::init() {
         this->objects.push_back(move(lamp_post));
     }
 
-    auto player_ = std::make_unique<Player>();
-    player_->position = {2.f,0.5f,-20.f };
-    player_->scale = {1.f, 1.f, 1.f};
-    player_->minXYZ = {2.f+1.5f,0.5f,-20.f - 0.5f};
-    player_->maxXYZ = {2.f-1.5f,0.5f,-20.f + 0.5f};
-    player_->_type = "out";
-    this->player = player_.get();
-    this->objects.push_back(move(player_));
-
     struct house_obj {
         std::string texturePath;
         std::string objPath;
@@ -178,6 +169,17 @@ void DayScene::init() {
     pool_volume->minXYZ = {pool_volume->position.x+7.5f, 1.f, pool_volume->position.z-5.f};
     pool_volume->maxXYZ = {pool_volume->position.x-7.5f, 1.f, pool_volume->position.z+5.f};
     this->objects.push_back(move(pool_volume));
+
+
+    auto player_ = std::make_unique<Player>();
+    player_->position = {2.f,0.5f,-20.f };
+    player_->scale = {1.f, 1.f, 1.f};
+    player_->minXYZ = {2.f+1.5f,0.5f,-20.f - 0.5f};
+    player_->maxXYZ = {2.f-1.5f,0.5f,-20.f + 0.5f};
+    player_->_type = "out";
+    player_->_pool = this->_weather->_pool;
+    this->player = player_.get();
+    this->objects.push_back(move(player_));
 }
 
 void DayScene::update(float time) {

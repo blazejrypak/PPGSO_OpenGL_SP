@@ -137,12 +137,14 @@ void Player::handleKey (Scene &scene, int key){
     if (key == GLFW_KEY_Q && scene.keyboard[key] == GLFW_PRESS && scene.camera->isFirstPersonMode()){
         scene.flash_light_on = !scene.flash_light_on;
     }
+
     float speed = 0.5f;
 //    W -> 0
 //    D -> 1
 //    S -> 2
 //    A -> 3
     if (key == GLFW_KEY_W){
+        vec3 prevPosition = position;
         if (direction == 0 || abs(direction) == 2){
             if (direction == 0){
                 position.z += speed;
@@ -155,6 +157,10 @@ void Player::handleKey (Scene &scene, int key){
             } else {
                 position.x += speed;
             }
+        }
+        if (!checkPlayerMove(position)){
+            position = prevPosition;
+            return;
         }
     } else if (key == GLFW_KEY_D && scene.keyboard[key] == GLFW_PRESS){
         direction += 1;
@@ -170,6 +176,16 @@ void Player::handleKey (Scene &scene, int key){
         d = d == -1 ? 3 : d;
         scene.camera->updateWithDirection(position, abs(static_cast<short>(d)));
     }
+}
+
+bool Player::checkPlayerMove(vec3 &nextPosition) {
+        std::cout << nextPosition.x << " " << nextPosition.z << std::endl;
+        if ((nextPosition.x >= _pool->position.x - 2*_pool->scale.x && position.x <= _pool->position.x + 2*_pool->scale.x) &&
+                (_pool->position.z - _pool->scale.z <= nextPosition.z && nextPosition.z <= _pool->position.z + _pool->scale.z)
+                ){
+            return false;
+        }
+    return true;
 }
 
 
