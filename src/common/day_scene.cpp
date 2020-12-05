@@ -81,12 +81,6 @@ void DayScene::init() {
     road->rotation = {0.f, 0.f, glm::radians(90.f)};
     this->objects.push_back(move(road));
 
-//    auto car = std::make_unique<Shape>("cars/car_1", "cars/car_1");
-//    car->position = {15.f, 0.5f, -35.f};
-//    car->_type = "out";
-//    this->car_ = car.get();
-//    this->objects.push_back(move(car));
-
     for (int i = -3; i < 3; ++i) {
         auto lamp_post = std::make_unique<Shape>("white", "lamp_post/lamp_post");
         lamp_post->position = {15.f*i, 0.f, -40.f};
