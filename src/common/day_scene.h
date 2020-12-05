@@ -17,7 +17,6 @@ public:
     bool animate = true;
 
     Player *player;
-    Shape *car_;
     unique_ptr<Weather> _weather;
 
     void init();

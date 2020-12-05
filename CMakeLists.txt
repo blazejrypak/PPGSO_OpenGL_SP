@@ -92,6 +92,7 @@ add_executable(FinalFinal
         src/objects/light.cpp
         src/objects/common.h
         src/objects/background.cpp
+        src/objects/car.cpp
         src/common/menu_scene.cpp
         src/common/menu_scene.h
         )

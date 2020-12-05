@@ -10,6 +10,7 @@
 #include <memory>
 #include <map>
 #include <list>
+#include <src/objects/car.h>
 
 #include "../objects/object.h"
 #include "../objects/light.h"
@@ -47,6 +48,7 @@ public:
     // flashlight
     Light *light;
     Light *sun;
+    std::vector<Car *> cars;
 
     bool flash_light_on = false;
 

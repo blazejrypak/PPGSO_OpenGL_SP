@@ -1,6 +1,7 @@
 #include <thread>
 #include <chrono>
 #include <src/objects/background.h>
+#include <src/objects/car.h>
 #include "day_scene.h"
 #include "main_window.h"
 #include "../objects/wall.h"
@@ -80,11 +81,11 @@ void DayScene::init() {
     road->rotation = {0.f, 0.f, glm::radians(90.f)};
     this->objects.push_back(move(road));
 
-    auto car = std::make_unique<Shape>("cars/car_1", "cars/car_1");
-    car->position = {15.f, 0.5f, -35.f};
-    car->_type = "out";
-    this->car_ = car.get();
-    this->objects.push_back(move(car));
+//    auto car = std::make_unique<Shape>("cars/car_1", "cars/car_1");
+//    car->position = {15.f, 0.5f, -35.f};
+//    car->_type = "out";
+//    this->car_ = car.get();
+//    this->objects.push_back(move(car));
 
     for (int i = -3; i < 3; ++i) {
         auto lamp_post = std::make_unique<Shape>("white", "lamp_post/lamp_post");
@@ -206,13 +207,19 @@ void DayScene::update(float time) {
         this->camera->update();
     }
     float day_length = 30.f;
-
-    if (this->car_->position.x < -50.f){
-        this->car_->position.x = 50.f;
+    if (rand() % 10 < 3){
+        for (int i = 0; i < 2 - this->cars.size(); ++i) {
+            auto car = std::make_unique<Car>("fire", "cube");
+            if (rand() % 3 < 2){
+                car->position = {50.f, 0.5f, -35.f};
+            } else {
+                car->position = {50.f, 0.5f, -30.f};
+            }
+            car->_type = "out";
+            this->cars.push_back(car.get());
+            this->objects.push_back(move(car));
+        }
     }
-    this->car_->position.x -= day_length/60.f;
-
-
 
     float sunShinness = fmod(time, day_length);
     float interpolation = 0.0f;
