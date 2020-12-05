@@ -33,6 +33,8 @@ private:
         RainParticle( vec3 position, Weather *parent);
         bool update(Scene &scene, float dt) override;
         void render(Scene &scene) override;
+
+        void fillPool();
     };
 
 public:

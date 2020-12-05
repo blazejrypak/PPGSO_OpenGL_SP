@@ -54,6 +54,12 @@ bool checkRoofCollision(Scene &scene, vec3 &particlePos) {
     return false;
 }
 
+void Weather::RainParticle::fillPool(){
+    if (this->parent->_pool_volume->scale.y < this->parent->_pool->scale.y){
+        this->parent->_pool_volume->scale.y += 0.00001f;
+    }
+}
+
 bool Weather::RainParticle::update(Scene &scene1, float dt) {
     if (this->parent->pause) {
         return true;
@@ -92,11 +98,9 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
             position.x < this->parent->_pool_volume->position.x + 5 ||
             position.z > this->parent->_pool_volume->position.z - 5 ||
             position.z < this->parent->_pool_volume->position.z + 5) {
-            if (this->parent->_pool_volume->scale.y < this->parent->_pool->scale.y){
-                this->parent->_pool_volume->scale.y += 0.00001f;
-                this->age += 0.2f;
-            }
-        } else {
+            fillPool();
+        }
+        else {
             scale -= vec3{0.1, 0.2, 0.1};
             this->age += 0.5f;
         }
