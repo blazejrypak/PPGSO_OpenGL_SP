@@ -22,7 +22,6 @@ private:
 
 public:
 
-
     Car (const std::string& textureName, const std::string& objectName);
 
     bool update (Scene &scene, float dt) override;

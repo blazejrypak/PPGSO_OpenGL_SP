@@ -24,6 +24,22 @@ Player::Player () {
 }
 
 bool Player::update (Scene &scene, float dt) {
+    if (dead){
+        if (dt-collisionStart >= maxDeadAge){
+            scene.windowRef->openMenu();
+        }
+        this->rotation.y = glm::radians(90.f);
+        this->rotation.z = glm::radians(linearRand(-5.f, 5.f));
+        generateModelMatrix();
+        return true;
+    }
+    for (auto & car : scene.cars) {
+        if ((car->position.z - car->scale.z < this->position.z && this->position.z < car->position.z + car->scale.z) &&
+            (car->position.x + car->scale.x > this->position.x && this->position.x > car->position.x-car->scale.x)){
+            dead = true;
+            collisionStart = dt;
+        }
+    }
     shadow->update(this->position, scene);
     shadow->update(scene, dt);
     shadow->render(scene);
@@ -158,7 +174,7 @@ void Player::handleKey (Scene &scene, int key){
                 position.x += speed;
             }
         }
-        if (!checkPlayerMove(position)){
+        if (!checkPlayerMove(position, scene)){
             position = prevPosition;
             return;
         }
@@ -178,7 +194,7 @@ void Player::handleKey (Scene &scene, int key){
     }
 }
 
-bool Player::checkPlayerMove(vec3 &nextPosition) {
+bool Player::checkPlayerMove(vec3 &nextPosition, Scene &scene) {
         if ((nextPosition.x >= _pool->position.x - 2*_pool->scale.x && position.x <= _pool->position.x + 2*_pool->scale.x) &&
                 (_pool->position.z - _pool->scale.z <= nextPosition.z && nextPosition.z <= _pool->position.z + _pool->scale.z)
                 ){

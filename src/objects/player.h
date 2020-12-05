@@ -25,6 +25,10 @@ private:
     static std::unique_ptr<ppgso::Shader> shader;
     static std::unique_ptr<ppgso::Texture> texture;
 
+    bool dead = false;
+    float collisionStart = 0.0f;
+    float maxDeadAge = 5.0f;
+
 
     Shadow *shadow;
 
@@ -54,7 +58,7 @@ public:
 
     Shape *checkMove(Scene &scene);
 
-    bool checkPlayerMove(vec3 &nextPosition);
+    bool checkPlayerMove(vec3 &nextPosition, Scene &scene);
 };
 
 #endif //FINALFINAL_PLAYER_H
