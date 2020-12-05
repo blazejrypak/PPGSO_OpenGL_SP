@@ -130,6 +130,7 @@ void DayScene::init() {
             obj->scale = house_base_scale_objects;
             obj->_type = house_object.type;
             obj->ID = house_object.ID;
+            this->door = obj.get();
             // material silver
             obj->material.ambient = {0.19225f, 0.19225f, 0.19225f};
             obj->material.diffuse = {0.50754f, 0.50754f, 0.50754f};

@@ -11,6 +11,7 @@
 #include <map>
 #include <list>
 #include <src/objects/car.h>
+#include <src/objects/shape.h>
 
 #include "../objects/object.h"
 #include "../objects/light.h"
@@ -49,6 +50,7 @@ public:
     Light *light;
     Light *sun;
     std::vector<Car *> cars;
+    Shape *door;
 
     bool flash_light_on = false;
 

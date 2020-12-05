@@ -120,24 +120,16 @@ void Player::render (Scene &scene) {
 }
 
 Shape *Player::checkMove(Scene &scene) {
-    auto i = std::begin(scene.objects);
-
-    while (i != std::end(scene.objects)) {
-        // Update and remove from list if needed
-        auto obj = i->get();
-        float radius = 1.0f;
-        if (obj->ID == "door"){
-            if (
-                    (this->position.x <= obj->position.x + radius && this->position.x >= obj->position.x - radius) &&
-                            (this->position.z <= obj->position.z + radius && this->position.z >= obj->position.z - radius)
-                    ){
-                return dynamic_cast<Shape *>(obj);
-            }
-            return nullptr;
+    if (scene.door){
+        float radius = 2.0f;
+        if (
+                (this->position.x <= scene.door->position.x + radius && this->position.x >= scene.door->position.x - radius) &&
+                (this->position.z <= scene.door->position.z + radius && this->position.z >= scene.door->position.z - radius)
+                ){
+            return dynamic_cast<Shape *>(scene.door);
         }
-        i++;
+        return nullptr;
     }
-    return nullptr;
 }
 
 
