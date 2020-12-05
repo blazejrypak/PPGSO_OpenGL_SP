@@ -31,7 +31,7 @@ SceneWindow::SceneWindow () : Window{"Apartment", SIZE, SIZE} {
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
     
-    this->openMenu();
+    this->openDayScene();
 }
 
 void SceneWindow::onKey (int key, int scanCode, int action, int mods) {
