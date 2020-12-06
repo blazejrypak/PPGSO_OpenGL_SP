@@ -28,7 +28,7 @@ private:
         LEFT,
         RIGHT
     };
-    
+
     vec3 globalUp = vec3{0, 1, 0};
 
     uint view = 0;
@@ -92,18 +92,6 @@ private:
                     {15.0f, 2.0f, 15.0f},
 
             },
-            {
-                    globalUp,
-                    {40.0f, 30.0f, 40.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
-            {
-                    globalUp,
-                    {30.0f, 30.0f, 40.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            }
     };
     std::vector<View> animationFrames;
     int animationPathSteps = 10;
@@ -119,23 +107,10 @@ private:
         return lerp3(a, b, t);
     }
 
-    void generateAnimationShape(){
-        for (unsigned int i = 1; i < animationKeyFrames.size(); i+=2) {
-            for (int j = 0; j <= animationPathSteps; ++j) {
-                View frame;
-                frame.position = getAnimationPoint(animationKeyFrames[i-1].position, animationKeyFrames[i].position, animationKeyFrames[i+1].position, static_cast<float>(j)/static_cast<float>(animationPathSteps));
-                frame.center = getAnimationPoint(animationKeyFrames[i-1].center, animationKeyFrames[i].center, animationKeyFrames[i+1].center, static_cast<float>(j)/static_cast<float>(animationPathSteps));
-                frame.up = getAnimationPoint(animationKeyFrames[i-1].up, animationKeyFrames[i].up, animationKeyFrames[i+1].up, static_cast<float>(j)/static_cast<float>(animationPathSteps));
-                animationFrames.emplace_back(frame);
-            }
-        }
-    }
-
     void resetAnimation();
 
 public:
     bool animationRunning;
-    float animationDeltaTime;
     float animationFramesPerSecond;
     float animationDelay = 10.0f;
     unsigned int currentAnimationFrameIndex;
@@ -151,6 +126,20 @@ public:
     
     mat4 viewMatrix;
     mat4 projectionMatrix;
+    float animationDeltaTime = 0.0f;
+    float animationDuration = 5.0f;
+    float animationStartDeltaTime;
+
+    void updateAnimationFrame(){
+//        float window = (animationDuration / (animationKeyFrames.size() - 1 )) * 2;
+//        size_t key_frame_start_index = (animationDeltaTime/ window) * 2;
+//        if (key_frame_start_index < animationKeyFrames.size()){
+//            vec3 newPosition = getAnimationPoint(animationKeyFrames[key_frame_start_index].position, animationKeyFrames[key_frame_start_index+1].position, animationKeyFrames[key_frame_start_index+2].position, fmod(animationDeltaTime, window) / window);
+//            this->current.position = newPosition;
+//        }
+            vec3 newPosition = getAnimationPoint(animationKeyFrames[0].position, animationKeyFrames[1].position, animationKeyFrames[2].position, animationDeltaTime/animationDuration);
+            this->current.position = newPosition;
+    }
     
     vector<int> controls = {
         GLFW_KEY_UP,
@@ -175,9 +164,8 @@ public:
     void updateWithDirection (vec3 position, short direction);
 
     vec3 getDirectionMatrix (short direction);
-    
-    vec3 cast (double u, double v);
-    
+
+
     void switchView (DayScene *scene);
     
     void handleKey (Scene &scene, int key);
@@ -186,13 +174,7 @@ public:
     
     View getView ();
 
-    void ProcessKeyboard(Camera_Movement direction, float deltaTime);
-    void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
-    void ProcessMouseScroll(float yoffset);
-
     void updatePosition(vec3 position);
-private:
-    void updateCameraVectors();
 
 };
 

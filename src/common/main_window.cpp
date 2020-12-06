@@ -31,7 +31,7 @@ SceneWindow::SceneWindow () : Window{"Apartment", SIZE, SIZE} {
     glFrontFace(GL_CCW);
     glCullFace(GL_BACK);
     
-    this->openDayScene();
+    this->openMenu();
 }
 
 void SceneWindow::onKey (int key, int scanCode, int action, int mods) {
@@ -44,6 +44,7 @@ void SceneWindow::onIdle () {
     
     static auto time_ = (float) glfwGetTime();
     float dt = 0;
+    this->scene->deltaTime = (float) glfwGetTime() - time_;
 
 // Compute time delta
     if (dynamic_cast<DayScene *>(this->scene)) {

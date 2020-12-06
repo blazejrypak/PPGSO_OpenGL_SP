@@ -194,11 +194,12 @@ void DayScene::init() {
 }
 
 void DayScene::update(float time) {
-    if (this->camera->animationRunning && this->camera->currentAnimationFrameIndex == 0){
-        this->camera->animationDeltaTime = time + this->camera->animationFramesPerSecond;
-        this->camera->update();
-    } else if (this->camera->animationRunning && time > this->camera->animationDeltaTime){
-        this->camera->animationDeltaTime += this->camera->animationFramesPerSecond;
+    if (this->camera->animationRunning){
+        if (this->camera->animationDeltaTime >= this->camera->animationDuration){
+            this->camera->animationRunning = false;
+        }
+        this->camera->animationDeltaTime = time - this->camera->animationStartDeltaTime;
+        this->camera->updateAnimationFrame();
         this->camera->update();
     }
     float day_length = 30.f;

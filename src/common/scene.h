@@ -51,6 +51,7 @@ public:
     Light *sun;
     std::vector<Car *> cars;
     Shape *door;
+    float deltaTime;
 
     bool flash_light_on = false;
 

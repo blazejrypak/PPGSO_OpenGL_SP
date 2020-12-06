@@ -26,18 +26,7 @@ void Camera::updatePosition (vec3 position) {
 }
 
 void Camera::update (vec3 eye, vec3 center) {
-    if (animationRunning){
-        if (currentAnimationFrameIndex == animationFrames.size()){
-            resetAnimation();
-            viewMatrix = lookAt(views[0].position, views[0].center + front, globalUp);
-        } else {
-//            std::cout << animationFrames[currentAnimationFrameIndex].position.x << " " << animationFrames[currentAnimationFrameIndex].position.y << " " << animationFrames[currentAnimationFrameIndex].position.z << std::endl;
-            viewMatrix = lookAt(animationFrames[currentAnimationFrameIndex].position, animationFrames[currentAnimationFrameIndex].center + front, animationFrames[currentAnimationFrameIndex].up);
-            currentAnimationFrameIndex += 1;
-        }
-    } else {
-        viewMatrix = lookAt(eye, center + front, globalUp);
-    }
+    viewMatrix = lookAt(eye, center + front, globalUp);
 }
 
 void Camera::update (View view) {
@@ -101,9 +90,7 @@ void Camera::handleKey (Scene &scene, int key) {
         float speedRotation = 2.5f;
 
         if (key == GLFW_KEY_X && scene.keyboard[key] == GLFW_PRESS) {
-            this->resetAnimation();
-            this->generateAnimationShape();
-            this->animationFramesPerSecond = (animationDelay / this->animationFrames.size())*10;
+            animationStartDeltaTime = scene.deltaTime;
             animationRunning = true;
         }
 
@@ -133,91 +120,12 @@ void Camera::handleKey (Scene &scene, int key) {
     }
 };
 
-
-vec3 Camera::cast (double u, double v) {
-    // Create point in Screen coordinates
-    vec4 screenPosition{u, v, 0.0f, 1.0f};
-    
-    // Use inverse matrices to get the point in world coordinates
-    auto invProjection = inverse(projectionMatrix);
-    auto invView = inverse(viewMatrix);
-    
-    // Compute position on the camera plane
-    auto planePosition = invView * invProjection * screenPosition;
-    planePosition /= planePosition.w;
-    
-    // Create direction vector
-    auto direction = normalize(planePosition - vec4{current.position, 1.0f});
-    return vec3{direction};
-}
-
 bool Camera::isFirstPersonMode () {
     return view == 1;
 }
 
 View Camera::getView () {
     return this->current;
-}
-
-// processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
-{
-    float velocity = movementSpeed * deltaTime;
-    if (direction == FORWARD)
-        current.position += front * velocity;
-    if (direction == BACKWARD)
-        current.position -= front * velocity;
-    if (direction == LEFT)
-        current.position -= right * velocity;
-    if (direction == RIGHT)
-        current.position += right * velocity;
-}
-
-// processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch)
-{
-    xoffset *= mouseSensitivity;
-    yoffset *= mouseSensitivity;
-
-    yaw   += xoffset;
-    pitch += yoffset;
-
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainPitch)
-    {
-        if (pitch > 89.0f)
-            pitch = 89.0f;
-        if (pitch < -89.0f)
-            pitch = -89.0f;
-    }
-
-    // update front, Right and Up Vectors using the updated Euler angles
-    updateCameraVectors();
-}
-
-// processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-void Camera::ProcessMouseScroll(float yoffset)
-{
-    zoom -= (float)yoffset;
-    if (zoom < 1.0f)
-        zoom = 1.0f;
-    if (zoom > 45.0f)
-        zoom = 45.0f;
-}
-
-// calculates the front vector from the Camera's (updated) Euler Angles
-void Camera::updateCameraVectors()
-{
-    // calculate the new front vector
-    glm::vec3 front_;
-    front_.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front_.y = sin(glm::radians(pitch));
-    front_.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-    front = glm::normalize(front_);
-    // also re-calculate the Right and Up vector
-    right = glm::normalize(glm::cross(front, current.up));
-    // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
-    current.up    = glm::normalize(glm::cross(right, front));
 }
 
 void Camera::resetAnimation() {
