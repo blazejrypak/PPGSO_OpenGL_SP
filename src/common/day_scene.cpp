@@ -202,7 +202,9 @@ void DayScene::update(float time) {
         this->camera->updateAnimationFrame();
         this->camera->update();
     }
+
     float day_length = 30.f;
+
     if (rand() % 10 < 3){
         for (int i = 0; i < 2 - this->cars.size(); ++i) {
             auto car = std::make_unique<Car>("fire", "cube");

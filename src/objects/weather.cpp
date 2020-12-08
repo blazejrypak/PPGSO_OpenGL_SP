@@ -64,19 +64,13 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
     if (this->parent->pause) {
         return true;
     }
-    if (this->age >= this->maxAge) {
-        return false;
-    }
-    if (this->position.y <= 0){
-        return false;
-    }
     if (this->position.y > 1) {
-        vector<Object *> collisions = scene1.intersect(this->position, this->speed);
-        for (auto & collision : collisions) {
-            if (collision->_type == "out"){
-                return false;
-            }
-        }
+//        vector<Object *> collisions = scene1.intersect(this->position, this->speed);
+//        for (auto & collision : collisions) {
+//            if (collision->_type == "out"){
+//                return false;
+//            }
+//        }
 //        bool collision = checkRoofCollision(scene1, this->position);
 //        if (collision){
 //            this->speed = {0.0f, -1.0f, -1.0f};
@@ -86,11 +80,8 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
 //        } else {
 //            this->speed = {0.0f, -1.0f, 0.0f};
 //        }
-        this->speed += this->parent->windSpeed;
-        this->position += vec3{(speed.x * dt), speed.y * dt, speed.z * dt};
-        this->speed += this->speed * dt;
-        generateModelMatrix();
-        return true;
+        this->velocity += (this->gravity + this->parent->windSpeed) * dt;
+        this->position += this->velocity;
     }
     // POOL
     if (position.y <= 1) {
@@ -101,9 +92,14 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
             fillPool();
         }
         else {
-            scale -= vec3{0.1, 0.2, 0.1};
-            this->age += 0.5f;
+            return false;
         }
+    }
+    if (this->age >= this->maxAge) {
+        return false;
+    }
+    if (this->position.y <= 1){
+        return false;
     }
     generateModelMatrix();
     return true;

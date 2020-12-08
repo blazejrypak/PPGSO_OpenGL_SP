@@ -26,6 +26,8 @@ private:
     private:
         Weather *parent;
         vec3 speed = {0, -1.0f, 0};
+        vec3 gravity = {0, -1, 0};
+        vec3 velocity = {0, 0, 0};
         float age{0.0f};
         float maxAge{2.f};
 
