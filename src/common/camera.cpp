@@ -132,7 +132,24 @@ void Camera::resetAnimation() {
     animationFrames.clear();
     animationRunning = false;
     animationDeltaTime = 0.0f;
-    animationFramesPerSecond = 0.5f;
-    animationDelay = 2.f;
-    currentAnimationFrameIndex = 0;
+}
+
+// https://stackoverflow.com/questions/27751602/interpolation-between-2-4x4-matrices
+glm::mat4 Camera::interpolate(const mat4 &_mat1, const mat4 &_mat2, const float t) {
+    glm::quat rot0 = glm::quat_cast(_mat1);
+    glm::quat rot1= glm::quat_cast(_mat2);
+
+    glm::quat finalRot = glm::slerp(rot0, rot1, t);
+
+    glm::mat4 finalMat = glm::mat4_cast(finalRot);
+
+    finalMat[3] = _mat1[3] * (1 - t) + _mat2[3] * t;
+
+    return finalMat;
+}
+
+glm::mat4 Camera::getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t) {
+    glm::mat4 a = this->interpolate(_mat1, _mat2, t);
+    glm::mat4 b = this->interpolate(_mat3, _mat4, t);
+    return this->interpolate(a, b, t);
 }

@@ -94,7 +94,6 @@ private:
             },
     };
     std::vector<View> animationFrames;
-    int animationPathSteps = 10;
 
     static glm::vec3 lerp3(const glm::vec3 &p1, const glm::vec3 &p2, const float t) {
         return p1 * (1.f - t) + p2 * t;
@@ -107,13 +106,14 @@ private:
         return lerp3(a, b, t);
     }
 
+    glm::mat4 interpolate(const glm::mat4 &_mat1, const glm::mat4 &_mat2, const float t);
+
+    glm::mat4 getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t);
+
     void resetAnimation();
 
 public:
     bool animationRunning;
-    float animationFramesPerSecond;
-    float animationDelay = 10.0f;
-    unsigned int currentAnimationFrameIndex;
     vec3 firstPersonViewCenter{0, 0, 0};
     
     View current = {
