@@ -27,16 +27,10 @@ bool checkRoofCollision(Scene &scene, vec3 &particlePos) {
                                                        std::sqrt(2)));
             auto roof_width = static_cast<float>(abs(2 * scene.roofA->scale.z) / sqrt(2));
 
-            if (particlePos.z < 1){
-                if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
-                    return true;
-                }
-            } else {
-                if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
-                    return true;
-                }
+            if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
+                return true;
             }
-            if (particlePos.y <= roof_base_high + 2){
+            if (particlePos.y <= scene.roofA->position.y){
                 return true;
             }
             return false;
