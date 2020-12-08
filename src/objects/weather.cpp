@@ -21,35 +21,26 @@ Weather::RainParticle::RainParticle(vec3 position, Weather *parent) {
 }
 
 bool checkRoofCollision(Scene &scene, vec3 &particlePos) {
-    auto i = std::begin(scene.objects);
+    if ((particlePos.x > scene.roofB->position.x - scene.roofB->scale.x && particlePos.x < scene.roofB->position.x + scene.roofB->scale.x)){
+        if (particlePos.z < scene.roofB->scale.z + scene.roofB->position.z && particlePos.z > -scene.roofA->scale.z){
+            float roof_base_high = (static_cast<float>(abs(scene.roofA->position.z - scene.roofA->scale.z) /
+                                                       std::sqrt(2)));
+            auto roof_width = static_cast<float>(abs(2 * scene.roofA->scale.z) / sqrt(2));
 
-    while (i != std::end(scene.objects)) {
-        // Update and remove from list if needed
-        auto obj = i->get();
-        float radius = 1.0f;
-        if (obj->ID == "roof"){
-            std::cout << particlePos.x << " " << particlePos.y << " " << particlePos.z << std::endl;
-            std::cout << obj->position.x << " " << obj->position.y << " " << obj->position.z << std::endl;
-            if (particlePos.x < obj->position.x + 40 && particlePos.x > obj->position.x - 40){
-                if (particlePos.z >= 0){
-                    if (particlePos.y < obj->position.y + 20 && particlePos.z < obj->position.z + 20){
-                        if ( particlePos.y < 16 + (20 - glm::abs(particlePos.z))){
-                            std::cout << "bitch" << std::endl;
-                            return true;
-                        }
-                    }
-                } else {
-                    if (particlePos.y < obj->position.y + 20 && particlePos.z > obj->position.z - 20){
-                        if ( particlePos.y < 16 + (20 - glm::abs(particlePos.z))){
-                            std::cout << "bitch" << std::endl;
-                            return true;
-                        }
-                    }
+            if (particlePos.z < 1){
+                if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
+                    return true;
                 }
+            } else {
+                if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
+                    return true;
+                }
+            }
+            if (particlePos.y <= roof_base_high + 2){
+                return true;
             }
             return false;
         }
-        i++;
     }
     return false;
 }
@@ -65,21 +56,6 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
         return true;
     }
     if (this->position.y > 1) {
-//        vector<Object *> collisions = scene1.intersect(this->position, this->speed);
-//        for (auto & collision : collisions) {
-//            if (collision->_type == "out"){
-//                return false;
-//            }
-//        }
-//        bool collision = checkRoofCollision(scene1, this->position);
-//        if (collision){
-//            this->speed = {0.0f, -1.0f, -1.0f};
-//                this->position += vec3{speed.x * dt, speed.y * dt, speed.z * dt};
-//                this->speed += this->speed * dt;
-//            return false;
-//        } else {
-//            this->speed = {0.0f, -1.0f, 0.0f};
-//        }
         this->velocity += (this->gravity + this->parent->windSpeed) * dt;
         this->position += this->velocity;
     }
@@ -100,6 +76,10 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
     }
     if (this->position.y <= 1){
         return false;
+    } else {
+        if (checkRoofCollision(scene1, this->position)){
+            return false;
+        }
     }
     generateModelMatrix();
     return true;
@@ -137,8 +117,8 @@ void Weather::pauseRain() {
 
 void Weather::update() {
     if (this->raining && !this->pause) {
-        for (int i = 0; i < 200; ++i) {
-            vec3 pos = vec3{(rand() % 100)-50, (rand() % 100) + 20, (rand() % 100)-50};
+        for (int i = 0; i < 100; ++i) {
+            vec3 pos = vec3{(rand() % 100)-50, (rand() % 100) + 50, (rand() % 100)-50};
             auto rainParticle = std::make_unique<Weather::RainParticle>(pos, this);
             scene->objects.push_back(move(rainParticle));
         }

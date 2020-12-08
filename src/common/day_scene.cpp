@@ -98,25 +98,28 @@ void DayScene::init() {
     };
 
     std::vector<house_obj> house_objects = {
-            {"house/BanheiraTexture", "house/Bathtub", "base", ""},
-            {"house/TetoTexture", "house/Bed", "base", ""},
+//            {"house/BanheiraTexture", "house/Bathtub", "base", ""},
+//            {"house/TetoTexture", "house/Bed", "base", ""},
             {"house/CasaTexture", "house/Casa", "out", ""},
             {"house/ChaoTexture", "house/Chao", "out", ""},
-            {"house/PortaTexture", "house/door1", "out", "door"},
+//            {"house/PortaTexture", "house/door1", "out", "door"},
 //            {"house/PortaTexture", "house/Porta1", "door", ""},
 //            {"house/PortaTexture", "house/Porta2", "door", ""},
-            {"house/TetoTexture", "house/Sink", "base", ""},
-            {"house/TetoTexture", "house/Table", "base", ""},
+//            {"house/TetoTexture", "house/Sink", "base", ""},
+//            {"house/TetoTexture", "house/Table", "base", ""},
             {"house/TetoTexture", "house/Teto", "base", ""},
-            {"house/TetoTexture", "house/Window", "base", ""},
-            {"house/TetoTexture", "house/Window1", "base", ""},
-            {"house/TetoTexture", "house/Window2", "base", ""},
-            {"house/TetoTexture", "house/Window3", "base", ""},
-            {"house/VentiladorTexture", "house/Ventilator", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria1", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria2", "base", ""},
-            {"house/BanheiraTexture", "home/roof", "out", "roof"},
+//            {"house/TetoTexture", "house/Window", "base", ""},
+//            {"house/TetoTexture", "house/Window1", "base", ""},
+//            {"house/TetoTexture", "house/Window2", "base", ""},
+//            {"house/TetoTexture", "house/Window3", "base", ""},
+//            {"house/VentiladorTexture", "house/Ventilator", "base", ""},
+//            {"house/LuminariaTexture", "house/Luminaria", "base", ""},
+//            {"house/LuminariaTexture", "house/Luminaria1", "base", ""},
+//            {"house/LuminariaTexture", "house/Luminaria2", "base", ""},
+
+
+
+//            {"house/BanheiraTexture", "home/roof", "out", "roof"},
     };
 
     glm::vec3 house_base_position_objects = glm::vec3{5.f, 8.f, 0.f};
@@ -191,6 +194,30 @@ void DayScene::init() {
     player_->_pool = this->_weather->_pool;
     this->player = player_.get();
     this->objects.push_back(move(player_));
+
+    auto roof_A = std::make_unique<Shape>("blau", "cube");
+    roof_A->scale = {50, 0.1, 9};
+    roof_A->rotation.x = glm::radians(-45.f);
+    roof_A->position.y = 22;
+    roof_A->position.z = -1;
+    roof_A->material.ambient = {0.329412f, 0.223529f, 0.027451f};
+    roof_A->material.diffuse = {0.780392f, 0.568627f, 0.113725f};
+    roof_A->material.specular = {0.992157f, 0.941176f, 0.807843f};
+    roof_A->material.shininess = 0.21794872f * 128;
+    this->roofA = roof_A.get();
+    this->objects.push_back(move(roof_A));
+
+    auto roof_B = std::make_unique<Shape>("blau", "cube");
+    roof_B->scale = {50, 0.1, 9};
+    roof_B->rotation.x = glm::radians(45.f);
+    roof_B->position.y = 22;
+    roof_B->position.z = 8;
+    roof_B->material.ambient = {0.329412f, 0.223529f, 0.027451f};
+    roof_B->material.diffuse = {0.780392f, 0.568627f, 0.113725f};
+    roof_B->material.specular = {0.992157f, 0.941176f, 0.807843f};
+    roof_B->material.shininess = 0.21794872f * 128;
+    this->roofB = roof_B.get();
+    this->objects.push_back(move(roof_B));
 }
 
 void DayScene::update(float time) {
