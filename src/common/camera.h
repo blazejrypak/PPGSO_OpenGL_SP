@@ -61,37 +61,12 @@ private:
     float mouseSensitivity;
     float zoom;
 
-    std::vector<View> animationKeyFrames = {
-            {
-                globalUp,
-                    {15.0f, 30.0f, -60.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
-            {
-                    globalUp,
-                    {30.0f, 20.0f, -40.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
-            {
-                    globalUp,
-                    {60.0f, 15.0f, -20.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
-            {
-                    globalUp,
-                    {60.0f, 15.0f, 0.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
-            {
-                    globalUp,
-                    {60.0f, 20.0f, 20.0f},
-                    {15.0f, 2.0f, 15.0f},
-
-            },
+    std::vector<glm::mat4> animationKeyFrames = {
+            lookAt({15.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({30.0f, 20.0f, -40.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({60.0f, 15.0f, -20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({60.0f, 15.0f, 0.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({60.0f, 20.0f, 20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
     };
     std::vector<View> animationFrames;
 
@@ -131,14 +106,11 @@ public:
     float animationStartDeltaTime;
 
     void updateAnimationFrame(){
-//        float window = (animationDuration / (animationKeyFrames.size() - 1 )) * 2;
-//        size_t key_frame_start_index = (animationDeltaTime/ window) * 2;
-//        if (key_frame_start_index < animationKeyFrames.size()){
-//            vec3 newPosition = getAnimationPoint(animationKeyFrames[key_frame_start_index].position, animationKeyFrames[key_frame_start_index+1].position, animationKeyFrames[key_frame_start_index+2].position, fmod(animationDeltaTime, window) / window);
-//            this->current.position = newPosition;
-//        }
-            vec3 newPosition = getAnimationPoint(animationKeyFrames[0].position, animationKeyFrames[1].position, animationKeyFrames[2].position, animationDeltaTime/animationDuration);
-            this->current.position = newPosition;
+        this->viewMatrix = getAnimationViewFrame(animationKeyFrames[0],
+                                                 animationKeyFrames[1],
+                                                 animationKeyFrames[2],
+                                                 animationKeyFrames[3],
+                                                 animationDeltaTime/animationDuration);
     }
     
     vector<int> controls = {

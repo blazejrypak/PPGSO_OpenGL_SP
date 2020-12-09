@@ -227,7 +227,6 @@ void DayScene::update(float time) {
         }
         this->camera->animationDeltaTime = time - this->camera->animationStartDeltaTime;
         this->camera->updateAnimationFrame();
-        this->camera->update();
     }
 
     float day_length = 30.f;
