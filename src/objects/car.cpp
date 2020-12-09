@@ -41,12 +41,22 @@ bool Car::update (Scene &scene, float dt) {
         for (size_t i = 0; i < scene.cars.size(); ++i) {
             if (this == scene.cars[i]){
                 scene.cars.erase(scene.cars.begin() + i);
+                auto car = std::make_unique<Car>("fire", "cars/LowPolyFiatUNO");
+                car->rotation.z = glm::radians(-90.f);
+                if (rand() % 3 < 2){
+                    car->position = {50.f, 0.5f, -35.f};
+                } else {
+                    car->position = {50.f, 0.5f, -30.f};
+                }
+                car->_type = "out";
+                scene.cars.push_back(car.get());
+                scene.objects.push_back(move(car));
             }
         }
         return false;
     }
     if (!haveCollision(scene)){
-        this->position += this->velocity * dt;
+        this->position += this->direction * dt;
     } else {
         return false;
     }

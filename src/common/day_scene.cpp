@@ -218,6 +218,19 @@ void DayScene::init() {
     roof_B->material.shininess = 0.21794872f * 128;
     this->roofB = roof_B.get();
     this->objects.push_back(move(roof_B));
+
+        for (int i = 0; i < 2 - this->cars.size(); ++i) {
+            auto car = std::make_unique<Car>("fire", "cars/LowPolyFiatUNO");
+            car->rotation.z = glm::radians(-90.f);
+            if (rand() % 3 < 2){
+                car->position = {50.f, 0.5f, -35.f};
+            } else {
+                car->position = {50.f, 0.5f, -30.f};
+            }
+            car->_type = "out";
+            this->cars.push_back(car.get());
+            this->objects.push_back(move(car));
+        }
 }
 
 void DayScene::update(float time) {
@@ -230,20 +243,6 @@ void DayScene::update(float time) {
     }
 
     float day_length = 30.f;
-
-    if (rand() % 10 < 3){
-        for (int i = 0; i < 2 - this->cars.size(); ++i) {
-            auto car = std::make_unique<Car>("fire", "cube");
-            if (rand() % 3 < 2){
-                car->position = {50.f, 0.5f, -35.f};
-            } else {
-                car->position = {50.f, 0.5f, -30.f};
-            }
-            car->_type = "out";
-            this->cars.push_back(car.get());
-            this->objects.push_back(move(car));
-        }
-    }
 
     float sunShinness = fmod(time, day_length);
     float interpolation = 0.0f;

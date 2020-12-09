@@ -12,7 +12,8 @@ using namespace glm;
 class Car : public Object {
 
 private:
-    vec3 velocity = {-linearRand(0.01f, 0.2f), 0, 0};
+    vec3 velocity = {0, 0, 0};
+    vec3 direction = {-linearRand(0.01f, 0.2f), 0, 0};
     vec3 minPos = {-50, 0, 0};
     vec3 maxPos = {50, 0, 0};
 
