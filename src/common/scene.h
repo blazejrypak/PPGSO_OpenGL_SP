@@ -1,7 +1,3 @@
-//
-// Created by František Gič on 30/11/2019.
-//
-
 #pragma once
 
 #ifndef FINALFINAL_SCENE_H
@@ -22,25 +18,26 @@ class SceneWindow;
 class Scene {
 public:
     SceneWindow *windowRef;
-    
-    virtual void update (float time);
-    
-    void render ();
-    
-    void init ();
-    
-    std::vector<Object *> intersect (const glm::vec3 &position, const glm::vec3 &direction);
-    Object* getObject (std::string ID);
+
+    virtual void update(float time);
+
+    void render();
+
+    void init();
+
+    std::vector<Object *> intersect(const glm::vec3 &position, const glm::vec3 &direction);
+
+    Object *getObject(std::string ID);
 
     // Camera object
     std::unique_ptr<Camera> camera;
-    
+
     // All objects to be rendered in scene
     std::list<std::unique_ptr<Object>> objects;
-    
+
     // Keyboard state
     std::map<int, int> keyboard;
-    
+
     // Lights, in this case using only simple directional diffuse lighting
     glm::vec3 lightDirection{0.f, 1.f, 1.f};
 
@@ -60,16 +57,15 @@ public:
     std::vector<Light *> lights;
 
 
-
     // Store cursor state
     struct {
         double x, y;
         bool left, right;
     } cursor;
-    
-    virtual void handleKey (int key, int action);
-    
-    void lightReset ();
+
+    virtual void handleKey(int key, int action);
+
+    void lightReset();
 };
 
 

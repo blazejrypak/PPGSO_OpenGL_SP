@@ -26,11 +26,11 @@ public:
     Shadow *shadow = nullptr;
     glm::vec3 color = {0, 0, 0};
 
-    Shape (const std::string& textureName, const std::string& objectName);
+    Shape(const std::string &textureName, const std::string &objectName);
 
-    bool update (Scene &scene, float dt) override;
+    bool update(Scene &scene, float dt) override;
 
-    void render (Scene &scene) override;
+    void render(Scene &scene) override;
 
 };
 

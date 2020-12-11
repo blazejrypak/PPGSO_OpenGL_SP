@@ -4,7 +4,7 @@
 #include <shaders/color_vert_glsl.h>
 #include <shaders/color_frag_glsl.h>
 
-Wall::Wall () {
+Wall::Wall() {
     // Initialize static resources if needed
     if (!shader) shader = make_unique<Shader>(color_vert_glsl, color_frag_glsl);
     if (!texture)
@@ -13,7 +13,7 @@ Wall::Wall () {
 
 }
 
-Wall::Wall (const std::string& textureName, const std::string& objectName) {
+Wall::Wall(const std::string &textureName, const std::string &objectName) {
     // Initialize static resources if needed
     if (!shader) shader = make_unique<Shader>(color_vert_glsl, color_frag_glsl);
     if (!texture)
@@ -22,12 +22,12 @@ Wall::Wall (const std::string& textureName, const std::string& objectName) {
 
 }
 
-bool Wall::update (Scene &scene, float dt) {
+bool Wall::update(Scene &scene, float dt) {
     generateModelMatrix();
     return true;
 }
 
-void Wall::render (Scene &scene) {
+void Wall::render(Scene &scene) {
     shader->use();
 
     // Set up light

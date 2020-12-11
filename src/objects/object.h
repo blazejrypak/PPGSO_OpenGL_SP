@@ -21,14 +21,14 @@ class Scene;
 class Object {
 public:
     // Define default constructors as this is an abstract class
-    Object () = default;
-    
-    Object (const Object &) = default;
-    
-    Object (Object &&) = default;
-    
-    virtual ~Object () {};
-    
+    Object() = default;
+
+    Object(const Object &) = default;
+
+    Object(Object &&) = default;
+
+    virtual ~Object() {};
+
     /*!
      * Update Object parameters, usually used to update the modelMatrix based on position, scale and rotation
      *
@@ -36,20 +36,20 @@ public:
      * @param dt - Time delta for animation purposes
      * @return true to delete the object
      */
-    virtual bool update (Scene &scene, float dt) = 0;
-    
+    virtual bool update(Scene &scene, float dt) = 0;
+
     /*!
      * Render the object in the scene
      * @param scene
      */
-    virtual void render (Scene &scene) = 0;
-    
-    
+    virtual void render(Scene &scene) = 0;
+
+
     /*!
      * Event to be called when the object is clicked
      * @param scene
      */
-    virtual void onClick (Scene &scene) {};
+    virtual void onClick(Scene &scene) {};
 
     struct {
         vec3 ambient{1.f, 1.f, 1.f};
@@ -78,6 +78,6 @@ protected:
     /*!
      * Generate modelMatrix from position, rotation and scale
      */
-    void generateModelMatrix ();
+    void generateModelMatrix();
 };
 

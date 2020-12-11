@@ -23,7 +23,7 @@ void DayScene::init() {
     sun->dirLight.direction = {0.f, -1.f, 0.f};
     sun->dirLight.ambient = {0.2f, 0.2f, 0.2f};
     sun->dirLight.diffuse = {.5f, .5f, .5f};
-    sun->dirLight.specular = {1.0f, 1.0f,1.0f};
+    sun->dirLight.specular = {1.0f, 1.0f, 1.0f};
     this->sun = sun.get();
     this->objects.push_back(move(sun));
 
@@ -37,7 +37,7 @@ void DayScene::init() {
     light_1->pointLight.quadratic = 0.032f;
     light_1->pointLight.ambient = {.5f, 0.5f, 0.5f};
     light_1->pointLight.diffuse = {.5f, .5f, .5f};
-    light_1->pointLight.specular = {1.0f, 1.0f,1.0f};
+    light_1->pointLight.specular = {1.0f, 1.0f, 1.0f};
     this->lights.push_back(light_1.get());
     this->objects.push_back(move(light_1));
 
@@ -51,7 +51,7 @@ void DayScene::init() {
     light_2->pointLight.quadratic = 0.032f;
     light_2->pointLight.ambient = {.5f, 0.5f, 0.5f};
     light_2->pointLight.diffuse = {.5f, .5f, .5f};
-    light_2->pointLight.specular = {1.0f, 1.0f,1.0f};
+    light_2->pointLight.specular = {1.0f, 1.0f, 1.0f};
     this->lights.push_back(light_2.get());
     this->objects.push_back(move(light_2));
 
@@ -61,8 +61,8 @@ void DayScene::init() {
     flash_light->spotLight.quadratic = 0.0002f;
     flash_light->spotLight.ambient = {1.f, 0.f, 0.f};
     flash_light->spotLight.diffuse = {.8f, .8f, .8f};
-    flash_light->spotLight.specular = {1.0f, 1.0f,1.0f};
-    flash_light->spotLight.position = {0.0f, 15.0f,0.0f};
+    flash_light->spotLight.specular = {1.0f, 1.0f, 1.0f};
+    flash_light->spotLight.position = {0.0f, 15.0f, 0.0f};
     flash_light->spotLight.direction = {0.0f, -1.f, 0.f};
     flash_light->spotLight.cutOff = glm::cos(glm::radians(6.5f));
     flash_light->spotLight.outerCutOff = glm::cos(glm::radians(7.5f));
@@ -83,7 +83,7 @@ void DayScene::init() {
 
     for (int i = -3; i < 3; ++i) {
         auto lamp_post = std::make_unique<Shape>("white", "lamp_post/lamp_post");
-        lamp_post->position = {15.f*i, 0.f, -40.f};
+        lamp_post->position = {15.f * i, 0.f, -40.f};
         lamp_post->scale = {0.3f, 0.3f, 0.3f};
         lamp_post->_type = "out";
         lamp_post->rotation = {0.f, 0.f, glm::radians(-90.f)};
@@ -98,38 +98,34 @@ void DayScene::init() {
     };
 
     std::vector<house_obj> house_objects = {
-            {"house/BanheiraTexture", "house/Bathtub", "base", ""},
-            {"house/TetoTexture", "house/Bed", "base", ""},
-            {"house/CasaTexture", "house/Casa", "out", ""},
-            {"house/ChaoTexture", "house/Chao", "out", ""},
-            {"house/PortaTexture", "house/door1", "out", "door"},
-            {"house/PortaTexture", "house/Porta1", "door", ""},
-            {"house/PortaTexture", "house/Porta2", "door", ""},
-            {"house/TetoTexture", "house/Sink", "base", ""},
-            {"house/TetoTexture", "house/Table", "base", ""},
-            {"house/TetoTexture", "house/Teto", "base", ""},
-            {"house/TetoTexture", "house/Window", "base", ""},
-            {"house/TetoTexture", "house/Window1", "base", ""},
-            {"house/TetoTexture", "house/Window2", "base", ""},
-            {"house/TetoTexture", "house/Window3", "base", ""},
+            {"house/BanheiraTexture",   "house/Bathtub",    "base", ""},
+            {"house/TetoTexture",       "house/Bed",        "base", ""},
+            {"house/CasaTexture",       "house/Casa",       "out",  ""},
+            {"house/ChaoTexture",       "house/Chao",       "out",  ""},
+            {"house/PortaTexture",      "house/door1",      "out",  "door"},
+//            {"house/PortaTexture",      "house/Porta1",     "door", ""},
+//            {"house/PortaTexture",      "house/Porta2",     "door", ""},
+            {"house/TetoTexture",       "house/Sink",       "base", ""},
+            {"house/TetoTexture",       "house/Table",      "base", ""},
+            {"house/TetoTexture",       "house/Teto",       "base", ""},
+            {"house/TetoTexture",       "house/Window",     "base", ""},
+            {"house/TetoTexture",       "house/Window1",    "base", ""},
+            {"house/TetoTexture",       "house/Window2",    "base", ""},
+            {"house/TetoTexture",       "house/Window3",    "base", ""},
             {"house/VentiladorTexture", "house/Ventilator", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria1", "base", ""},
-            {"house/LuminariaTexture", "house/Luminaria2", "base", ""},
-
-
-
-//            {"house/BanheiraTexture", "home/roof", "out", "roof"},
+            {"house/LuminariaTexture",  "house/Luminaria",  "base", ""},
+            {"house/LuminariaTexture",  "house/Luminaria1", "base", ""},
+            {"house/LuminariaTexture",  "house/Luminaria2", "base", ""},
     };
 
     glm::vec3 house_base_position_objects = glm::vec3{5.f, 8.f, 0.f};
     glm::vec3 house_base_scale_objects = glm::vec3{5.f, 5.f, 5.f};
     glm::vec3 house_base_rotation_objects = glm::vec3{0.f, 0.f, glm::radians(180.f)};
 
-    for (auto & house_object : house_objects) {
+    for (auto &house_object : house_objects) {
         auto obj = std::make_unique<Shape>(house_object.texturePath, house_object.objPath);
-        if (house_object.ID == "door"){
-            obj->position = { -2.f,  6.f, -8.f};
+        if (house_object.ID == "door") {
+            obj->position = {-2.f, 6.f, -8.f};
             obj->scale = house_base_scale_objects;
             obj->_type = house_object.type;
             obj->ID = house_object.ID;
@@ -139,7 +135,7 @@ void DayScene::init() {
             obj->material.diffuse = {0.50754f, 0.50754f, 0.50754f};
             obj->material.specular = {0.508273f, 0.508273f, 0.508273f};
             obj->material.shininess = 0.4f * 128;
-        } else if(house_object.ID == "roof"){
+        } else if (house_object.ID == "roof") {
             obj->ID = house_object.ID;
             obj->position = {5.f, 0.f, 5.f};
             obj->scale = {9.0f, 4.0f, 5.f};
@@ -148,8 +144,7 @@ void DayScene::init() {
             obj->material.diffuse = {0.780392f, 0.568627f, 0.113725f};
             obj->material.specular = {0.992157f, 0.941176f, 0.807843f};
             obj->material.shininess = 0.21794872f * 128;
-        }
-        else {
+        } else {
             obj->ID = house_object.ID;
             obj->position = house_base_position_objects;
             obj->scale = house_base_scale_objects;
@@ -175,16 +170,16 @@ void DayScene::init() {
     pool_volume->scale = {5.f, 0.1f, 5.f};
     pool_volume->_type = "out";
     this->_weather->_pool_volume = pool_volume.get();
-    pool_volume->minXYZ = {pool_volume->position.x+7.5f, 1.f, pool_volume->position.z-5.f};
-    pool_volume->maxXYZ = {pool_volume->position.x-7.5f, 1.f, pool_volume->position.z+5.f};
+    pool_volume->minXYZ = {pool_volume->position.x + 7.5f, 1.f, pool_volume->position.z - 5.f};
+    pool_volume->maxXYZ = {pool_volume->position.x - 7.5f, 1.f, pool_volume->position.z + 5.f};
     this->objects.push_back(move(pool_volume));
 
 
     auto player_ = std::make_unique<Player>();
-    player_->position = {2.f,0.5f,-20.f };
+    player_->position = {2.f, 0.5f, -20.f};
     player_->scale = {1.f, 1.f, 1.f};
-    player_->minXYZ = {2.f+1.5f,0.5f,-20.f - 0.5f};
-    player_->maxXYZ = {2.f-1.5f,0.5f,-20.f + 0.5f};
+    player_->minXYZ = {2.f + 1.5f, 0.5f, -20.f - 0.5f};
+    player_->maxXYZ = {2.f - 1.5f, 0.5f, -20.f + 0.5f};
     player_->_type = "out";
     // material emerald
     player_->material.ambient = {0.215f, 0.1745f, 0.215f};
@@ -219,23 +214,23 @@ void DayScene::init() {
     this->roofB = roof_B.get();
     this->objects.push_back(move(roof_B));
 
-        for (int i = 0; i < 2 - this->cars.size(); ++i) {
-            auto car = std::make_unique<Car>("fire", "cars/LowPolyFiatUNO");
-            car->rotation.z = glm::radians(-90.f);
-            if (rand() % 3 < 2){
-                car->position = {50.f, 0.5f, -35.f};
-            } else {
-                car->position = {50.f, 0.5f, -30.f};
-            }
-            car->_type = "out";
-            this->cars.push_back(car.get());
-            this->objects.push_back(move(car));
+    for (int i = 0; i < 2 - this->cars.size(); ++i) {
+        auto car = std::make_unique<Car>("fire", "cars/LowPolyFiatUNO");
+        car->rotation.z = glm::radians(-90.f);
+        if (rand() % 3 < 2) {
+            car->position = {50.f, 0.5f, -35.f};
+        } else {
+            car->position = {50.f, 0.5f, -30.f};
         }
+        car->_type = "out";
+        this->cars.push_back(car.get());
+        this->objects.push_back(move(car));
+    }
 }
 
 void DayScene::update(float time) {
-    if (this->camera->animationRunning){
-        if (this->camera->animationDeltaTime >= this->camera->animationDuration){
+    if (this->camera->animationRunning) {
+        if (this->camera->animationDeltaTime >= this->camera->animationDuration) {
             this->camera->animationRunning = false;
         }
         this->camera->animationDeltaTime = time - this->camera->animationStartDeltaTime;
@@ -246,17 +241,17 @@ void DayScene::update(float time) {
 
     float sunShinness = fmod(time, day_length);
     float interpolation = 0.0f;
-    if (sunShinness < day_length/2){
-        interpolation = sunShinness*(2*0.8f/day_length);
+    if (sunShinness < day_length / 2) {
+        interpolation = sunShinness * (2 * 0.8f / day_length);
     } else {
-        interpolation = (day_length - sunShinness)*(2*0.8f/day_length);
+        interpolation = (day_length - sunShinness) * (2 * 0.8f / day_length);
     }
     this->sun->dirLight.ambient = vec3(interpolation, interpolation, interpolation) * this->sun->color;
     this->sun->dirLight.direction = {interpolation, interpolation, interpolation};
     Scene::update(time);
 }
 
-void DayScene::handleKey (int key, int action) {
+void DayScene::handleKey(int key, int action) {
     if (action == GLFW_PRESS) {
         switch (key) {
 
@@ -306,21 +301,18 @@ void DayScene::handleKey (int key, int action) {
             default:
                 break;
         }
-    }
-
-    else if (key == GLFW_KEY_B) {
+    } else if (key == GLFW_KEY_B) {
         this->sun->dirLight.direction.x -= 0.2f;
         this->sun->position.x -= 0.2f;
-        if (this->sun->dirLight.ambient.x < 0.8){
-        this->sun->dirLight.ambient.x += 0.05f;
-        this->sun->dirLight.ambient.y += 0.05f;
-        this->sun->dirLight.ambient.z += 0.05f;
+        if (this->sun->dirLight.ambient.x < 0.8) {
+            this->sun->dirLight.ambient.x += 0.05f;
+            this->sun->dirLight.ambient.y += 0.05f;
+            this->sun->dirLight.ambient.z += 0.05f;
         }
-    }
-    else if (key == GLFW_KEY_N) {
+    } else if (key == GLFW_KEY_N) {
         this->sun->dirLight.direction.x += 0.2f;
         this->sun->position.x += 0.2f;
-        if (this->sun->dirLight.ambient.x > 0.05){
+        if (this->sun->dirLight.ambient.x > 0.05) {
             this->sun->dirLight.ambient.x -= 0.05f;
             this->sun->dirLight.ambient.y -= 0.05f;
             this->sun->dirLight.ambient.z -= 0.05f;

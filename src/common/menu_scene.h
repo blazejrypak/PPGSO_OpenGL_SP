@@ -6,6 +6,7 @@
 
 #include <src/objects/shape.h>
 #include "scene.h"
+
 #ifndef FINALFINAL_MENU_SCENE_H
 #define FINALFINAL_MENU_SCENE_H
 
@@ -22,9 +23,9 @@ public:
 
     void init();
 
-    void update (float time) override;
+    void update(float time) override;
 
-    void handleKey (int key, int action) override;
+    void handleKey(int key, int action) override;
 };
 
 #endif //FINALFINAL_MENU_SCENE_H

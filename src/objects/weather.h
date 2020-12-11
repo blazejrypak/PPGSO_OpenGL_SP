@@ -32,8 +32,10 @@ private:
         float maxAge{2.f};
 
     public:
-        RainParticle( vec3 position, Weather *parent);
+        RainParticle(vec3 position, Weather *parent);
+
         bool update(Scene &scene, float dt) override;
+
         void render(Scene &scene) override;
 
         void fillPool();
@@ -45,11 +47,16 @@ public:
     Shape *_pool;
     Shape *_pool_volume;
 
-    explicit Weather (Scene *scene);
-    void update ();
+    explicit Weather(Scene *scene);
+
+    void update();
+
     void toggleRain();
+
     void pauseRain();
+
     void upWindSpeed();
+
     void downWindSpeed();
 };
 

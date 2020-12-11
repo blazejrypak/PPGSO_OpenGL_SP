@@ -14,8 +14,8 @@ unique_ptr<Mesh> Player::mesh;
 unique_ptr<Texture> Player::texture;
 unique_ptr<Shader> Player::shader;
 
-Player::Player () {
-    this->shadow = new Shadow(this->position+glm::vec3{0.f, 10.f, 0.f}, {this->scale.x*2, 0.1, this->scale.z*2});
+Player::Player() {
+    this->shadow = new Shadow(this->position + glm::vec3{0.f, 10.f, 0.f}, {this->scale.x * 2, 0.1, this->scale.z * 2});
     this->shadow->rotation.z = glm::radians(90.f);
     if (!shader) shader = make_unique<Shader>(phong_vert_glsl, phong_frag_glsl);
     if (!texture)
@@ -23,9 +23,9 @@ Player::Player () {
     if (!mesh) mesh = make_unique<Mesh>("objects/cyborg.obj");
 }
 
-bool Player::update (Scene &scene, float dt) {
-    if (dead){
-        if (dt-collisionStart >= maxDeadAge){
+bool Player::update(Scene &scene, float dt) {
+    if (dead) {
+        if (dt - collisionStart >= maxDeadAge) {
             scene.windowRef->openMenu();
         }
         this->rotation.y = glm::radians(90.f);
@@ -33,9 +33,9 @@ bool Player::update (Scene &scene, float dt) {
         generateModelMatrix();
         return true;
     }
-    for (auto & car : scene.cars) {
+    for (auto &car : scene.cars) {
         if ((car->position.z - car->scale.z < this->position.z && this->position.z < car->position.z + car->scale.z) &&
-            (car->position.x + car->scale.x > this->position.x && this->position.x > car->position.x-car->scale.x)){
+            (car->position.x + car->scale.x > this->position.x && this->position.x > car->position.x - car->scale.x)) {
             dead = true;
             collisionStart = dt;
         }
@@ -45,18 +45,18 @@ bool Player::update (Scene &scene, float dt) {
     shadow->render(scene);
     generateModelMatrix();
     Shape *obj = checkMove(scene);
-    if (!updated){
+    if (!updated) {
         updated = true;
         return true;
     }
-    if (!obj){
+    if (!obj) {
         Shape *door = dynamic_cast<Shape *>(scene.getObject("door"));
         door->state = false;
         shadow->update(this->position, scene);
         shadow->update(scene, dt);
         generateModelMatrix();
     } else {
-        if (obj->state){
+        if (obj->state) {
             shadow->update(this->position, scene);
             shadow->update(scene, dt);
             generateModelMatrix();
@@ -67,7 +67,7 @@ bool Player::update (Scene &scene, float dt) {
     return true;
 }
 
-void Player::render (Scene &scene) {
+void Player::render(Scene &scene) {
     shader->use();
 
     shader->setUniform("dirLight.direction", scene.sun->dirLight.direction);
@@ -76,7 +76,7 @@ void Player::render (Scene &scene) {
     shader->setUniform("dirLight.specular", scene.sun->dirLight.specular);
 
     for (unsigned int i = 0; i < scene.lights.size(); ++i) {
-        shader->setUniform( "pointLightsOn", true);
+        shader->setUniform("pointLightsOn", true);
         shader->setUniform("pointLights[" + to_string(i) + "].position", scene.lights[i]->position);
         shader->setUniform("pointLights[" + to_string(i) + "].ambient", scene.lights[i]->pointLight.ambient);
         shader->setUniform("pointLights[" + to_string(i) + "].diffuse", scene.lights[i]->pointLight.diffuse);
@@ -86,18 +86,18 @@ void Player::render (Scene &scene) {
         shader->setUniform("pointLights[" + to_string(i) + "].quadratic", scene.lights[i]->pointLight.quadratic);
     }
 
-    shader->setUniform( "spotLightOn", scene.flash_light_on);
-    if (scene.flash_light_on){
-        shader->setUniform( "spotLight.position", scene.light->spotLight.position);
-        shader->setUniform( "spotLight.direction", scene.light->spotLight.direction);
-        shader->setUniform( "spotLight.ambient", scene.light->spotLight.ambient);
-        shader->setUniform( "spotLight.diffuse", scene.light->spotLight.diffuse);
-        shader->setUniform( "spotLight.specular", scene.light->spotLight.specular);
-        shader->setUniform( "spotLight.constant", scene.light->spotLight.constant);
-        shader->setUniform( "spotLight.linear", scene.light->spotLight.linear);
-        shader->setUniform( "spotLight.quadratic", scene.light->spotLight.quadratic);
-        shader->setUniform( "spotLight.cutOff", scene.light->spotLight.cutOff);
-        shader->setUniform( "spotLight.outerCutOff", scene.light->spotLight.outerCutOff);
+    shader->setUniform("spotLightOn", scene.flash_light_on);
+    if (scene.flash_light_on) {
+        shader->setUniform("spotLight.position", scene.light->spotLight.position);
+        shader->setUniform("spotLight.direction", scene.light->spotLight.direction);
+        shader->setUniform("spotLight.ambient", scene.light->spotLight.ambient);
+        shader->setUniform("spotLight.diffuse", scene.light->spotLight.diffuse);
+        shader->setUniform("spotLight.specular", scene.light->spotLight.specular);
+        shader->setUniform("spotLight.constant", scene.light->spotLight.constant);
+        shader->setUniform("spotLight.linear", scene.light->spotLight.linear);
+        shader->setUniform("spotLight.quadratic", scene.light->spotLight.quadratic);
+        shader->setUniform("spotLight.cutOff", scene.light->spotLight.cutOff);
+        shader->setUniform("spotLight.outerCutOff", scene.light->spotLight.outerCutOff);
     }
 
     shader->setUniform("viewPos", scene.camera->getView().position);
@@ -120,12 +120,14 @@ void Player::render (Scene &scene) {
 }
 
 Shape *Player::checkMove(Scene &scene) {
-    if (scene.door){
+    if (scene.door) {
         float radius = 2.0f;
         if (
-                (this->position.x <= scene.door->position.x + radius && this->position.x >= scene.door->position.x - radius) &&
-                (this->position.z <= scene.door->position.z + radius && this->position.z >= scene.door->position.z - radius)
-                ){
+                (this->position.x <= scene.door->position.x + radius &&
+                 this->position.x >= scene.door->position.x - radius) &&
+                (this->position.z <= scene.door->position.z + radius &&
+                 this->position.z >= scene.door->position.z - radius)
+                ) {
             return dynamic_cast<Shape *>(scene.door);
         }
         return nullptr;
@@ -133,16 +135,16 @@ Shape *Player::checkMove(Scene &scene) {
 }
 
 
-void Player::handleKey (Scene &scene, int key){
-    if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS){
+void Player::handleKey(Scene &scene, int key) {
+    if (key == GLFW_KEY_E && scene.keyboard[key] == GLFW_PRESS) {
         Shape *obj = checkMove(scene);
-        if(obj){
+        if (obj) {
             obj->state = !obj->state;
         }
         return;
     }
 
-    if (key == GLFW_KEY_Q && scene.keyboard[key] == GLFW_PRESS && scene.camera->isFirstPersonMode()){
+    if (key == GLFW_KEY_Q && scene.keyboard[key] == GLFW_PRESS && scene.camera->isFirstPersonMode()) {
         scene.flash_light_on = !scene.flash_light_on;
     }
 
@@ -151,10 +153,10 @@ void Player::handleKey (Scene &scene, int key){
 //    D -> 1
 //    S -> 2
 //    A -> 3
-    if (key == GLFW_KEY_W){
+    if (key == GLFW_KEY_W) {
         vec3 prevPosition = position;
-        if (direction == 0 || abs(direction) == 2){
-            if (direction == 0){
+        if (direction == 0 || abs(direction) == 2) {
+            if (direction == 0) {
                 position.z += speed;
             } else {
                 position.z -= speed;
@@ -166,32 +168,33 @@ void Player::handleKey (Scene &scene, int key){
                 position.x += speed;
             }
         }
-        if (!checkPlayerMove(position, scene)){
+        if (!checkPlayerMove(position, scene)) {
             position = prevPosition;
             return;
         }
-    } else if (key == GLFW_KEY_D && scene.keyboard[key] == GLFW_PRESS){
+    } else if (key == GLFW_KEY_D && scene.keyboard[key] == GLFW_PRESS) {
         direction += 1;
-    } else if (key == GLFW_KEY_A && scene.keyboard[key] == GLFW_PRESS){
+    } else if (key == GLFW_KEY_A && scene.keyboard[key] == GLFW_PRESS) {
         direction -= 1;
     } else if (key == GLFW_KEY_S && scene.keyboard[key] == GLFW_PRESS) {
         direction += 2;
     }
     direction %= 4;
     rotation.z = glm::radians(static_cast<float>(direction) * -90.0f);
-    if (scene.camera->isFirstPersonMode()){
-        int d = (direction+2)%4;
+    if (scene.camera->isFirstPersonMode()) {
+        int d = (direction + 2) % 4;
         d = d == -1 ? 3 : d;
         scene.camera->updateWithDirection(position, abs(static_cast<short>(d)));
     }
 }
 
 bool Player::checkPlayerMove(vec3 &nextPosition, Scene &scene) {
-        if ((nextPosition.x >= _pool->position.x - 2*_pool->scale.x && position.x <= _pool->position.x + 2*_pool->scale.x) &&
-                (_pool->position.z - _pool->scale.z <= nextPosition.z && nextPosition.z <= _pool->position.z + _pool->scale.z)
-                ){
-            return false;
-        }
+    if ((nextPosition.x >= _pool->position.x - 2 * _pool->scale.x &&
+         position.x <= _pool->position.x + 2 * _pool->scale.x) &&
+        (_pool->position.z - _pool->scale.z <= nextPosition.z && nextPosition.z <= _pool->position.z + _pool->scale.z)
+            ) {
+        return false;
+    }
     return true;
 }
 

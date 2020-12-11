@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include "common/main_window.h"
 
-int main () {
+int main() {
     SceneWindow window;
 
     while (window.pollEvents()) {}

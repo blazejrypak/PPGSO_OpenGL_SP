@@ -30,10 +30,11 @@ void World::render(Scene &scene) {
     glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
 
     // draw skybox as last
-    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+    glDepthFunc(
+            GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     shader->use();
     // use camera
     shader->setUniform("ProjectionMatrix", scene.camera->projectionMatrix);
@@ -69,15 +70,17 @@ void World::create() {
 // -Z (back)
 // -------------------------------------------------------
 unsigned int World::loadCubemap() {
-    std:string skybox = "skybox";
+    std:
+    string skybox = "skybox";
     glUniform1i(glGetUniformLocation(textureID, skybox.c_str()), 0);
     glGenTextures(1, &textureID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
     int width, height, nrChannels;
     for (unsigned int i = 0; i < faces.size(); i++) {
-        ppgso::Image image =  ppgso::image::loadBMP( "textures/skybox/" + faces[i]);
-        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, image.width, image.height, 0, GL_RGB, GL_UNSIGNED_BYTE,  image.getFramebuffer().data());
+        ppgso::Image image = ppgso::image::loadBMP("textures/skybox/" + faces[i]);
+        glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, image.width, image.height, 0, GL_RGB,
+                     GL_UNSIGNED_BYTE, image.getFramebuffer().data());
     }
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);

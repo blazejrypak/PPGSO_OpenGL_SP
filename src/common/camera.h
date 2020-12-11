@@ -10,6 +10,7 @@ using namespace glm;
 using namespace std;
 
 class DayScene;
+
 class Scene;
 
 typedef struct {
@@ -33,20 +34,20 @@ private:
 
     uint view = 0;
     vector<View> views = {
-        {
-            globalUp,
-            {14.0f, 30, -60},
-            {14.0f, 2, 14.0f},
-        },
-        {
-            globalUp,
-            {2,     4,  0},
-            {0,     0, -1},
-        },
             {
-                globalUp,
-                        {0.0f, 0, 10},
-                        {0.0f, 0, 0.0f},
+                    globalUp,
+                    {14.0f, 30, -60},
+                    {14.0f, 2, 14.0f},
+            },
+            {
+                    globalUp,
+                    {2,     4,  0},
+                    {0,     0, -1},
+            },
+            {
+                    globalUp,
+                    {0.0f,  0,  10},
+                    {0.0f,  0, 0.0f},
             },
     };
 
@@ -74,7 +75,7 @@ private:
         return p1 * (1.f - t) + p2 * t;
     }
 
-    glm::vec3 getAnimationPoint(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const float t){
+    glm::vec3 getAnimationPoint(const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2, const float t) {
         vec3 a = lerp3(p0, p1, t);
         vec3 b = lerp3(p1, p2, t);
 
@@ -83,68 +84,69 @@ private:
 
     glm::mat4 interpolate(const glm::mat4 &_mat1, const glm::mat4 &_mat2, const float t);
 
-    glm::mat4 getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t);
+    glm::mat4
+    getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t);
 
     void resetAnimation();
 
 public:
     bool animationRunning;
     vec3 firstPersonViewCenter{0, 0, 0};
-    
+
     View current = {
-        globalUp,
-        {0, 0, 0},
-        {0, 0, 0},
+            globalUp,
+            {0, 0, 0},
+            {0, 0, 0},
     };
 
 public:
-    
+
     mat4 viewMatrix;
     mat4 projectionMatrix;
     float animationDeltaTime = 0.0f;
     float animationDuration = 2.0f;
     float animationStartDeltaTime;
 
-    void updateAnimationFrame(){
+    void updateAnimationFrame() {
         this->viewMatrix = getAnimationViewFrame(animationKeyFrames[0],
                                                  animationKeyFrames[1],
                                                  animationKeyFrames[2],
                                                  animationKeyFrames[3],
-                                                 animationDeltaTime/animationDuration);
+                                                 animationDeltaTime / animationDuration);
     }
-    
+
     vector<int> controls = {
-        GLFW_KEY_UP,
-        GLFW_KEY_DOWN,
-        GLFW_KEY_RIGHT,
-        GLFW_KEY_LEFT,
-        GLFW_KEY_O,
-        GLFW_KEY_P,
-        GLFW_KEY_X
+            GLFW_KEY_UP,
+            GLFW_KEY_DOWN,
+            GLFW_KEY_RIGHT,
+            GLFW_KEY_LEFT,
+            GLFW_KEY_O,
+            GLFW_KEY_P,
+            GLFW_KEY_X
     };
 
-    Camera (float fow = 45.0f, float ratio = 1.0f, float near = 0.1f, float far = 10.0f);
-    
-    void update ();
-    
-    void update (View view);
-    
-    void update (vec3 center);
-    
-    void update (vec3 eye, vec3 center);
-    
-    void updateWithDirection (vec3 position, short direction);
+    Camera(float fow = 45.0f, float ratio = 1.0f, float near = 0.1f, float far = 10.0f);
 
-    vec3 getDirectionMatrix (short direction);
+    void update();
+
+    void update(View view);
+
+    void update(vec3 center);
+
+    void update(vec3 eye, vec3 center);
+
+    void updateWithDirection(vec3 position, short direction);
+
+    vec3 getDirectionMatrix(short direction);
 
 
-    void switchView (DayScene *scene);
-    
-    void handleKey (Scene &scene, int key);
-    
-    bool isFirstPersonMode ();
-    
-    View getView ();
+    void switchView(DayScene *scene);
+
+    void handleKey(Scene &scene, int key);
+
+    bool isFirstPersonMode();
+
+    View getView();
 
     void updatePosition(vec3 position);
 

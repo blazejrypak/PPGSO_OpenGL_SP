@@ -21,12 +21,13 @@ public:
 
     glm::vec3 color = {0, 0, 0};
 
-    Wall ();
-    Wall (const std::string& textureName, const std::string& objectName);
+    Wall();
 
-    bool update (Scene &scene, float dt) override;
+    Wall(const std::string &textureName, const std::string &objectName);
 
-    void render (Scene &scene) override;
+    bool update(Scene &scene, float dt) override;
+
+    void render(Scene &scene) override;
 };
 
 

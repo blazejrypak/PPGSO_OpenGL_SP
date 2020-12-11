@@ -23,11 +23,11 @@ private:
 
 public:
 
-    Car (const std::string& textureName, const std::string& objectName);
+    Car(const std::string &textureName, const std::string &objectName);
 
-    bool update (Scene &scene, float dt) override;
+    bool update(Scene &scene, float dt) override;
 
-    void render (Scene &scene) override;
+    void render(Scene &scene) override;
 
     bool haveCollision(Scene &scene);
 };

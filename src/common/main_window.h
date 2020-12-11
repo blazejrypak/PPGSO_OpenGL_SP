@@ -31,19 +31,19 @@ private:
     MenuScene *menuScene;
 
     template<typename T>
-    void initScene (T *currentScene);
+    void initScene(T *currentScene);
 
 public:
-    SceneWindow ();
-    
-    void onKey (int key, int scanCode, int action, int mods) override;
-    
-    void onIdle () override;
-    
-    void openDayScene ();
-    
-    void openMenu ();
-    
+    SceneWindow();
+
+    void onKey(int key, int scanCode, int action, int mods) override;
+
+    void onIdle() override;
+
+    void openDayScene();
+
+    void openMenu();
+
 };
 
 #endif //FINALFINAL_SCENEWINDOW_H

@@ -12,8 +12,8 @@
 using namespace std;
 using namespace glm;
 
-void Object::generateModelMatrix () {
-    if (parentModelMatrix != nullptr){
+void Object::generateModelMatrix() {
+    if (parentModelMatrix != nullptr) {
         mat4 matrix = *parentModelMatrix;
         matrix *= glm::translate(mat4(1.0f), position);
         matrix *= glm::orientate4(rotation);

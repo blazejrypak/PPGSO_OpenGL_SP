@@ -21,16 +21,17 @@ Weather::RainParticle::RainParticle(vec3 position, Weather *parent) {
 }
 
 bool checkRoofCollision(Scene &scene, vec3 &particlePos) {
-    if ((particlePos.x > scene.roofB->position.x - scene.roofB->scale.x && particlePos.x < scene.roofB->position.x + scene.roofB->scale.x)){
-        if (particlePos.z < scene.roofB->scale.z + scene.roofB->position.z && particlePos.z > -scene.roofA->scale.z){
+    if ((particlePos.x > scene.roofB->position.x - scene.roofB->scale.x &&
+         particlePos.x < scene.roofB->position.x + scene.roofB->scale.x)) {
+        if (particlePos.z < scene.roofB->scale.z + scene.roofB->position.z && particlePos.z > -scene.roofA->scale.z) {
             float roof_base_high = (static_cast<float>(abs(scene.roofA->position.z - scene.roofA->scale.z) /
                                                        std::sqrt(2)));
             auto roof_width = static_cast<float>(abs(2 * scene.roofA->scale.z) / sqrt(2));
 
-            if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high){
+            if (particlePos.y <= roof_width - abs(particlePos.z) + roof_base_high) {
                 return true;
             }
-            if (particlePos.y <= scene.roofA->position.y){
+            if (particlePos.y <= scene.roofA->position.y) {
                 return true;
             }
             return false;
@@ -39,8 +40,8 @@ bool checkRoofCollision(Scene &scene, vec3 &particlePos) {
     return false;
 }
 
-void Weather::RainParticle::fillPool(){
-    if (this->parent->_pool_volume->scale.y < this->parent->_pool->scale.y){
+void Weather::RainParticle::fillPool() {
+    if (this->parent->_pool_volume->scale.y < this->parent->_pool->scale.y) {
         this->parent->_pool_volume->scale.y += 0.00001f;
     }
 }
@@ -60,18 +61,17 @@ bool Weather::RainParticle::update(Scene &scene1, float dt) {
             position.z > this->parent->_pool_volume->position.z - 5 ||
             position.z < this->parent->_pool_volume->position.z + 5) {
             fillPool();
-        }
-        else {
+        } else {
             return false;
         }
     }
     if (this->age >= this->maxAge) {
         return false;
     }
-    if (this->position.y <= 1){
+    if (this->position.y <= 1) {
         return false;
     } else {
-        if (checkRoofCollision(scene1, this->position)){
+        if (checkRoofCollision(scene1, this->position)) {
             return false;
         }
     }
@@ -112,7 +112,7 @@ void Weather::pauseRain() {
 void Weather::update() {
     if (this->raining && !this->pause) {
         for (int i = 0; i < 100; ++i) {
-            vec3 pos = vec3{(rand() % 100)-50, (rand() % 100) + 50, (rand() % 100)-50};
+            vec3 pos = vec3{(rand() % 100) - 50, (rand() % 100) + 50, (rand() % 100) - 50};
             auto rainParticle = std::make_unique<Weather::RainParticle>(pos, this);
             scene->objects.push_back(move(rainParticle));
         }

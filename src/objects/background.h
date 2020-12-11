@@ -11,31 +11,31 @@
  */
 class Background final : public Object {
 private:
-  // Static resources (Shared between instances)
-  static std::unique_ptr<ppgso::Mesh> mesh;
-  static std::unique_ptr<ppgso::Shader> shader;
-  static std::unique_ptr<ppgso::Texture> texture;
+    // Static resources (Shared between instances)
+    static std::unique_ptr<ppgso::Mesh> mesh;
+    static std::unique_ptr<ppgso::Shader> shader;
+    static std::unique_ptr<ppgso::Texture> texture;
 
-  glm::vec2 textureOffset;
+    glm::vec2 textureOffset;
 public:
-  /*!
-   * Create new Background background
-   */
-  Background();
+    /*!
+     * Create new Background background
+     */
+    Background();
 
-  /*!
-   * Update space background
-   * @param scene Scene to update
-   * @param dt Time delta
-   * @return true to delete the object
-   */
-  bool update(Scene &scene, float dt) override;
+    /*!
+     * Update space background
+     * @param scene Scene to update
+     * @param dt Time delta
+     * @return true to delete the object
+     */
+    bool update(Scene &scene, float dt) override;
 
-  /*!
-   * Render space background
-   * @param scene Scene to render in
-   */
-  void render(Scene &scene) override;
+    /*!
+     * Render space background
+     * @param scene Scene to render in
+     */
+    void render(Scene &scene) override;
 };
 
 #endif //FINALFINAL_BACKGROUND_H

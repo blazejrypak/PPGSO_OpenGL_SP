@@ -48,13 +48,13 @@ public:
     bool updated = false;
     bool canMove = false;
 
-    Player ();
+    Player();
 
-    bool update (Scene &scene, float dt) override;
+    bool update(Scene &scene, float dt) override;
 
-    void render (Scene &scene) override;
+    void render(Scene &scene) override;
 
-    void handleKey (Scene &scene, int key);
+    void handleKey(Scene &scene, int key);
 
     Shape *checkMove(Scene &scene);
 

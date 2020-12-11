@@ -28,7 +28,7 @@ void MenuScene::init() {
     sun->dirLight.direction = {0.f, -1.f, 0.f};
     sun->dirLight.ambient = {0.2f, 0.2f, 0.2f};
     sun->dirLight.diffuse = {.5f, .5f, .5f};
-    sun->dirLight.specular = {1.0f, 1.0f,1.0f};
+    sun->dirLight.specular = {1.0f, 1.0f, 1.0f};
     this->sun = sun.get();
     this->objects.push_back(move(sun));
 
@@ -89,7 +89,7 @@ void MenuScene::update(float time) {
     Scene::update(time);
 }
 
-void MenuScene::handleKey (int key, int action) {
+void MenuScene::handleKey(int key, int action) {
     if (action == GLFW_PRESS) {
         switch (key) {
             case (GLFW_KEY_ENTER): {

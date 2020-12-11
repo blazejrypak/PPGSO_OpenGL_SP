@@ -55,11 +55,11 @@ public:
 
     glm::vec3 color = {1.0, 1.0, 1.0};
 
-    Light ();
+    Light();
 
-    bool update (Scene &scene, float dt) override;
+    bool update(Scene &scene, float dt) override;
 
-    void render (Scene &scene) override;
+    void render(Scene &scene) override;
 };
 
 

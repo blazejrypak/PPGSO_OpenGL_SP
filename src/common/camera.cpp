@@ -8,7 +8,7 @@ using namespace glm;
 using namespace ppgso;
 
 
-Camera::Camera (float fow, float ratio, float near, float far) {
+Camera::Camera(float fow, float ratio, float near, float far) {
     float fowInRad = (PI / 180.0f) * fow;
     projectionMatrix = perspective(fowInRad, ratio, near, far + 1000.f);
     worldUp = this->views[this->view].up;
@@ -17,35 +17,35 @@ Camera::Camera (float fow, float ratio, float near, float far) {
 }
 
 
-void Camera::update () {
-        this->update(current.position, current.center);
+void Camera::update() {
+    this->update(current.position, current.center);
 }
 
-void Camera::updatePosition (vec3 position) {
-        this->update(position, current.center);
+void Camera::updatePosition(vec3 position) {
+    this->update(position, current.center);
 }
 
-void Camera::update (vec3 eye, vec3 center) {
+void Camera::update(vec3 eye, vec3 center) {
     viewMatrix = lookAt(eye, center + front, globalUp);
 }
 
-void Camera::update (View view) {
+void Camera::update(View view) {
     current = view;
     this->update();
 }
 
-void Camera::update (vec3 center) {
+void Camera::update(vec3 center) {
     viewMatrix = lookAt(current.position, center + front, globalUp);
 }
 
-void Camera::updateWithDirection (vec3 position, short direction) {
+void Camera::updateWithDirection(vec3 position, short direction) {
     firstPersonViewCenter = position;
     current.position = position + this->getDirectionMatrix(direction);
     current.center = firstPersonViewCenter;
     this->update();
 }
 
-vec3 Camera::getDirectionMatrix (short direction) {
+vec3 Camera::getDirectionMatrix(short direction) {
     int y = 5;
     int x = 6;
     int z = 10;
@@ -69,7 +69,7 @@ vec3 Camera::getDirectionMatrix (short direction) {
     }
 }
 
-void Camera::switchView (DayScene *scene) {
+void Camera::switchView(DayScene *scene) {
     view++;
     if (view == views.size()) {
         view = 0;
@@ -82,9 +82,8 @@ void Camera::switchView (DayScene *scene) {
     this->update(views[view]);
 }
 
-void Camera::handleKey (Scene &scene, int key) {
-    
-    // Rotating camera shouldn't be enabled in third person mode
+void Camera::handleKey(Scene &scene, int key) {
+
     if (view != 1) {
         float speed = 0.2f;
         float speedRotation = 2.5f;
@@ -120,11 +119,11 @@ void Camera::handleKey (Scene &scene, int key) {
     }
 };
 
-bool Camera::isFirstPersonMode () {
+bool Camera::isFirstPersonMode() {
     return view == 1;
 }
 
-View Camera::getView () {
+View Camera::getView() {
     return this->current;
 }
 
@@ -137,7 +136,7 @@ void Camera::resetAnimation() {
 // https://stackoverflow.com/questions/27751602/interpolation-between-2-4x4-matrices
 glm::mat4 Camera::interpolate(const mat4 &_mat1, const mat4 &_mat2, const float t) {
     glm::quat rot0 = glm::quat_cast(_mat1);
-    glm::quat rot1= glm::quat_cast(_mat2);
+    glm::quat rot1 = glm::quat_cast(_mat2);
 
     glm::quat finalRot = glm::slerp(rot0, rot1, t);
 
@@ -148,7 +147,8 @@ glm::mat4 Camera::interpolate(const mat4 &_mat1, const mat4 &_mat2, const float 
     return finalMat;
 }
 
-glm::mat4 Camera::getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t) {
+glm::mat4 Camera::getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4,
+                                        const float t) {
     glm::mat4 a = this->interpolate(_mat1, _mat2, t);
     glm::mat4 b = this->interpolate(_mat2, _mat3, t);
     glm::mat4 c = this->interpolate(_mat3, _mat4, t);
