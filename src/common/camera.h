@@ -62,11 +62,11 @@ private:
     float zoom;
 
     std::vector<glm::mat4> animationKeyFrames = {
-            lookAt({15.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
-            lookAt({30.0f, 20.0f, -40.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
-            lookAt({60.0f, 15.0f, -20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
-            lookAt({60.0f, 15.0f, 0.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
-            lookAt({60.0f, 20.0f, 20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({0.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({60.0f, 30.0f, 0.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({0.0f, 30.0f, 60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+            lookAt({-60.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
+//            lookAt({60.0f, 30.0f, 20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
     };
     std::vector<View> animationFrames;
 
@@ -102,7 +102,7 @@ public:
     mat4 viewMatrix;
     mat4 projectionMatrix;
     float animationDeltaTime = 0.0f;
-    float animationDuration = 5.0f;
+    float animationDuration = 2.0f;
     float animationStartDeltaTime;
 
     void updateAnimationFrame(){

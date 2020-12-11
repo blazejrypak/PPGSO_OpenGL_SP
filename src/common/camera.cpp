@@ -150,6 +150,11 @@ glm::mat4 Camera::interpolate(const mat4 &_mat1, const mat4 &_mat2, const float 
 
 glm::mat4 Camera::getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t) {
     glm::mat4 a = this->interpolate(_mat1, _mat2, t);
-    glm::mat4 b = this->interpolate(_mat3, _mat4, t);
-    return this->interpolate(a, b, t);
+    glm::mat4 b = this->interpolate(_mat2, _mat3, t);
+    glm::mat4 c = this->interpolate(_mat3, _mat4, t);
+
+    glm::mat4 d = this->interpolate(a, b, t);
+    glm::mat4 e = this->interpolate(b, c, t);
+
+    return this->interpolate(d, e, t);
 }
