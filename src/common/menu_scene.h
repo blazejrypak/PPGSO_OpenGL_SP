@@ -15,7 +15,6 @@ class MenuScene final : public Scene {
 private:
 
 public:
-    bool animate = false;
 
     Shape *cone_1 = nullptr;
     Shape *cone_2 = nullptr;

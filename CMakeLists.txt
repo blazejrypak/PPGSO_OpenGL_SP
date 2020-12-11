@@ -83,7 +83,6 @@ add_executable(FinalFinal
         src/common/camera.cpp
         src/objects/shadow.cpp
         src/objects/object.cpp
-        src/objects/world.cpp
         src/objects/wall.cpp
         src/objects/shape.cpp
         src/objects/player.cpp

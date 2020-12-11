@@ -170,16 +170,12 @@ void DayScene::init() {
     pool_volume->scale = {5.f, 0.1f, 5.f};
     pool_volume->_type = "out";
     this->_weather->_pool_volume = pool_volume.get();
-    pool_volume->minXYZ = {pool_volume->position.x + 7.5f, 1.f, pool_volume->position.z - 5.f};
-    pool_volume->maxXYZ = {pool_volume->position.x - 7.5f, 1.f, pool_volume->position.z + 5.f};
     this->objects.push_back(move(pool_volume));
 
 
     auto player_ = std::make_unique<Player>();
     player_->position = {2.f, 0.5f, -20.f};
     player_->scale = {1.f, 1.f, 1.f};
-    player_->minXYZ = {2.f + 1.5f, 0.5f, -20.f - 0.5f};
-    player_->maxXYZ = {2.f - 1.5f, 0.5f, -20.f + 0.5f};
     player_->_type = "out";
     // material emerald
     player_->material.ambient = {0.215f, 0.1745f, 0.215f};

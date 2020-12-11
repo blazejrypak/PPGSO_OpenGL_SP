@@ -56,13 +56,6 @@ public:
 
     std::vector<Light *> lights;
 
-
-    // Store cursor state
-    struct {
-        double x, y;
-        bool left, right;
-    } cursor;
-
     virtual void handleKey(int key, int action);
 
     void lightReset();

@@ -2,8 +2,6 @@
 #include "../common/scene.h"
 #include "shadow.h"
 
-#include <shaders/diffuse_vert_glsl.h>
-#include <shaders/diffuse_frag_glsl.h>
 #include <shaders/phong_vert_glsl.h>
 #include <shaders/phong_frag_glsl.h>
 
@@ -88,10 +86,6 @@ void Shape::render(Scene &scene) {
     shader->setUniform("Texture", *texture);
 
     mesh->render();
-}
-
-void Shape::setPhongLight(bool phongLight) {
-    phong_light = phongLight;
 }
 
 

@@ -18,8 +18,6 @@ private:
     static std::unique_ptr<ppgso::Texture> texture;
 
 public:
-    float age{0.0f};
-    float maxAge{0.2f};
 
     Shadow(vec3 position, vec3 scale);
 

@@ -1,8 +1,6 @@
 #include <thread>
-#include <chrono>
 #include "../common/scene.h"
 #include "../common/main_window.h"
-#include "../objects/shape.h"
 #include "player.h"
 
 using namespace std;

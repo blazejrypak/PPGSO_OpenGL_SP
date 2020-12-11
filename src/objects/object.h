@@ -60,19 +60,14 @@ public:
 
     // Object properties
     vec3 position{0, 0, 0};
-    vec3 nextKeyPos{1};
     vec3 rotation{0, 0, 0};
     vec3 scale{1, 1, 1};
     mat4 modelMatrix{1};
     mat4 *parentModelMatrix = nullptr;
-    glm::vec3 lightColor{1.0f};
 
     std::string _type;
     std::string ID;
     bool state{false};
-
-    vec3 minXYZ;
-    vec3 maxXYZ;
 
 protected:
     /*!

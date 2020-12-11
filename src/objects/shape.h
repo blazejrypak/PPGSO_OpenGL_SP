@@ -18,10 +18,7 @@ private:
     std::unique_ptr<ppgso::Shader> shader;
     std::unique_ptr<ppgso::Texture> texture;
 
-    bool phong_light = false;
-
 public:
-    void setPhongLight(bool phongLight);
 
     Shadow *shadow = nullptr;
     glm::vec3 color = {0, 0, 0};

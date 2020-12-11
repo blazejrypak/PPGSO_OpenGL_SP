@@ -17,9 +17,6 @@
 class Player final : public Object {
 private:
 
-    bool hasMoved = false;
-    float delay = 0.0f;
-
     static std::unique_ptr<ppgso::Mesh> mesh;
 
     static std::unique_ptr<ppgso::Shader> shader;
@@ -46,7 +43,6 @@ public:
     short direction = 0;
 
     bool updated = false;
-    bool canMove = false;
 
     Player();
 

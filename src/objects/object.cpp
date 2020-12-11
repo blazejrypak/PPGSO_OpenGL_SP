@@ -1,11 +1,6 @@
-#define GLM_ENABLE_EXPERIMENTAL
-
-#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/euler_angles.hpp>
-#include <glm/gtx/transform.hpp>
-#include <bin/ppgso/lib/ppgso.h>
 
 #include "object.h"
 

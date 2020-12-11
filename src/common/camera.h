@@ -22,14 +22,6 @@ typedef struct {
 class Camera {
 private:
 
-    // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
-    enum Camera_Movement {
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT
-    };
-
     vec3 globalUp = vec3{0, 1, 0};
 
     uint view = 0;
@@ -54,20 +46,12 @@ private:
     glm::vec3 front;
     glm::vec3 right;
     glm::vec3 worldUp;
-    // euler Angles
-    float yaw;
-    float pitch;
-    // camera options
-    float movementSpeed;
-    float mouseSensitivity;
-    float zoom;
 
     std::vector<glm::mat4> animationKeyFrames = {
             lookAt({0.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
             lookAt({60.0f, 30.0f, 0.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
             lookAt({0.0f, 30.0f, 60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
             lookAt({-60.0f, 30.0f, -60.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
-//            lookAt({60.0f, 30.0f, 20.0f}, {15.0f, 2.0f, 15.0f}, globalUp),
     };
     std::vector<View> animationFrames;
 

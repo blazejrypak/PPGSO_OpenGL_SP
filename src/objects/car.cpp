@@ -2,8 +2,6 @@
 #include "../common/scene.h"
 #include "car.h"
 
-#include <shaders/diffuse_vert_glsl.h>
-#include <shaders/diffuse_frag_glsl.h>
 #include <shaders/phong_vert_glsl.h>
 #include <shaders/phong_frag_glsl.h>
 

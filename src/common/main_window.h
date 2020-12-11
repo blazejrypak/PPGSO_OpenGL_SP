@@ -10,10 +10,6 @@
 
 #include "../common/scene.h"
 
-class Menu;
-
-class Game;
-
 class DayScene;
 
 class MenuScene;
