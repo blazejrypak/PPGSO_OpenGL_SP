@@ -36,6 +36,8 @@ public:
      * @param scene Scene to render in
      */
     void render(Scene &scene) override;
+
+    void update_keyframe(Scene &scene, float dt) override;
 };
 
 #endif //FINALFINAL_BACKGROUND_H

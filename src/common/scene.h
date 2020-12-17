@@ -51,6 +51,10 @@ public:
     Shape *roofA = nullptr;
     Shape *roofB = nullptr;
     float deltaTime;
+    float keyframeAnimationStartDeltaTime;
+    float keyframeAnimationDeltaTime; // current animation duration
+    float keyframeAnimationDuration = 5.0f;
+    bool keyframe_animation = false;
 
     bool flash_light_on = false;
 
@@ -59,6 +63,11 @@ public:
     virtual void handleKey(int key, int action);
 
     void lightReset();
+
+    mat4 interpolate(const mat4 &_mat1, const mat4 &_mat2, const float t);
+
+    mat4
+    getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4, const float t);
 };
 
 

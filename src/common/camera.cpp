@@ -89,8 +89,10 @@ void Camera::handleKey(Scene &scene, int key) {
         float speedRotation = 2.5f;
 
         if (key == GLFW_KEY_X && scene.keyboard[key] == GLFW_PRESS) {
-            animationStartDeltaTime = scene.deltaTime;
-            animationRunning = true;
+//            animationStartDeltaTime = scene.deltaTime;
+//            animationRunning = true;
+            scene.keyframeAnimationStartDeltaTime = scene.deltaTime;
+            scene.keyframe_animation = true;
         }
 
         if (key == GLFW_KEY_O) {
@@ -129,8 +131,8 @@ View Camera::getView() {
 
 void Camera::resetAnimation() {
     animationFrames.clear();
-    animationRunning = false;
-    animationDeltaTime = 0.0f;
+//    animationRunning = false;
+//    animationDeltaTime = 0.0f;
 }
 
 // https://stackoverflow.com/questions/27751602/interpolation-between-2-4x4-matrices

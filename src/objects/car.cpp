@@ -118,3 +118,4 @@ void Car::render(Scene &scene) {
     mesh->render();
 }
 
+void Car::update_keyframe(Scene &scene, float dt) {}

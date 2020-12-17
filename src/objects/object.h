@@ -44,6 +44,12 @@ public:
      */
     virtual void render(Scene &scene) = 0;
 
+    /*!
+     * Update keyframe animation(update modelMatrix)
+     * @param scene - Reference to the Scene the object is rendered in
+     * @param dt - Time delta for animation purposes
+     */
+    virtual void update_keyframe(Scene &scene, float dt) = 0;
 
     /*!
      * Event to be called when the object is clicked
@@ -74,5 +80,6 @@ protected:
      * Generate modelMatrix from position, rotation and scale
      */
     void generateModelMatrix();
+    glm::mat4  getModelMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale_);
 };
 

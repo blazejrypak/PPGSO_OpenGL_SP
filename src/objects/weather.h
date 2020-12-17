@@ -39,6 +39,8 @@ private:
         void render(Scene &scene) override;
 
         void fillPool();
+
+        void update_keyframe(Scene &scene, float dt) override;
     };
 
 public:

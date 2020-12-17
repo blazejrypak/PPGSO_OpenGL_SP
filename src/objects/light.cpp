@@ -32,3 +32,5 @@ void Light::render(Scene &scene) {
 
     mesh->render();
 }
+
+void Light::update_keyframe(Scene &scene, float dt) {}

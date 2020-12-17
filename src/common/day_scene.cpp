@@ -14,7 +14,7 @@
 void DayScene::init() {
     Scene::init();
     // Add background
-    this->objects.push_back(std::make_unique<Background>());
+//    this->objects.push_back(std::make_unique<Background>());
 
     auto sun = std::make_unique<Light>();
     sun->position = {0.f, 70.f, 0.f};
@@ -225,12 +225,8 @@ void DayScene::init() {
 }
 
 void DayScene::update(float time) {
-    if (this->camera->animationRunning) {
-        if (this->camera->animationDeltaTime >= this->camera->animationDuration) {
-            this->camera->animationRunning = false;
-        }
-        this->camera->animationDeltaTime = time - this->camera->animationStartDeltaTime;
-        this->camera->updateAnimationFrame();
+    if (this->keyframe_animation){
+        this->camera->updateAnimationFrame(this->keyframeAnimationDeltaTime, this->keyframeAnimationDuration);
     }
 
     float day_length = 30.f;

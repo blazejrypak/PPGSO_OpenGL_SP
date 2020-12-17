@@ -196,4 +196,9 @@ bool Player::checkPlayerMove(vec3 &nextPosition, Scene &scene) {
     return true;
 }
 
+void Player::update_keyframe(Scene &scene, float dt) {
+    this->modelMatrix = scene.getAnimationViewFrame(this->modelMatrix, this->modelMatrix*glm::scale(glm::mat4{1.0}, {20.f, 20.f, 20.f}), glm::scale(glm::mat4{1.0}, {24.f, 24.f, 24.f}), glm::scale(glm::mat4{1.0}
+    , {28.f, 28.f, 28.f}), scene.keyframeAnimationDeltaTime / scene.keyframeAnimationDuration);
+}
+
 

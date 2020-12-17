@@ -28,6 +28,8 @@ public:
     void render(Scene &scene) override;
 
     bool haveCollision(Scene &scene);
+
+    void update_keyframe(Scene &scene, float dt) override;
 };
 
 

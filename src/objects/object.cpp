@@ -21,3 +21,10 @@ void Object::generateModelMatrix() {
     }
 }
 
+glm::mat4 Object::getModelMatrix(glm::vec3 pos, glm::vec3 rot, glm::vec3 scale_){
+    glm::mat4 modMatrix{1.0};
+    modMatrix = glm::translate(mat4(1.0f), pos);
+    modMatrix *= glm::orientate4(rot);
+    modMatrix *= glm::scale(mat4(1.0f), scale_);
+}
+

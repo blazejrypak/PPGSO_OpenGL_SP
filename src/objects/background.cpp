@@ -42,3 +42,5 @@ void Background::render(Scene &scene) {
 std::unique_ptr<ppgso::Mesh> Background::mesh;
 std::unique_ptr<ppgso::Shader> Background::shader;
 std::unique_ptr<ppgso::Texture> Background::texture;
+
+void Background::update_keyframe(Scene &scene, float dt) {}

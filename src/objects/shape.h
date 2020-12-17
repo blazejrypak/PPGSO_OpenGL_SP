@@ -29,6 +29,7 @@ public:
 
     void render(Scene &scene) override;
 
+    void update_keyframe(Scene &scene, float dt) override;
 };
 
 

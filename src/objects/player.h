@@ -29,6 +29,13 @@ private:
 
     Shadow *shadow;
 
+    std::vector<glm::mat4> animationKeyFrames = {
+//            getModelMatrix({this->position.x + 20.f, this->position.y + 20.f, this->position.z  + 20.f}, {this->rotation.x , this->rotation.y, this->rotation.z},this->scale*2.f),
+//            getModelMatrix({this->position.x + 20.f, this->position.y + 20.f, this->position.z + 20.f}, {this->rotation.x , this->rotation.y, this->rotation.z + glm::radians(20.f)},this->scale*1.5f),
+//            getModelMatrix({this->position.x + 20.f, this->position.y + 20.f, this->position.z + 20.f}, {this->rotation.x , this->rotation.y, this->rotation.z + glm::radians(70.f)},this->scale*2.f),
+//            getModelMatrix({this->position.x + 20.f, this->position.y + 20.f, this->position.z + 20.f}, {this->rotation.x , this->rotation.y, this->rotation.z + glm::radians(70.f)},this->scale*2.f),
+    };
+
 public:
     Shape *_pool;
     vector<int> controls = {
@@ -55,6 +62,8 @@ public:
     Shape *checkMove(Scene &scene);
 
     bool checkPlayerMove(vec3 &nextPosition, Scene &scene);
+
+    void update_keyframe(Scene &scene, float dt) override;
 };
 
 #endif //FINALFINAL_PLAYER_H

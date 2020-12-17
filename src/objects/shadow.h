@@ -26,6 +26,8 @@ public:
     bool update(Scene &scene, float dt) override;
 
     void render(Scene &scene) override;
+
+    void update_keyframe(Scene &scene, float dt) override;
 };
 
 

@@ -60,3 +60,5 @@ void Shadow::render(Scene &scene) {
 
     mesh->render();
 }
+
+void Shadow::update_keyframe(Scene &scene, float dt) {}

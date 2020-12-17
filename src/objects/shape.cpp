@@ -88,4 +88,5 @@ void Shape::render(Scene &scene) {
     mesh->render();
 }
 
+void Shape::update_keyframe(Scene &scene, float dt) {}
 

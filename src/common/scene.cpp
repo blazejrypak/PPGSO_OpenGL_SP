@@ -2,7 +2,7 @@
 
 void Scene::init() {
     this->objects.clear();
-    this->lightReset();
+//    this->lightReset();
 }
 
 void Scene::update(float time) {
@@ -14,10 +14,18 @@ void Scene::update(float time) {
         // Update and remove from list if needed
         auto obj = i->get();
         if (!obj->update(*this, time))
-            i = objects.erase(
-                    i); // NOTE: no need to call destructors as we store shared pointers in the scene
-        else
+            i = objects.erase(i); // NOTE: no need to call destructors as we store shared pointers in the scene
+        else{
+            if (keyframe_animation){
+                this->keyframeAnimationDeltaTime = time - this->keyframeAnimationStartDeltaTime;
+                if (this->keyframeAnimationDeltaTime >= this->keyframeAnimationDuration) {
+                    this->keyframe_animation = false;
+                    continue;
+                }
+                obj->update_keyframe(*this, time);
+            }
             ++i;
+        }
     }
 }
 
@@ -75,3 +83,29 @@ Object *Scene::getObject(std::string _ID) {
     return nullptr;
 }
 
+
+// https://stackoverflow.com/questions/27751602/interpolation-between-2-4x4-matrices
+glm::mat4 Scene::interpolate(const mat4 &_mat1, const mat4 &_mat2, const float t) {
+    glm::quat rot0 = glm::quat_cast(_mat1);
+    glm::quat rot1 = glm::quat_cast(_mat2);
+
+    glm::quat finalRot = glm::slerp(rot0, rot1, t);
+
+    glm::mat4 finalMat = glm::mat4_cast(finalRot);
+
+    finalMat[3] = _mat1[3] * (1 - t) + _mat2[3] * t;
+
+    return finalMat;
+}
+
+glm::mat4 Scene::getAnimationViewFrame(const mat4 &_mat1, const mat4 &_mat2, const mat4 &_mat3, const mat4 &_mat4,
+                                        const float t) {
+    glm::mat4 a = this->interpolate(_mat1, _mat2, t);
+    glm::mat4 b = this->interpolate(_mat2, _mat3, t);
+    glm::mat4 c = this->interpolate(_mat3, _mat4, t);
+
+    glm::mat4 d = this->interpolate(a, b, t);
+    glm::mat4 e = this->interpolate(b, c, t);
+
+    return this->interpolate(d, e, t);
+}

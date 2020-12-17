@@ -46,6 +46,8 @@ void Weather::RainParticle::fillPool() {
     }
 }
 
+void Weather::RainParticle::update_keyframe(Scene &scene, float dt) {}
+
 bool Weather::RainParticle::update(Scene &scene1, float dt) {
     if (this->parent->pause) {
         return true;

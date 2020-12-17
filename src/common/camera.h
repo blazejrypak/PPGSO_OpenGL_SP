@@ -87,11 +87,11 @@ public:
 
     mat4 viewMatrix;
     mat4 projectionMatrix;
-    float animationDeltaTime = 0.0f;
-    float animationDuration = 2.0f;
-    float animationStartDeltaTime;
+//    float animationDeltaTime = 0.0f;
+//    float animationDuration = 2.0f;
+//    float animationStartDeltaTime;
 
-    void updateAnimationFrame() {
+    void updateAnimationFrame(float &animationDeltaTime, float &animationDuration) {
         this->viewMatrix = getAnimationViewFrame(animationKeyFrames[0],
                                                  animationKeyFrames[1],
                                                  animationKeyFrames[2],
